@@ -1,6 +1,7 @@
 package com.androidapp.getinline;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.androidapp.getinline.util.LibraryClass;
 import com.google.firebase.database.DatabaseReference;
@@ -128,14 +129,14 @@ public class User {
     }
 
     public void removeDB( DatabaseReference.CompletionListener completionListener ){
-
-        DatabaseReference firebase = LibraryClass.getFirebase().child("users").child( getId() );
+        Log.d("GETIDUSER", getId().toString());
+        DatabaseReference firebase = LibraryClass.getFirebase().child("users").child(getId());
+        Log.d("GETIDUSERCHILD", firebase.toString());
         firebase.setValue(null, completionListener);
     }
 
     public void contextDataDB( Context context ){
-        DatabaseReference firebase = LibraryClass.getFirebase().child("users").child( getId() );
-
+        DatabaseReference firebase = LibraryClass.getFirebase().child("users").child(getId());
         firebase.addListenerForSingleValueEvent((ValueEventListener) context);
     }
 

@@ -13,5 +13,14 @@
     <string name="logout">Logout</string>
     <string name="update_login">Atualizar login</string>
     <string name="update_profile">Atualizar profile</string>
+    <string name="update_password">Atualizar senha</string>
+    <string name="link_accounts">Link contas</string>
+    <string name="remove_user">Remover conta</string>
+    <string name="password_info">Para prosseguir com a atualização informe abaixo sua senha.</string>
+    <string name="reset_bt_label">Iniciar recuperação acesso</string>
+    <string name="reset">Recuperar acesso</string>
+    <string name="title_activity_update_login">UpdateLoginActivity</string>
+    <string name="title_activity_update_password">UpdatePasswordActivity</string>
+    <string name="title_activity_remove_user">RemoveUserActivity</string>
 
 </resources>

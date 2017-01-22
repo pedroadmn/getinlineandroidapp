@@ -86,8 +86,18 @@ public class MainActivity extends AppCompatActivity {
         if(id == R.id.action_logout){
             FirebaseAuth.getInstance().signOut();
             finish();
-        } else if(id == R.id.action_update){
+        }
+        else if(id == R.id.action_update){
             startActivity(new Intent(this, UpdateActivity.class));
+        }
+        else if(id == R.id.action_update_login){
+            startActivity(new Intent(this, UpdateLoginActivity.class));
+        }
+        else if(id == R.id.action_update_password){
+            startActivity(new Intent(this, UpdatePasswordActivity.class));
+        }
+        else if(id == R.id.action_remove_user){
+            startActivity(new Intent(this, RemoveUserActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
