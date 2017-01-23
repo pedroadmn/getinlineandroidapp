@@ -1,13 +1,16 @@
-package com.androidapp.getinline;
+package com.androidapp.getinline.activities;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.androidapp.getinline.R;
+import com.androidapp.getinline.entities.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -20,10 +23,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-public class UpdatePasswordActivity extends AppCompatActivity implements ValueEventListener {
+public class UpdateLoginActivity extends AppCompatActivity implements ValueEventListener {
     private Toolbar toolbar;
     private User user;
-    private EditText newPassword;
+    private AutoCompleteTextView newEmail;
     private EditText password;
 
     private FirebaseAuth mAuth;
@@ -31,7 +34,7 @@ public class UpdatePasswordActivity extends AppCompatActivity implements ValueEv
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_password);
+        setContentView(R.layout.activity_update_login);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -45,8 +48,8 @@ public class UpdatePasswordActivity extends AppCompatActivity implements ValueEv
     }
 
     private void init(){
-        toolbar.setTitle( getResources().getString(R.string.update_password) );
-        newPassword = (EditText) findViewById(R.id.new_password);
+        toolbar.setTitle( getResources().getString(R.string.update_login) );
+        newEmail = (AutoCompleteTextView) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
 
         user = new User();
@@ -55,7 +58,7 @@ public class UpdatePasswordActivity extends AppCompatActivity implements ValueEv
     }
 
     public void update( View view ){
-        user.setNewPassword( newPassword.getText().toString() );
+
         user.setPassword( password.getText().toString() );
 
         reauthenticate();
@@ -88,7 +91,7 @@ public class UpdatePasswordActivity extends AppCompatActivity implements ValueEv
                 public void onFailure(@NonNull Exception e) {
                     FirebaseCrash.report( e );
                     Toast.makeText(
-                            UpdatePasswordActivity.this,
+                            UpdateLoginActivity.this,
                             e.getMessage(),
                             Toast.LENGTH_SHORT
                     ).show();
@@ -97,7 +100,6 @@ public class UpdatePasswordActivity extends AppCompatActivity implements ValueEv
     }
 
     private void updateData(){
-        user.setNewPassword( newPassword.getText().toString() );
         user.setPassword( password.getText().toString() );
 
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
@@ -107,18 +109,18 @@ public class UpdatePasswordActivity extends AppCompatActivity implements ValueEv
         }
 
         firebaseUser
-            .updatePassword( user.getNewPassword() )
+            .updateEmail( newEmail.getText().toString() )
             .addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
 
                     if( task.isSuccessful() ){
-                        newPassword.setText("");
-                        password.setText("");
+                        user.setEmail( newEmail.getText().toString() );
+                        user.updateDB();
 
                         Toast.makeText(
-                                UpdatePasswordActivity.this,
-                                "Senha atualizada com sucesso",
+                                UpdateLoginActivity.this,
+                                "Email de login atualizado com sucesso",
                                 Toast.LENGTH_SHORT
                         ).show();
                     }
@@ -129,7 +131,7 @@ public class UpdatePasswordActivity extends AppCompatActivity implements ValueEv
                 public void onFailure(@NonNull Exception e) {
                     FirebaseCrash.report( e );
                     Toast.makeText(
-                            UpdatePasswordActivity.this,
+                            UpdateLoginActivity.this,
                             e.getMessage(),
                             Toast.LENGTH_SHORT
                     ).show();
@@ -140,6 +142,7 @@ public class UpdatePasswordActivity extends AppCompatActivity implements ValueEv
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
         User u = dataSnapshot.getValue( User.class );
+        newEmail.setText( u.getEmail() );
         user.setEmail( u.getEmail() );
     }
 

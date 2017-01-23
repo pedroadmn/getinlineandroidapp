@@ -1,4 +1,4 @@
-package com.androidapp.getinline;
+package com.androidapp.getinline.entities;
 
 import android.content.Context;
 import android.util.Log;
@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class User {
 
-    public static String PROVIDER = "com.androidapp.getinline.User.PROVIDER";
+    public static String PROVIDER = "com.androidapp.getinline.entities.User.PROVIDER";
 
     private String id;
     private String name;

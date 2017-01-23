@@ -1,4 +1,4 @@
-package com.androidapp.getinline;
+package com.androidapp.getinline.activities;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +8,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import com.androidapp.getinline.R;
+import com.androidapp.getinline.entities.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;

@@ -13,7 +13,7 @@
         android:name=".CustomApplication">
 
         <activity
-            android:name=".SplashActivity"
+            android:name=".activities.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.MainActivity">
             <!--<intent-filter>-->
                 <!--&lt;!&ndash;<action android:name="android.intent.action.MAIN" />&ndash;&gt;-->
 
@@ -31,35 +31,35 @@
         </activity>
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:theme="@style/AppTheme.LoginActionbar"
             android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
 
         <activity
-            android:name=".SignUpActivity"
+            android:name=".activities.SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".UpdateActivity"
+            android:name=".activities.UpdateActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".ResetActivity"
+            android:name=".activities.ResetActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".UpdateLoginActivity"
+            android:name=".activities.UpdateLoginActivity"
             android:label="@string/title_activity_update_login"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".UpdatePasswordActivity"
+            android:name=".activities.UpdatePasswordActivity"
             android:label="@string/title_activity_update_password"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".RemoveUserActivity"
+            android:name=".activities.RemoveUserActivity"
             android:label="@string/title_activity_remove_user"
             android:theme="@style/AppTheme.NoActionBar" />
 

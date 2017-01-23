@@ -2,7 +2,7 @@ package com.androidapp.getinline.listener;
 
 import android.util.Log;
 
-import com.androidapp.getinline.User;
+import com.androidapp.getinline.entities.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;

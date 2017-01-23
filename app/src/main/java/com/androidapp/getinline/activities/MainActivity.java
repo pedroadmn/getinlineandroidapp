@@ -1,4 +1,4 @@
-package com.androidapp.getinline;
+package com.androidapp.getinline.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import com.androidapp.getinline.R;
 import com.androidapp.getinline.listener.CustomChildEventListener;
 import com.androidapp.getinline.listener.CustomValueEventListener;
 import com.androidapp.getinline.util.LibraryClass;

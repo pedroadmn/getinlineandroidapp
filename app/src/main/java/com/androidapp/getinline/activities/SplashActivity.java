@@ -1,4 +1,4 @@
-package com.androidapp.getinline;
+package com.androidapp.getinline.activities;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package com.androidapp.getinline;
+package com.androidapp.getinline.activities;
 
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
