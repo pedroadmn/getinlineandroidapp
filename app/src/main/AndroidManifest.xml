@@ -12,6 +12,16 @@
         android:theme="@style/AppTheme"
         android:name=".CustomApplication">
 
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".MainActivity">
             <!--<intent-filter>-->
                 <!--&lt;!&ndash;<action android:name="android.intent.action.MAIN" />&ndash;&gt;-->
@@ -24,10 +34,6 @@
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.LoginActionbar"
             android:windowSoftInputMode="stateHidden|adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
