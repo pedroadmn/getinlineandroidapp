@@ -22,6 +22,9 @@
     <string name="title_activity_update_login">UpdateLoginActivity</string>
     <string name="title_activity_update_password">UpdatePasswordActivity</string>
     <string name="title_activity_remove_user">RemoveUserActivity</string>
+    <string name="action_sign_in_facebook">Sign in com Facebook</string>
+
+    <string name="facebook_app_id">637626683090336</string>
 
 
 </resources>

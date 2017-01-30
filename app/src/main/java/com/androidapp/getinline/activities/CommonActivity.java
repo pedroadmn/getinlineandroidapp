@@ -35,4 +35,5 @@ abstract public class CommonActivity extends AppCompatActivity {
     abstract protected void initViews();
 
     abstract protected void initUser();
+
 }

@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import com.androidapp.getinline.R;
+import com.androidapp.getinline.entities.User;
 import com.androidapp.getinline.listener.CustomChildEventListener;
 import com.androidapp.getinline.listener.CustomValueEventListener;
 import com.androidapp.getinline.util.LibraryClass;
@@ -22,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
-    private Button btLogout;
     private CustomValueEventListener customValueEventListener;
     private CustomChildEventListener customChildEventListener;
 
@@ -31,12 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        databaseReference = LibraryClass.getFirebase().child("users");
-        //customValueEventListener = new CustomValueEventListener();
-        //databaseReference.addListenerForSingleValueEvent(customValueEventListener);
-        //customChildEventListener = new CustomChildEventListener();
-        //databaseReference.addValueEventListener(customValueEventListener);
-        //databaseReference.addChildEventListener(customChildEventListener);
+
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -48,11 +43,19 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-
-
         mAuth = FirebaseAuth.getInstance();
         mAuth.addAuthStateListener(authStateListener);
         databaseReference = LibraryClass.getFirebase();
+        //customValueEventListener = new CustomValueEventListener();
+        //databaseReference.addListenerForSingleValueEvent(customValueEventListener);
+        //customChildEventListener = new CustomChildEventListener();
+        //databaseReference.addValueEventListener(customValueEventListener);
+        //databaseReference.addChildEventListener(customChildEventListener);
+
+
+
+
+
     }
 
     @Override
@@ -70,20 +73,28 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //databaseReference.removeEventListener(customValueEventListener);
-        //databaseReference.removeEventListener(customChildEventListener);
+        if( authStateListener != null ){
+            mAuth.removeAuthStateListener( authStateListener );
+        }
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        User user = new User();
+
+        if(user.isSocialNetworkLogged(this)){
+            getMenuInflater().inflate(R.menu.menu_social_network_logged, menu);
+        }else{
+            getMenuInflater().inflate(R.menu.menu, menu);
+        }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+
         if(id == R.id.action_logout){
             FirebaseAuth.getInstance().signOut();
             finish();

@@ -31,6 +31,11 @@ public class User {
         this.id = id;
     }
 
+    public boolean isSocialNetworkLogged( Context context ){
+        String token = getProviderSP(context);
+        return(token.contains("facebook") || token.contains("google"));
+    }
+
     public String getName() {
         return name;
     }
@@ -89,6 +94,14 @@ public class User {
         this.newPassword = newPassword;
     }
 
+    public void saveProviderSP(Context context, String token ){
+        LibraryClass.saveSP(context, PROVIDER, token);
+    }
+
+    public String getProviderSP(Context context ){
+        return( LibraryClass.getSP( context, PROVIDER) );
+    }
+
     public void saveDB( DatabaseReference.CompletionListener... completionListener ){
         DatabaseReference firebase = LibraryClass.getFirebase().child("users").child( getId() );
 
@@ -98,14 +111,6 @@ public class User {
         else{
             firebase.setValue(this, completionListener[0]);
         }
-    }
-
-    public void saveProviderSP(Context context, String token ){
-        LibraryClass.saveSP(context, PROVIDER, token);
-    }
-
-    public String getProviderSP(Context context ){
-        return( LibraryClass.getSP( context, PROVIDER) );
     }
 
     public void updateDB( DatabaseReference.CompletionListener... completionListener ){
@@ -140,8 +145,5 @@ public class User {
         firebase.addListenerForSingleValueEvent((ValueEventListener) context);
     }
 
-    public boolean isSocialNetworkLogged( Context context ){
-        String token = getProviderSP(context);
-        return(token.contains("facebook") || token.contains("google"));
-    }
+
 }
