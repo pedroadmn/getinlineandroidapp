@@ -46,12 +46,6 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mAuth.addAuthStateListener(authStateListener);
         databaseReference = LibraryClass.getFirebase();
-        //customValueEventListener = new CustomValueEventListener();
-        //databaseReference.addListenerForSingleValueEvent(customValueEventListener);
-        //customChildEventListener = new CustomChildEventListener();
-        //databaseReference.addValueEventListener(customValueEventListener);
-        //databaseReference.addChildEventListener(customChildEventListener);
-        
     }
 
     @Override
@@ -100,6 +94,9 @@ public class MainActivity extends AppCompatActivity {
         }
         else if(id == R.id.action_update_login){
             startActivity(new Intent(this, UpdateLoginActivity.class));
+        }
+        else if(id == R.id.action_link_accounts){
+            startActivity(new Intent(this, LinkAccountsActivity.class));
         }
         else if(id == R.id.action_update_password){
             startActivity(new Intent(this, UpdatePasswordActivity.class));

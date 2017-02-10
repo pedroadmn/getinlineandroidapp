@@ -75,6 +75,10 @@
             android:label="@string/title_activity_remove_user"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <activity
+            android:name=".activities.LinkAccountsActivity"
+            android:label="@string/title_activity_link_accounts" />
+
     </application>
 
 </manifest>

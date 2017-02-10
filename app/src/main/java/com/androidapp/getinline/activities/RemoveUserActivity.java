@@ -110,7 +110,7 @@ public class RemoveUserActivity extends AppCompatActivity
                     return;
                 }
 
-                user.removeDB( RemoveUserActivity.this );
+                user.removeDB(RemoveUserActivity.this);
             }
         })
         .addOnFailureListener(new OnFailureListener() {

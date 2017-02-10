@@ -24,6 +24,13 @@
     <string name="title_activity_update_password">UpdatePasswordActivity</string>
     <string name="title_activity_remove_user">RemoveUserActivity</string>
     <string name="action_sign_in_facebook">Sign in com Facebook</string>
+    <string name="action_link_facebook">Link Facebook login</string>
+    <string name="action_unlink_facebook">Unlink Facebook login</string>
+    <string name="action_link">Link convencional login</string>
+    <string name="action_unlink">Unlink convencional login</string>
+    <string name="action_link_google">Link Google login</string>
+    <string name="action_unlink_google">Unlink Google login</string>
+    <string name="title_activity_link_accounts">Link contas</string>
 
     <string name="facebook_app_id">637626683090336</string>
 
