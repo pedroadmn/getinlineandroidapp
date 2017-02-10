@@ -3,7 +3,6 @@ package com.androidapp.getinline.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -44,20 +43,18 @@ import java.util.Arrays;
 
 public class LoginActivity extends CommonActivity implements GoogleApiClient.OnConnectionFailedListener{
 
-
     private static final int RC_SIGN_IN_GOOGLE = 7859;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private CallbackManager callbackManager;
     private GoogleApiClient mGoogleApiClient;
+
     private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
@@ -213,6 +210,16 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
     public void callReset(View view){
         Intent intent = new Intent( this, ResetActivity.class );
         startActivity(intent);
+    }
+
+    public void callLoginForm(View v){
+        findViewById(R.id.act_login_form).setVisibility(View.VISIBLE);
+        findViewById(R.id.email_login_form).setVisibility(View.INVISIBLE);
+    }
+
+    public void callCancel(View v){
+        findViewById(R.id.act_login_form).setVisibility(View.INVISIBLE);
+        findViewById(R.id.email_login_form).setVisibility(View.VISIBLE);
     }
 
     public void sendLoginData(View view){
