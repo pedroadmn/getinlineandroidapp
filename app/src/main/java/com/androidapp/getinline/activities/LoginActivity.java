@@ -143,8 +143,6 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
                 && tokens.length > 0
                 && tokens[0] != null ){
 
-            Log.d("TOKEN[0]", tokens[0]);
-
             AuthCredential credential = FacebookAuthProvider.getCredential(tokens[0]);
             credential = provider.equalsIgnoreCase("google") ? GoogleAuthProvider.getCredential(tokens[0], null) : credential;
 

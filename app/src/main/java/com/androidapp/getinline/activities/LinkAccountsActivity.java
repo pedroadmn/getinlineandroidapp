@@ -78,7 +78,7 @@ public class LinkAccountsActivity extends CommonActivity
 
         // GOOGLE SIGN IN
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("312301797686-1bkt0nbecnbctpfoflanjr3sp4fi0aec.apps.googleusercontent.com")
+                .requestIdToken("617151987057-es670jj5qfiuphb7u64gvrup3c8kdvum.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
 
@@ -152,7 +152,7 @@ public class LinkAccountsActivity extends CommonActivity
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         closeProgressBar();
-                        if( !task.isSuccessful() ){
+                        if(!task.isSuccessful()){
                             return;
                         }
 
@@ -178,7 +178,6 @@ public class LinkAccountsActivity extends CommonActivity
         email = (AutoCompleteTextView) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.login_progress);
-
         initButtons();
     }
 
@@ -213,16 +212,15 @@ public class LinkAccountsActivity extends CommonActivity
             String providerId,
             int linkId,
             int unlinkId,
-            int... fieldsIds ){
+            int... fieldsIds){
 
-        if( isALinkedProvider( providerId ) ){
-
-            ((Button) findViewById( buttonId )).setText( getString( unlinkId ) );
-            showHideFields( false, fieldsIds );
+        if(isALinkedProvider(providerId)){
+            ((Button) findViewById(buttonId)).setText(getString(unlinkId) );
+            showHideFields(false, fieldsIds);
         }
         else{
-            ((Button) findViewById( buttonId )).setText( getString( linkId ) );
-            showHideFields( true, fieldsIds );
+            ((Button) findViewById(buttonId)).setText(getString(linkId));
+            showHideFields(true, fieldsIds);
         }
     }
 
@@ -307,19 +305,18 @@ public class LinkAccountsActivity extends CommonActivity
 
         mAuth
             .getCurrentUser()
-            .unlink( providerId )
+            .unlink(providerId)
             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-
                     if( !task.isSuccessful() ){
                         return;
                     }
 
                     initButtons();
-                    showSnackbar("Conta provider "+providerId+" desvinculada com sucesso.");
+                    showSnackbar("Conta provider " +providerId+ " desvinculada com sucesso.");
 
-                    if( isLastProvider( providerId ) ){
+                    if(isLastProvider(providerId)){
                         user.setId( mAuth.getCurrentUser().getUid() );
                         user.removeDB( LinkAccountsActivity.this );
                     }

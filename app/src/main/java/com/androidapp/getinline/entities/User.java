@@ -134,9 +134,7 @@ public class User {
     }
 
     public void removeDB( DatabaseReference.CompletionListener completionListener ){
-        Log.d("GETIDUSER", getId().toString());
         DatabaseReference firebase = LibraryClass.getFirebase().child("users").child(getId());
-        Log.d("GETIDUSERCHILD", firebase.toString());
         firebase.setValue(null, completionListener);
     }
 
