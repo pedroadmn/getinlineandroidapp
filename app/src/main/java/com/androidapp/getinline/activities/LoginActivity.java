@@ -57,6 +57,8 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -152,6 +154,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(!task.isSuccessful()){
+
                                 showSnackbar("Login social falhou");
                             }
                         }
@@ -209,10 +212,10 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
         startActivity(intent);
     }
 
-    /*public void callReset(View view){
+    public void callReset(View view){
         Intent intent = new Intent( this, ResetActivity.class );
         startActivity(intent);
-    }*/
+    }
 
     public void sendLoginData(View view){
         FirebaseCrash.log("LoginActivity:clickListener:button:sendLoginData()");

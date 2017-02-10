@@ -45,24 +45,16 @@ public class ResetActivity extends AppCompatActivity {
 
     public void reset( View view ){
         firebaseAuth
-            .sendPasswordResetEmail( email.getText().toString() )
+            .sendPasswordResetEmail(email.getText().toString())
             .addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    if( task.isSuccessful() ){
+                    if(task.isSuccessful()){
                         email.setText("");
-                        Toast.makeText(
-                            ResetActivity.this,
-                            "Recuperação de acesso iniciada. Email enviado.",
-                            Toast.LENGTH_SHORT
-                        ).show();
+                        Toast.makeText(ResetActivity.this, "Recuperação de acesso iniciada. Email enviado.", Toast.LENGTH_SHORT).show();
                     }
                     else{
-                        Toast.makeText(
-                            ResetActivity.this,
-                            "Falhou! Tente novamente",
-                            Toast.LENGTH_SHORT
-                        ).show();
+                        Toast.makeText(ResetActivity.this, "Falhou! Tente novamente", Toast.LENGTH_SHORT).show();
                     }
                 }
             })
