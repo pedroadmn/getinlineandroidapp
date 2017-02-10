@@ -9,6 +9,7 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="action_reset_call">Recuperar acesso</string>
     <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in_google">Sign in com Google</string>
     <string name="action_sign_up_call">Cadastrar</string>
     <string name="logout">Logout</string>
     <string name="update_login">Atualizar login</string>

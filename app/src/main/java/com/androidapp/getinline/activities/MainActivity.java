@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 
 import com.androidapp.getinline.R;
 import com.androidapp.getinline.entities.User;
@@ -51,11 +50,7 @@ public class MainActivity extends AppCompatActivity {
         //customChildEventListener = new CustomChildEventListener();
         //databaseReference.addValueEventListener(customValueEventListener);
         //databaseReference.addChildEventListener(customChildEventListener);
-
-
-
-
-
+        
     }
 
     @Override
