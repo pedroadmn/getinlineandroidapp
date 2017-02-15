@@ -224,7 +224,6 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
 
     public void sendLoginData(View view){
         FirebaseCrash.log("LoginActivity:clickListener:button:sendLoginData()");
-        openProgressBar();
         initUser();
         verifyLogin();
     }
@@ -258,21 +257,27 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
     private void verifyLogin(){
         FirebaseCrash.log("LoginActivity:verifyLogin()");
         user.saveProviderSP(LoginActivity.this, "");
-        mAuth.signInWithEmailAndPassword(user.getEmail(), user.getPassword())
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if( !task.isSuccessful() ){
-                            showSnackbar("Login falhou");
-                            return;
+        if(!isCredentialEmpty(user.getEmail(), user.getPassword())){
+            openProgressBar();
+            mAuth.signInWithEmailAndPassword(user.getEmail(), user.getPassword())
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if( !task.isSuccessful() ){
+                                showSnackbar("Login falhou");
+                                return;
+                            }
                         }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        FirebaseCrash.report(e);
-                    }
-                });
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    FirebaseCrash.report(e);
+                }
+            });
+        } else {
+            showSnackbar(getResources().getString(R.string.empty_credentials));
+        }
+
     }
 
     @Override
@@ -280,5 +285,12 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
         FirebaseCrash.report(
                 new Exception(connectionResult.getErrorCode()+": "+connectionResult.getErrorMessage()));
         showSnackbar( connectionResult.getErrorMessage() );
+    }
+
+    public boolean isCredentialEmpty(String email, String password){
+        if(email.isEmpty() || password.isEmpty()){
+            return true;
+        }
+        return false;
     }
 }
