@@ -20,76 +20,67 @@
         android:layout_marginBottom="8dp"
         android:visibility="gone" />
 
-    <ScrollView
-        android:id="@+id/login_form"
+    <LinearLayout
+        android:id="@+id/email_login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin">
 
-        <LinearLayout
-            android:id="@+id/email_login_form"
+        <Button
+            android:id="@+id/email_sign_in_facebook_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin">
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/com_facebook_button_background"
+            android:onClick="sendLoginFacebookData"
+            android:text="@string/action_sign_in_facebook"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
 
-            <Button
-                android:id="@+id/email_sign_in_facebook_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/com_facebook_button_background"
-                android:onClick="sendLoginFacebookData"
-                android:text="@string/action_sign_in_facebook"
-                android:textAllCaps="false"
-                android:textColor="@color/white" />
+        <!--<com.google.android.gms.common.SignInButton-->
+        <!--android:id="@+id/email_sign_in_google_button"-->
+        <!--style="?android:textAppearanceSmall"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="16dp"-->
+        <!--android:text="@string/action_sign_in_google" />-->
 
-            <!--<com.google.android.gms.common.SignInButton-->
-            <!--android:id="@+id/email_sign_in_google_button"-->
-            <!--style="?android:textAppearanceSmall"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginBottom="16dp"-->
-            <!--android:text="@string/action_sign_in_google" />-->
+        <Button
+            android:id="@+id/email_sign_in_google_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/common_google_signin_btn_text_light_normal"
+            android:onClick="sendLoginGoogleData"
+            android:text="@string/action_sign_in_google"
+            android:textAllCaps="false"
+            android:textColor="@color/black" />
 
-            <Button
-                android:id="@+id/email_sign_in_google_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/common_google_signin_btn_text_light_normal"
-                android:onClick="sendLoginGoogleData"
-                android:text="@string/action_sign_in_google"
-                android:textAllCaps="false"
-                android:textColor="@color/black" />
+        <Button
+            android:id="@+id/email_sign_in_button"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/signin_email"
+            android:onClick="callSignUp"
+            android:text="@string/action_sign_in"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
 
-            <Button
-                android:id="@+id/email_sign_in_button"
-                android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/signin_email"
-                android:onClick="callSignUp"
-                android:text="@string/action_sign_in"
-                android:textAllCaps="false"
-                android:textColor="@color/white" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="callLoginForm"
+            android:text="@string/login"
+            android:textColor="@color/grayNormal"
+            android:textSize="16dp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:onClick="callLoginForm"
-                android:text="@string/login"
-                android:textColor="@color/grayNormal"
-                android:textSize="16dp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
 
     <include layout="@layout/activity_login_form" />
 
