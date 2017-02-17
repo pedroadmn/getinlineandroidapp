@@ -58,10 +58,10 @@ public class UpdateActivity extends AppCompatActivity implements ValueEventListe
     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
         if( databaseError != null ){
             FirebaseCrash.report( databaseError.toException() );
-            Toast.makeText( this, "Falhou: "+databaseError.getMessage(), Toast.LENGTH_LONG ).show();
+            Toast.makeText( this, getResources().getString(R.string.failed) + databaseError.getMessage(), Toast.LENGTH_LONG ).show();
         }
         else{
-            Toast.makeText( this, "Atualização realizada com sucesso.", Toast.LENGTH_SHORT ).show();
+            Toast.makeText( this, getResources().getString(R.string.successfully_updated), Toast.LENGTH_SHORT ).show();
         }
     }
 

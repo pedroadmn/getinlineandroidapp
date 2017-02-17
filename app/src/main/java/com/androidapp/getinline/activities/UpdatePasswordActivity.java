@@ -119,8 +119,7 @@ public class UpdatePasswordActivity extends AppCompatActivity implements ValueEv
                         password.setText("");
 
                         Toast.makeText(
-                                UpdatePasswordActivity.this,
-                                "Senha atualizada com sucesso",
+                                UpdatePasswordActivity.this, getResources().getString(R.string.password_updated),
                                 Toast.LENGTH_SHORT
                         ).show();
                     }

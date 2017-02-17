@@ -11,11 +11,7 @@ import android.view.MenuItem;
 
 import com.androidapp.getinline.R;
 import com.androidapp.getinline.entities.User;
-import com.androidapp.getinline.listener.CustomChildEventListener;
-import com.androidapp.getinline.listener.CustomValueEventListener;
-import com.androidapp.getinline.util.LibraryClass;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(firebaseAuth.getCurrentUser() == null){
+                if (firebaseAuth.getCurrentUser() == null) {
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
@@ -49,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         init();
     }
 
-    private void init(){
+    private void init() {
         RecyclerView rvUsers = (RecyclerView) findViewById(R.id.rv_users);
         rvUsers.setHasFixedSize(true);
         rvUsers.setLayoutManager(new LinearLayoutManager(this));
@@ -58,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if( authStateListener != null ){
-            mAuth.removeAuthStateListener( authStateListener );
+        if (authStateListener != null) {
+            mAuth.removeAuthStateListener(authStateListener);
         }
 
     }
@@ -68,9 +64,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         User user = new User();
 
-        if(user.isSocialNetworkLogged(this)){
+        if (user.isSocialNetworkLogged(this)) {
             getMenuInflater().inflate(R.menu.menu_social_network_logged, menu);
-        }else{
+        } else {
             getMenuInflater().inflate(R.menu.menu, menu);
         }
         return true;
@@ -80,23 +76,18 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if(id == R.id.action_logout){
+        if (id == R.id.action_logout) {
             FirebaseAuth.getInstance().signOut();
             finish();
-        }
-        else if(id == R.id.action_update){
+        } else if (id == R.id.action_update) {
             startActivity(new Intent(this, UpdateActivity.class));
-        }
-        else if(id == R.id.action_update_login){
+        } else if (id == R.id.action_update_login) {
             startActivity(new Intent(this, UpdateLoginActivity.class));
-        }
-        else if(id == R.id.action_link_accounts){
+        } else if (id == R.id.action_link_accounts) {
             startActivity(new Intent(this, LinkAccountsActivity.class));
-        }
-        else if(id == R.id.action_update_password){
+        } else if (id == R.id.action_update_password) {
             startActivity(new Intent(this, UpdatePasswordActivity.class));
-        }
-        else if(id == R.id.action_remove_user){
+        } else if (id == R.id.action_remove_user) {
             startActivity(new Intent(this, RemoveUserActivity.class));
         }
         return super.onOptionsItemSelected(item);

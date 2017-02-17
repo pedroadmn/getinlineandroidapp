@@ -35,11 +35,6 @@
         </activity>
 
         <activity android:name=".activities.MainActivity">
-            <!--<intent-filter>-->
-                <!--&lt;!&ndash;<action android:name="android.intent.action.MAIN" />&ndash;&gt;-->
-
-                <!--&lt;!&ndash;<category android:name="android.intent.category.LAUNCHER" />&ndash;&gt;-->
-            <!--</intent-filter>-->
         </activity>
 
         <activity

@@ -1,7 +1,6 @@
 package com.androidapp.getinline.entities;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.androidapp.getinline.util.LibraryClass;
 import com.google.firebase.database.DatabaseReference;
@@ -142,6 +141,4 @@ public class User {
         DatabaseReference firebase = LibraryClass.getFirebase().child("users").child(getId());
         firebase.addListenerForSingleValueEvent((ValueEventListener) context);
     }
-
-
 }

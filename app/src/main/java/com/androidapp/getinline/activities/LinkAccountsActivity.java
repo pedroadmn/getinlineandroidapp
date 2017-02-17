@@ -3,7 +3,6 @@ package com.androidapp.getinline.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -58,20 +57,20 @@ public class LinkAccountsActivity extends CommonActivity
         setContentView(R.layout.activity_link_accounts);
 
         // FACEBOOK
-        FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                accessFacebookLoginData( loginResult.getAccessToken() );
+                accessFacebookLoginData(loginResult.getAccessToken());
             }
 
             @Override
-            public void onCancel() {}
+            public void onCancel() {
+            }
 
             @Override
             public void onError(FacebookException error) {
-                showSnackbar( error.getMessage() );
+                showSnackbar(error.getMessage());
             }
         });
 
@@ -97,112 +96,101 @@ public class LinkAccountsActivity extends CommonActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if( requestCode == RC_SIGN_IN_GOOGLE ){
+        if (requestCode == RC_SIGN_IN_GOOGLE) {
 
-            GoogleSignInResult googleSignInResult = Auth.GoogleSignInApi.getSignInResultFromIntent( data );
+            GoogleSignInResult googleSignInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             GoogleSignInAccount account = googleSignInResult.getSignInAccount();
 
-            if( account == null ){
-                showSnackbar("Google login falhou, tente novamente");
+            if (account == null) {
+                showSnackbar(getResources().getString(R.string.google_login_failed));
                 return;
             }
 
-            accessGoogleLoginData( account.getIdToken() );
+            accessGoogleLoginData(account.getIdToken());
+        } else {
+            callbackManager.onActivityResult(requestCode, resultCode, data);
         }
-        else{
-            callbackManager.onActivityResult( requestCode, resultCode, data );
-        }
     }
 
-    private void accessEmailLoginData( String email, String password ){
-        accessLoginData(
-                "email",
-                email,
-                password
+    private void accessEmailLoginData(String email, String password) {
+        accessLoginData("email", email, password);
+    }
+
+    private void accessFacebookLoginData(AccessToken accessToken) {
+        accessLoginData("facebook", (accessToken != null ? accessToken.getToken() : null)
         );
     }
 
-    private void accessFacebookLoginData(AccessToken accessToken){
-        accessLoginData(
-                "facebook",
-                (accessToken != null ? accessToken.getToken() : null)
-        );
+    private void accessGoogleLoginData(String accessToken) {
+        accessLoginData("google", accessToken);
     }
 
-    private void accessGoogleLoginData(String accessToken){
-        accessLoginData(
-                "google",
-                accessToken
-        );
-    }
-
-    private void accessLoginData(final String provider, String... tokens ){
-        if( tokens != null
+    private void accessLoginData(final String provider, String... tokens) {
+        if (tokens != null
                 && tokens.length > 0
-                && tokens[0] != null ){
+                && tokens[0] != null) {
 
-            AuthCredential credential = FacebookAuthProvider.getCredential( tokens[0]);
-            credential = provider.equalsIgnoreCase("google") ? GoogleAuthProvider.getCredential( tokens[0], null) : credential;
-            credential = provider.equalsIgnoreCase("email") ? EmailAuthProvider.getCredential( tokens[0], tokens[1] ) : credential;
+            AuthCredential credential = FacebookAuthProvider.getCredential(tokens[0]);
+            credential = provider.equalsIgnoreCase("google") ? GoogleAuthProvider.getCredential(tokens[0], null) : credential;
+            credential = provider.equalsIgnoreCase("email") ? EmailAuthProvider.getCredential(tokens[0], tokens[1]) : credential;
 
             mAuth
-                .getCurrentUser()
-                .linkWithCredential( credential )
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        closeProgressBar();
-                        if(!task.isSuccessful()){
-                            return;
-                        }
+                    .getCurrentUser()
+                    .linkWithCredential(credential)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            closeProgressBar();
+                            if (!task.isSuccessful()) {
+                                return;
+                            }
 
-                        initButtons();
-                        showSnackbar("Conta provider "+provider+" vinculada com sucesso.");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        FirebaseCrash.report( e );
-                        closeProgressBar();
-                        showSnackbar("Error: "+e.getMessage());
-                    }
-                });
-        }
-        else{
+                            initButtons();
+                            showSnackbar("Conta provider " + provider + " vinculada com sucesso.");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            FirebaseCrash.report(e);
+                            closeProgressBar();
+                            showSnackbar("Error: " + e.getMessage());
+                        }
+                    });
+        } else {
             mAuth.signOut();
         }
     }
 
-    protected void initViews(){
+    protected void initViews() {
         email = (AutoCompleteTextView) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.login_progress);
         initButtons();
     }
 
-    private void initButtons(){
+    private void initButtons() {
         setButtonLabel(
-            R.id.email_sign_in_button,
-            EmailAuthProvider.PROVIDER_ID,
-            R.string.action_link,
-            R.string.action_unlink,
-            R.id.til_email,
-            R.id.til_password
+                R.id.email_sign_in_button,
+                EmailAuthProvider.PROVIDER_ID,
+                R.string.action_link,
+                R.string.action_unlink,
+                R.id.til_email,
+                R.id.til_password
         );
 
         setButtonLabel(
-            R.id.email_sign_in_facebook_button,
-            FacebookAuthProvider.PROVIDER_ID,
-            R.string.action_link_facebook,
-            R.string.action_unlink_facebook
+                R.id.email_sign_in_facebook_button,
+                FacebookAuthProvider.PROVIDER_ID,
+                R.string.action_link_facebook,
+                R.string.action_unlink_facebook
         );
 
         setButtonLabel(
-            R.id.email_sign_in_google_button,
-            GoogleAuthProvider.PROVIDER_ID,
-            R.string.action_link_google,
-            R.string.action_unlink_google
+                R.id.email_sign_in_google_button,
+                GoogleAuthProvider.PROVIDER_ID,
+                R.string.action_link_google,
+                R.string.action_unlink_google
         );
 
     }
@@ -212,70 +200,69 @@ public class LinkAccountsActivity extends CommonActivity
             String providerId,
             int linkId,
             int unlinkId,
-            int... fieldsIds){
+            int... fieldsIds) {
 
-        if(isALinkedProvider(providerId)){
-            ((Button) findViewById(buttonId)).setText(getString(unlinkId) );
+        if (isALinkedProvider(providerId)) {
+            ((Button) findViewById(buttonId)).setText(getString(unlinkId));
             showHideFields(false, fieldsIds);
-        }
-        else{
+        } else {
             ((Button) findViewById(buttonId)).setText(getString(linkId));
             showHideFields(true, fieldsIds);
         }
     }
 
-    private void showHideFields( boolean status, int... ids ){
-        for( int id : ids ){
-            findViewById( id ).setVisibility( status ? View.VISIBLE : View.GONE );
+    private void showHideFields(boolean status, int... ids) {
+        for (int id : ids) {
+            findViewById(id).setVisibility(status ? View.VISIBLE : View.GONE);
         }
     }
 
-    private boolean isALinkedProvider( String providerId ){
+    private boolean isALinkedProvider(String providerId) {
 
-        for(UserInfo userInfo : mAuth.getCurrentUser().getProviderData() ){
+        for (UserInfo userInfo : mAuth.getCurrentUser().getProviderData()) {
 
-            if( userInfo.getProviderId().equals( providerId ) ){
+            if (userInfo.getProviderId().equals(providerId)) {
                 return true;
             }
         }
         return false;
     }
 
-    protected void initUser(){
+    protected void initUser() {
         user = new User();
-        user.setEmail( email.getText().toString() );
-        user.setPassword( password.getText().toString() );
+        user.setEmail(email.getText().toString());
+        user.setPassword(password.getText().toString());
     }
 
-    public void sendLoginData( View view ){
-        if( isALinkedProvider( EmailAuthProvider.PROVIDER_ID ) ){
-            unlinkProvider( EmailAuthProvider.PROVIDER_ID );
+    public void sendLoginData(View view) {
+        if (isALinkedProvider(EmailAuthProvider.PROVIDER_ID)) {
+            unlinkProvider(EmailAuthProvider.PROVIDER_ID);
             return;
         }
 
         openProgressBar();
         initUser();
-        accessEmailLoginData( user.getEmail(), user.getPassword() );
+        accessEmailLoginData(user.getEmail(), user.getPassword());
     }
 
-    public void sendLoginFacebookData( View view ){
+    public void sendLoginFacebookData(View view) {
 
-        if( isALinkedProvider( FacebookAuthProvider.PROVIDER_ID ) ){
-            unlinkProvider( FacebookAuthProvider.PROVIDER_ID );
+        if (isALinkedProvider(FacebookAuthProvider.PROVIDER_ID)) {
+            unlinkProvider(FacebookAuthProvider.PROVIDER_ID);
             return;
         }
 
         LoginManager
-            .getInstance()
-            .logInWithReadPermissions(
-                    this,
-                    Arrays.asList("public_profile", "user_friends", "email")
-            );
+                .getInstance()
+                .logInWithReadPermissions(
+                        this,
+                        Arrays.asList("public_profile", "user_friends", "email")
+                );
     }
 
-    public void sendLoginGoogleData( View view ){
-        if( isALinkedProvider( GoogleAuthProvider.PROVIDER_ID ) ){
-            unlinkProvider( GoogleAuthProvider.PROVIDER_ID );
+    public void sendLoginGoogleData(View view) {
+        if (isALinkedProvider(GoogleAuthProvider.PROVIDER_ID)) {
+            unlinkProvider(GoogleAuthProvider.PROVIDER_ID);
             return;
         }
 
@@ -285,14 +272,14 @@ public class LinkAccountsActivity extends CommonActivity
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        FirebaseCrash.report( new Exception( connectionResult.getErrorMessage() ) );
-        showSnackbar( connectionResult.getErrorMessage() );
+        FirebaseCrash.report(new Exception(connectionResult.getErrorMessage()));
+        showSnackbar(connectionResult.getErrorMessage());
     }
 
     @Override
     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-        if( databaseError != null ){
-            FirebaseCrash.report( databaseError.toException() );
+        if (databaseError != null) {
+            FirebaseCrash.report(databaseError.toException());
         }
 
         mAuth.getCurrentUser().delete();
@@ -301,41 +288,41 @@ public class LinkAccountsActivity extends CommonActivity
     }
 
 
-    private void unlinkProvider(final String providerId ){
+    private void unlinkProvider(final String providerId) {
 
         mAuth
-            .getCurrentUser()
-            .unlink(providerId)
-            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if( !task.isSuccessful() ){
-                        return;
-                    }
+                .getCurrentUser()
+                .unlink(providerId)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (!task.isSuccessful()) {
+                            return;
+                        }
 
-                    initButtons();
-                    showSnackbar("Conta provider " +providerId+ " desvinculada com sucesso.");
+                        initButtons();
+                        showSnackbar("Conta provider " + providerId + " desvinculada com sucesso.");
 
-                    if(isLastProvider(providerId)){
-                        user.setId( mAuth.getCurrentUser().getUid() );
-                        user.removeDB( LinkAccountsActivity.this );
+                        if (isLastProvider(providerId)) {
+                            user.setId(mAuth.getCurrentUser().getUid());
+                            user.removeDB(LinkAccountsActivity.this);
+                        }
                     }
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    FirebaseCrash.report( e );
-                    showSnackbar("Error: "+e.getMessage());
-                }
-            });
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                FirebaseCrash.report(e);
+                showSnackbar("Error: " + e.getMessage());
+            }
+        });
     }
 
 
-    private boolean isLastProvider( String providerId ){
+    private boolean isLastProvider(String providerId) {
         int size = mAuth.getCurrentUser().getProviders().size();
-        return(
-            size == 0
-            || (size == 1 && providerId.equals(EmailAuthProvider.PROVIDER_ID) )
+        return (
+                size == 0
+                        || (size == 1 && providerId.equals(EmailAuthProvider.PROVIDER_ID))
         );
     }
 }

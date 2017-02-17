@@ -47,24 +47,24 @@ public class RemoveUserActivity extends AppCompatActivity
         init();
     }
 
-    private void init(){
-        toolbar.setTitle( getResources().getString(R.string.remove_user) );
+    private void init() {
+        toolbar.setTitle(getResources().getString(R.string.remove_user));
         password = (EditText) findViewById(R.id.password);
 
         user = new User();
-        user.setId( mAuth.getCurrentUser().getUid() );
-        user.contextDataDB( this );
+        user.setId(mAuth.getCurrentUser().getUid());
+        user.contextDataDB(this);
     }
 
-    public void update( View view ){
+    public void update(View view) {
         user.setPassword(password.getText().toString());
         reauthenticate();
     }
 
-    private void reauthenticate(){
+    private void reauthenticate() {
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
 
-        if( firebaseUser == null ){
+        if (firebaseUser == null) {
             return;
         }
 
@@ -73,50 +73,19 @@ public class RemoveUserActivity extends AppCompatActivity
                 user.getPassword()
         );
 
-        firebaseUser.reauthenticate( credential )
-            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
+        firebaseUser.reauthenticate(credential)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
 
-                    if( task.isSuccessful() ){
-                        deleteUser();
+                        if (task.isSuccessful()) {
+                            deleteUser();
+                        }
                     }
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    FirebaseCrash.report( e );
-                    Toast.makeText(
-                            RemoveUserActivity.this,
-                            e.getMessage(),
-                            Toast.LENGTH_SHORT
-                    ).show();
-                }
-            });
-    }
-
-    private void deleteUser(){
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-
-        if( firebaseUser == null ){
-            return;
-        }
-
-        firebaseUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-
-                if( !task.isSuccessful() ){
-                    return;
-                }
-
-                user.removeDB(RemoveUserActivity.this);
-            }
-        })
-        .addOnFailureListener(new OnFailureListener() {
+                }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                FirebaseCrash.report( e );
+                FirebaseCrash.report(e);
                 Toast.makeText(
                         RemoveUserActivity.this,
                         e.getMessage(),
@@ -126,26 +95,56 @@ public class RemoveUserActivity extends AppCompatActivity
         });
     }
 
+    private void deleteUser() {
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+
+        if (firebaseUser == null) {
+            return;
+        }
+
+        firebaseUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+                if (!task.isSuccessful()) {
+                    return;
+                }
+
+                user.removeDB(RemoveUserActivity.this);
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        FirebaseCrash.report(e);
+                        Toast.makeText(
+                                RemoveUserActivity.this,
+                                e.getMessage(),
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+                });
+    }
+
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
-        User u = dataSnapshot.getValue( User.class );
-        user.setEmail( u.getEmail() );
+        User u = dataSnapshot.getValue(User.class);
+        user.setEmail(u.getEmail());
     }
 
     @Override
     public void onCancelled(DatabaseError firebaseError) {
-        FirebaseCrash.report( firebaseError.toException() );
+        FirebaseCrash.report(firebaseError.toException());
     }
 
     @Override
     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-        if( databaseError != null ){
-            FirebaseCrash.report( databaseError.toException() );
+        if (databaseError != null) {
+            FirebaseCrash.report(databaseError.toException());
         }
 
         Toast.makeText(
-                RemoveUserActivity.this,
-                "Conta removida com sucesso",
+                RemoveUserActivity.this, getResources().getString(R.string.success_removed),
                 Toast.LENGTH_SHORT
         ).show();
         finish();

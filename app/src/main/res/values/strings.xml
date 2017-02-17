@@ -1,25 +1,24 @@
 <resources>
     <string name="app_name">GetInLine</string>
-    <string name="prompt_name">Nome</string>
+    <string name="prompt_name">Name</string>
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Senha</string>
-    <string name="prompt_new_password">Nova senha</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_new_password">New password</string>
     <string name="action_sign_up_short">Cadastro</string>
-    <string name="action_sign_up">Cadastrar</string>
+    <string name="action_sign_up">Register</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="action_reset_call">Recuperar acesso</string>
+    <string name="action_reset_call">Recovery access</string>
     <string name="action_sign_in">Sign in with Email</string>
     <string name="login">Log in</string>
     <string name="action_sign_in_google">Sign Up with Google</string>
-    <string name="action_sign_up_call">Cadastrar</string>
     <string name="logout">Logout</string>
-    <string name="update_login">Atualizar login</string>
-    <string name="update_profile">Atualizar profile</string>
-    <string name="update_password">Atualizar senha</string>
-    <string name="link_accounts">Link contas</string>
-    <string name="remove_user">Remover conta</string>
-    <string name="password_info">Para prosseguir com a atualização informe abaixo sua senha.</string>
-    <string name="reset_bt_label">Iniciar recuperação acesso</string>
+    <string name="update_login">Update login</string>
+    <string name="update_profile">Update profile</string>
+    <string name="update_password">Update password</string>
+    <string name="link_accounts">Link accounts</string>
+    <string name="remove_user">Remove account</string>
+    <string name="password_info">To follow with the update, type your password below.</string>
+    <string name="reset_bt_label">Start the access recuperation</string>
     <string name="reset">Forgot your password?</string>
     <string name="title_activity_update_login">UpdateLoginActivity</string>
     <string name="title_activity_update_password">UpdatePasswordActivity</string>
@@ -31,11 +30,20 @@
     <string name="action_unlink">Unlink convencional login</string>
     <string name="action_link_google">Link Google login</string>
     <string name="action_unlink_google">Unlink Google login</string>
-    <string name="title_activity_link_accounts">Link contas</string>
+    <string name="title_activity_link_accounts">Link accounts</string>
 
     <string name="facebook_app_id">637626683090336</string>
     <string name="cancel">Cancel</string>
     <string name="empty_credentials">Please. Type email and password</string>
+    <string name="google_login_failed">Google login failed, try again</string>
+    <string name="social_login_failed">Social login failed</string>
+    <string name="success_removed">Account removed successfully</string>
+    <string name="access_recovery_initialized">Access recovery initialized. Email sent.</string>
+    <string name="failed">Failed. Try again</string>
+    <string name="account_registered">Account registered successfully</string>
+    <string name="successfully_updated">Successfully updated</string>
+    <string name="email_updated">Login email updated successfully</string>
+    <string name="password_updated">Password updated successfully</string>
 
 
 </resources>

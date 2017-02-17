@@ -94,7 +94,7 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
     @Override
     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
         mAuth.signOut();
-        showToast("Conta criada com sucesso!");
+        showToast(getResources().getString(R.string.account_registered));
         closeProgressBar();
         finish();
     }

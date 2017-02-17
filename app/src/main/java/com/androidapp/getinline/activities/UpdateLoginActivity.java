@@ -119,8 +119,7 @@ public class UpdateLoginActivity extends AppCompatActivity implements ValueEvent
                         user.updateDB();
 
                         Toast.makeText(
-                                UpdateLoginActivity.this,
-                                "Email de login atualizado com sucesso",
+                                UpdateLoginActivity.this, getResources().getString(R.string.email_updated),
                                 Toast.LENGTH_SHORT
                         ).show();
                     }

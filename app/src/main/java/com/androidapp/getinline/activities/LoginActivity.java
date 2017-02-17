@@ -39,9 +39,6 @@ import com.google.firebase.crash.FirebaseCrash;
 
 import java.util.Arrays;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
-
-
 /**
  * Created by pedroadmn on 1/21/2017.
  */
@@ -54,8 +51,6 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
     private CallbackManager callbackManager;
     private GoogleApiClient mGoogleApiClient;
     private TextView cancelButton;
-    private TextView loginButton;
-
     private User user;
 
     @Override
@@ -63,7 +58,6 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -115,14 +109,13 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
             GoogleSignInAccount account = googleSignInResult.getSignInAccount();
 
             if( account == null ){
-                showSnackbar("Google login falhou, tente novamente");
+                showSnackbar(getResources().getString(R.string.google_login_failed));
                 return;
             }
 
             accessGoogleLoginData(account.getIdToken() );
         }
         else{
-            //twitterAuthClient.onActivityResult( requestCode, resultCode, data );
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
@@ -164,7 +157,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(!task.isSuccessful()){
 
-                                showSnackbar("Login social falhou");
+                                showSnackbar(getResources().getString(R.string.social_login_failed));
                             }
                         }
                     })
@@ -206,7 +199,6 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
 
     protected void initViews(){
         cancelButton = (TextView) findViewById(R.id.cancel_button);
-        loginButton = (TextView) findViewById(R.id.login);
         email = (AutoCompleteTextView) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.login_progress);
@@ -314,7 +306,6 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
 
     @Override
     public void onBackPressed() {
-        Log.d("ACTIVATED", findViewById(R.id.act_login_form).isEnabled() + "");
         if(findViewById(R.id.act_login_form).isEnabled()) {
             findViewById(R.id.act_login_form).setEnabled(false);
             callCancel();
