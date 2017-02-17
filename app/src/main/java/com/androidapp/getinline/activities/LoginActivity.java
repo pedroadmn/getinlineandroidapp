@@ -3,10 +3,13 @@ package com.androidapp.getinline.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.androidapp.getinline.R;
 import com.androidapp.getinline.entities.User;
@@ -36,6 +39,8 @@ import com.google.firebase.crash.FirebaseCrash;
 
 import java.util.Arrays;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
+
 
 /**
  * Created by pedroadmn on 1/21/2017.
@@ -48,6 +53,8 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
     private FirebaseAuth.AuthStateListener mAuthListener;
     private CallbackManager callbackManager;
     private GoogleApiClient mGoogleApiClient;
+    private TextView cancelButton;
+    private TextView loginButton;
 
     private User user;
 
@@ -89,6 +96,13 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
         mAuthListener = getFirebaseAuthResultHandler();
         initViews();
         initUser();
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callCancel();
+            }
+        });
     }
 
     @Override
@@ -191,6 +205,8 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
     }
 
     protected void initViews(){
+        cancelButton = (TextView) findViewById(R.id.cancel_button);
+        loginButton = (TextView) findViewById(R.id.login);
         email = (AutoCompleteTextView) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.login_progress);
@@ -214,11 +230,13 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
 
     public void callLoginForm(View v){
         findViewById(R.id.act_login_form).setVisibility(View.VISIBLE);
+        findViewById(R.id.act_login_form).setEnabled(true);
         findViewById(R.id.email_login_form).setVisibility(View.INVISIBLE);
     }
 
-    public void callCancel(View v){
+    public void callCancel(){
         findViewById(R.id.act_login_form).setVisibility(View.INVISIBLE);
+        findViewById(R.id.act_login_form).setEnabled(false);
         findViewById(R.id.email_login_form).setVisibility(View.VISIBLE);
     }
 
@@ -292,5 +310,15 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.d("ACTIVATED", findViewById(R.id.act_login_form).isEnabled() + "");
+        if(findViewById(R.id.act_login_form).isEnabled()) {
+            callCancel();
+        } else {
+            finish();
+        }
     }
 }
