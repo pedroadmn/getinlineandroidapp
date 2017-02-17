@@ -316,6 +316,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
     public void onBackPressed() {
         Log.d("ACTIVATED", findViewById(R.id.act_login_form).isEnabled() + "");
         if(findViewById(R.id.act_login_form).isEnabled()) {
+            findViewById(R.id.act_login_form).setEnabled(false);
             callCancel();
         } else {
             finish();
