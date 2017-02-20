@@ -45,7 +45,8 @@
 
         <activity
             android:name=".activities.SignUpActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
 
         <activity
             android:name=".activities.UpdateActivity"
@@ -71,8 +72,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".activities.LinkAccountsActivity"
-            android:label="@string/title_activity_link_accounts" />
+        android:name=".activities.LinkAccountsActivity"
+        android:label="@string/title_activity_link_accounts" />
+
+        <activity android:name="za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
     </application>
 

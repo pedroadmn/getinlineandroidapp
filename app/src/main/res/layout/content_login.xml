@@ -82,6 +82,18 @@
 
     </LinearLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="20dp"
+        android:onClick="loadTutorial"
+        android:text="@string/learn_more"
+        android:textColor="@color/grayNormal"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
     <include layout="@layout/activity_login_form" />
 
 </RelativeLayout>

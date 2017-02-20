@@ -1,5 +1,6 @@
 package com.androidapp.getinline.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -37,7 +38,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.crash.FirebaseCrash;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+
+import za.co.riggaroo.materialhelptutorial.TutorialItem;
+import za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity;
 
 /**
  * Created by pedroadmn on 1/21/2017.
@@ -46,6 +51,7 @@ import java.util.Arrays;
 public class LoginActivity extends CommonActivity implements GoogleApiClient.OnConnectionFailedListener{
 
     private static final int RC_SIGN_IN_GOOGLE = 7859;
+    private static final int REQUEST_CODE = 1000 ;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private CallbackManager callbackManager;
@@ -230,6 +236,27 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
         findViewById(R.id.act_login_form).setVisibility(View.INVISIBLE);
         findViewById(R.id.act_login_form).setEnabled(false);
         findViewById(R.id.email_login_form).setVisibility(View.VISIBLE);
+    }
+
+    public void loadTutorial(View view) {
+        Intent mainAct = new Intent(this, MaterialTutorialActivity.class);
+        mainAct.putParcelableArrayListExtra(MaterialTutorialActivity.MATERIAL_TUTORIAL_ARG_TUTORIAL_ITEMS, getTutorialItems(this));
+        startActivityForResult(mainAct, REQUEST_CODE);
+
+    }
+
+    private ArrayList<TutorialItem> getTutorialItems(Context context) {
+        TutorialItem tutorialItem1 = new TutorialItem(context.getString(R.string.empty_credentials), context.getString(R.string.empty_credentials),
+                R.color.colorPrimaryDark, R.drawable.getinlinelogo,  R.drawable.getinlinelogo);
+
+        TutorialItem tutorialItem2 = new TutorialItem(context.getString(R.string.empty_credentials), context.getString(R.string.empty_credentials),
+                R.color.colorPrimaryDark, R.drawable.getinlinelogo,  R.drawable.getinlinelogo);
+
+        ArrayList<TutorialItem> tutorialItems = new ArrayList<>();
+        tutorialItems.add(tutorialItem1);
+        tutorialItems.add(tutorialItem2);
+
+        return tutorialItems;
     }
 
     public void sendLoginData(View view){
