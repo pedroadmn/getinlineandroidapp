@@ -4,10 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -18,7 +16,6 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.Auth;
@@ -77,7 +74,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
             @Override
             public void onError(FacebookException error) {
                 FirebaseCrash.report( error );
-                showSnackbar(error.getMessage());
+                showSnackBar(error.getMessage());
             }
         });
 
@@ -115,7 +112,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
             GoogleSignInAccount account = googleSignInResult.getSignInAccount();
 
             if( account == null ){
-                showSnackbar(getResources().getString(R.string.google_login_failed));
+                showSnackBar(getResources().getString(R.string.google_login_failed));
                 return;
             }
 
@@ -163,7 +160,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(!task.isSuccessful()){
 
-                                showSnackbar(getResources().getString(R.string.social_login_failed));
+                                showSnackBar(getResources().getString(R.string.social_login_failed));
                             }
                         }
                     })
@@ -301,7 +298,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if( !task.isSuccessful() ){
-                                showSnackbar("Login falhou");
+                                showSnackBar("Login falhou");
                                 return;
                             }
                         }
@@ -312,7 +309,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
                 }
             });
         } else {
-            showSnackbar(getResources().getString(R.string.empty_credentials));
+            showSnackBar(getResources().getString(R.string.empty_credentials));
         }
 
     }
@@ -321,7 +318,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
     public void onConnectionFailed(ConnectionResult connectionResult) {
         FirebaseCrash.report(
                 new Exception(connectionResult.getErrorCode()+": "+connectionResult.getErrorMessage()));
-        showSnackbar( connectionResult.getErrorMessage() );
+        showSnackBar( connectionResult.getErrorMessage() );
     }
 
     public boolean isCredentialEmpty(String email, String password){

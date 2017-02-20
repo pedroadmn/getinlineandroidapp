@@ -86,7 +86,7 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         FirebaseCrash.report(e);
-                        showSnackbar(e.getMessage());
+                        showSnackBar(e.getMessage());
                     }
                 });
     }

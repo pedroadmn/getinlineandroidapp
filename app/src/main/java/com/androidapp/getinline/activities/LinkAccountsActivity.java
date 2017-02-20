@@ -15,7 +15,6 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.Auth;
@@ -70,7 +69,7 @@ public class LinkAccountsActivity extends CommonActivity
 
             @Override
             public void onError(FacebookException error) {
-                showSnackbar(error.getMessage());
+                showSnackBar(error.getMessage());
             }
         });
 
@@ -102,7 +101,7 @@ public class LinkAccountsActivity extends CommonActivity
             GoogleSignInAccount account = googleSignInResult.getSignInAccount();
 
             if (account == null) {
-                showSnackbar(getResources().getString(R.string.google_login_failed));
+                showSnackBar(getResources().getString(R.string.google_login_failed));
                 return;
             }
 
@@ -146,7 +145,7 @@ public class LinkAccountsActivity extends CommonActivity
                             }
 
                             initButtons();
-                            showSnackbar("Conta provider " + provider + " vinculada com sucesso.");
+                            showSnackBar("Conta provider " + provider + " vinculada com sucesso.");
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -154,7 +153,7 @@ public class LinkAccountsActivity extends CommonActivity
                         public void onFailure(@NonNull Exception e) {
                             FirebaseCrash.report(e);
                             closeProgressBar();
-                            showSnackbar("Error: " + e.getMessage());
+                            showSnackBar("Error: " + e.getMessage());
                         }
                     });
         } else {
@@ -273,7 +272,7 @@ public class LinkAccountsActivity extends CommonActivity
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         FirebaseCrash.report(new Exception(connectionResult.getErrorMessage()));
-        showSnackbar(connectionResult.getErrorMessage());
+        showSnackBar(connectionResult.getErrorMessage());
     }
 
     @Override
@@ -301,7 +300,7 @@ public class LinkAccountsActivity extends CommonActivity
                         }
 
                         initButtons();
-                        showSnackbar("Conta provider " + providerId + " desvinculada com sucesso.");
+                        showSnackBar("Conta provider " + providerId + " desvinculada com sucesso.");
 
                         if (isLastProvider(providerId)) {
                             user.setId(mAuth.getCurrentUser().getUid());
@@ -312,7 +311,7 @@ public class LinkAccountsActivity extends CommonActivity
             @Override
             public void onFailure(@NonNull Exception e) {
                 FirebaseCrash.report(e);
-                showSnackbar("Error: " + e.getMessage());
+                showSnackBar("Error: " + e.getMessage());
             }
         });
     }

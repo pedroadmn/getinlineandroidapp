@@ -15,7 +15,7 @@ abstract public class CommonActivity extends AppCompatActivity {
     protected EditText password;
     protected ProgressBar progressBar;
 
-    protected void showSnackbar(String message) {
+    protected void showSnackBar(String message) {
         Snackbar.make(progressBar, message, Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
     }
