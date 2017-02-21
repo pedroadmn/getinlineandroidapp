@@ -322,10 +322,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
     }
 
     public boolean isCredentialEmpty(String email, String password){
-        if(email.isEmpty() || password.isEmpty()){
-            return true;
-        }
-        return false;
+        return email.isEmpty() || password.isEmpty();
     }
 
     @Override
