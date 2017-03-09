@@ -1,5 +1,6 @@
 package com.androidapp.getinline.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.androidapp.getinline.R;
 import com.androidapp.getinline.entities.User;
@@ -20,12 +22,15 @@ import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 
+import org.w3c.dom.Text;
+
 public class SignUpActivity extends CommonActivity implements DatabaseReference.CompletionListener{
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private User user;
     private AutoCompleteTextView name;
+    private TextView cancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,14 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
         email = (AutoCompleteTextView) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.sign_up_progress);
+        cancel = (TextView) findViewById(R.id.tv_cancel_signup);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callCancel();
+            }
+        });
     }
 
     protected void initUser(){
@@ -107,6 +120,12 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
     public boolean isFieldEmpty(String email, String password){
         return email.isEmpty() || password.isEmpty();
     }
+
+    private void callCancel(){
+        Intent goMain = new Intent(this, MainActivity.class);
+        startActivity(goMain);
+    }
+
 
     @Override
     protected void onStart() {
