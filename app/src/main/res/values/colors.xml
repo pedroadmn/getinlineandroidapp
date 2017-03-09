@@ -3,6 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="windowBackground">#FFFFFF</color>
+    <color name="navigationBarColor">#000000</color>
     <color name="grayLight">#e6e6e6</color>
     <color name="grayNormal">#5c5c5c</color>
     <color name="white">#ffffff</color>
@@ -10,4 +13,7 @@
     <color name="black">#000000</color>
     <color name="coral">#ff7f50</color>
     <color name="seaGreen">#2e8b57</color>
+    <color name="bg_main">#428bca</color>
+    <color name="toolbar">#f0f0f0</color>
+    <color name="input_login_hint">#999999</color>
 </resources>

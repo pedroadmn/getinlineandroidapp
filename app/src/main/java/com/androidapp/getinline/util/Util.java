@@ -5,7 +5,6 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.androidapp.getinline.R;
-import com.androidapp.getinline.activities.CommonActivity;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -59,6 +59,8 @@
     <string name="msg_email_wrong_format">Email format is wrong. Please, check it</string>
     <string name="msg_sign_login_empty_fields">Please. Fill out all fields</string>
     <string name="msg_dif_password">The passwords are not equals. Please, check them</string>
+    <string name="one">One</string>
+    <string name="two">two</string>
 
 
 </resources>
