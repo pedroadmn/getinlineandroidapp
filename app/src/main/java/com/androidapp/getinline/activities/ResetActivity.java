@@ -2,10 +2,13 @@ package com.androidapp.getinline.activities;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.androidapp.getinline.R;
@@ -15,11 +18,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.crash.FirebaseCrash;
 
-public class ResetActivity extends AppCompatActivity {
+import static android.R.id.message;
+import static com.androidapp.getinline.R.string.reset;
+
+public class ResetActivity extends CommonActivity {
 
     private Toolbar toolbar;
     private AutoCompleteTextView email;
     private FirebaseAuth firebaseAuth;
+    private Button resetButton;
+    protected ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,20 +38,17 @@ public class ResetActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         firebaseAuth = FirebaseAuth.getInstance();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        init();
+        initViews();
     }
 
-    private void init(){
-        toolbar.setTitle( getResources().getString(R.string.reset) );
-        email = (AutoCompleteTextView) findViewById(R.id.email);
-    }
-
-    public void reset( View view ){
+    public void reset(){
+        if (!email.getText().toString().isEmpty()){
         firebaseAuth
             .sendPasswordResetEmail(email.getText().toString())
             .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -64,5 +69,28 @@ public class ResetActivity extends AppCompatActivity {
                     FirebaseCrash.report( e );
                 }
             });
+        }else{
+            showToast(getResources().getString(R.string.empty_email_reset));
+        }
+    }
+
+    @Override
+    protected void initViews() {
+        toolbar.setTitle( getResources().getString(R.string.reset) );
+        email = (AutoCompleteTextView) findViewById(R.id.email);
+        resetButton = (Button) findViewById(R.id.bt_reset);
+        progressBar = (ProgressBar) findViewById(R.id.login_progress);
+
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reset();
+            }
+        });
+    }
+
+    @Override
+    protected void initUser() {
+
     }
 }

@@ -33,10 +33,10 @@
         </android.support.design.widget.TextInputLayout>
 
         <Button
+            android:id="@+id/bt_reset"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
-            android:onClick="reset"
             android:gravity="center"
             android:text="@string/reset_bt_label"
             android:layout_width="match_parent"
