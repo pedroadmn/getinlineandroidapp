@@ -227,12 +227,14 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
         findViewById(R.id.act_login_form).setVisibility(View.VISIBLE);
         findViewById(R.id.act_login_form).setEnabled(true);
         findViewById(R.id.email_login_form).setVisibility(View.INVISIBLE);
+        findViewById(R.id.tv_learn_more).setVisibility(View.INVISIBLE);
     }
 
     public void callCancel(){
         findViewById(R.id.act_login_form).setVisibility(View.INVISIBLE);
         findViewById(R.id.act_login_form).setEnabled(false);
         findViewById(R.id.email_login_form).setVisibility(View.VISIBLE);
+        findViewById(R.id.tv_learn_more).setVisibility(View.VISIBLE);
     }
 
     public void loadTutorial(View view) {
