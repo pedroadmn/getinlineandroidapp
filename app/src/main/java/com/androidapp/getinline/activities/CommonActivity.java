@@ -12,7 +12,7 @@ import android.widget.Toast;
 abstract public class CommonActivity extends AppCompatActivity {
 
     protected AutoCompleteTextView email;
-    protected EditText password;
+    protected EditText password, confirmPassword;
     protected ProgressBar progressBar;
 
     protected void showSnackBar(String message) {

@@ -3,6 +3,7 @@
     <string name="prompt_name">Name</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
+    <string name="prompt_confirm_password">Confirm Password</string>
     <string name="prompt_new_password">New password</string>
     <string name="action_sign_up_short">Cadastro</string>
     <string name="action_sign_up">Register</string>

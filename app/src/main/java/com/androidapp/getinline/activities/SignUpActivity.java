@@ -62,6 +62,7 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
         name = (AutoCompleteTextView) findViewById(R.id.name);
         email = (AutoCompleteTextView) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
+        confirmPassword = (EditText) findViewById(R.id.confirm_password);
         progressBar = (ProgressBar) findViewById(R.id.sign_up_progress);
         cancel = (TextView) findViewById(R.id.tv_cancel_signup);
 
@@ -88,23 +89,25 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
     private void saveUser() {
         if (!isFieldEmpty(user.getEmail(), user.getPassword())) {
             if (Util.validateEmail(getBaseContext(), user.getEmail())) {
-                openProgressBar();
-                mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (!task.isSuccessful()) {
-                                    closeProgressBar();
+                if (Util.validateEqualPassword(getBaseContext(), password.getText().toString(), confirmPassword.getText().toString())) {
+                    openProgressBar();
+                    mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (!task.isSuccessful()) {
+                                        closeProgressBar();
+                                    }
                                 }
-                            }
-                        })
-                        .addOnFailureListener(this, new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                FirebaseCrash.report(e);
-                                showSnackBar(e.getMessage());
-                            }
-                        });
+                            })
+                            .addOnFailureListener(this, new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    FirebaseCrash.report(e);
+                                    showSnackBar(e.getMessage());
+                                }
+                            });
+                }
             }
         }
     }
