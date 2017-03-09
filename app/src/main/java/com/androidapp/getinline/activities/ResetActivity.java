@@ -48,7 +48,7 @@ public class ResetActivity extends CommonActivity {
     }
 
     public void reset(){
-        if (!email.getText().toString().isEmpty()){
+        if (!isFieldEmpty(email.getText().toString())){
         firebaseAuth
             .sendPasswordResetEmail(email.getText().toString())
             .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -87,6 +87,10 @@ public class ResetActivity extends CommonActivity {
                 reset();
             }
         });
+    }
+
+    public boolean isFieldEmpty(String email){
+        return email.isEmpty();
     }
 
     @Override

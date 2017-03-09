@@ -73,22 +73,27 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
     }
 
     private void saveUser(){
-        mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(!task.isSuccessful()){
-                            closeProgressBar();
+        if(!isFieldEmpty(user.getEmail(), user.getPassword())){
+            mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(!task.isSuccessful()){
+                                closeProgressBar();
+                            }
                         }
-                    }
-                })
-                .addOnFailureListener(this, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        FirebaseCrash.report(e);
-                        showSnackBar(e.getMessage());
-                    }
-                });
+                    })
+                    .addOnFailureListener(this, new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            FirebaseCrash.report(e);
+                            showSnackBar(e.getMessage());
+                        }
+                    });
+        }else{
+            showSnackBar(getResources().getString(R.string.empty_credentials));
+            closeProgressBar();
+        }
     }
 
     @Override
@@ -97,6 +102,10 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
         showToast(getResources().getString(R.string.account_registered));
         closeProgressBar();
         finish();
+    }
+
+    public boolean isFieldEmpty(String email, String password){
+        return email.isEmpty() || password.isEmpty();
     }
 
     @Override
