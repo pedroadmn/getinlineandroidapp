@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.androidapp.getinline.R;
 import com.androidapp.getinline.entities.User;
+import com.androidapp.getinline.util.Util;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -302,24 +303,24 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
         FirebaseCrash.log("LoginActivity:verifyLogin()");
         user.saveProviderSP(LoginActivity.this, "");
         if(!isCredentialEmpty(user.getEmail(), user.getPassword())){
-            openProgressBar();
-            mAuth.signInWithEmailAndPassword(user.getEmail(), user.getPassword())
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if( !task.isSuccessful() ){
-                                showSnackBar("Login falhou");
-                                return;
+            if(Util.validateEmail(getBaseContext(), user.getEmail())){
+                openProgressBar();
+                mAuth.signInWithEmailAndPassword(user.getEmail(), user.getPassword())
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if( !task.isSuccessful() ){
+                                    showSnackBar("Login falhou");
+                                    return;
+                                }
                             }
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    FirebaseCrash.report(e);
-                }
-            });
-        } else {
-            showSnackBar(getResources().getString(R.string.empty_credentials));
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        FirebaseCrash.report(e);
+                    }
+                });
+            }
         }
 
     }
@@ -332,7 +333,11 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
     }
 
     public boolean isCredentialEmpty(String email, String password){
-        return email.isEmpty() || password.isEmpty();
+        if (email.isEmpty() || password.isEmpty()){
+            showSnackBar(getResources().getString(R.string.empty_credentials));
+            return true;
+        }
+        return false;
     }
 
     @Override

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.androidapp.getinline.R;
 import com.androidapp.getinline.entities.User;
+import com.androidapp.getinline.util.Util;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -24,7 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 
 import org.w3c.dom.Text;
 
-public class SignUpActivity extends CommonActivity implements DatabaseReference.CompletionListener{
+public class SignUpActivity extends CommonActivity implements DatabaseReference.CompletionListener {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -46,7 +47,7 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
-                if( firebaseUser == null || user.getId() != null ){
+                if (firebaseUser == null || user.getId() != null) {
                     return;
                 }
 
@@ -57,7 +58,7 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
         initViews();
     }
 
-    protected void initViews(){
+    protected void initViews() {
         name = (AutoCompleteTextView) findViewById(R.id.name);
         email = (AutoCompleteTextView) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
@@ -72,40 +73,39 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
         });
     }
 
-    protected void initUser(){
+    protected void initUser() {
         user = new User();
         user.setName(name.getText().toString());
         user.setEmail(email.getText().toString());
         user.setPassword(password.getText().toString());
     }
 
-    public void sendSignUpData(View view){
-        openProgressBar();
+    public void sendSignUpData(View view) {
         initUser();
         saveUser();
     }
 
-    private void saveUser(){
-        if(!isFieldEmpty(user.getEmail(), user.getPassword())){
-            mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(!task.isSuccessful()){
-                                closeProgressBar();
+    private void saveUser() {
+        if (!isFieldEmpty(user.getEmail(), user.getPassword())) {
+            if (Util.validateEmail(getBaseContext(), user.getEmail())) {
+                openProgressBar();
+                mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (!task.isSuccessful()) {
+                                    closeProgressBar();
+                                }
                             }
-                        }
-                    })
-                    .addOnFailureListener(this, new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            FirebaseCrash.report(e);
-                            showSnackBar(e.getMessage());
-                        }
-                    });
-        }else{
-            showSnackBar(getResources().getString(R.string.empty_credentials));
-            closeProgressBar();
+                        })
+                        .addOnFailureListener(this, new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                FirebaseCrash.report(e);
+                                showSnackBar(e.getMessage());
+                            }
+                        });
+            }
         }
     }
 
@@ -117,11 +117,16 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
         finish();
     }
 
-    public boolean isFieldEmpty(String email, String password){
-        return email.isEmpty() || password.isEmpty();
+    public boolean isFieldEmpty(String email, String password) {
+        if (email.isEmpty() || password.isEmpty()) {
+            showSnackBar(getResources().getString(R.string.empty_credentials));
+            closeProgressBar();
+            return true;
+        }
+        return false;
     }
 
-    private void callCancel(){
+    private void callCancel() {
         Intent goMain = new Intent(this, MainActivity.class);
         startActivity(goMain);
     }
@@ -136,7 +141,7 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
     @Override
     protected void onStop() {
         super.onStop();
-        if(mAuthStateListener != null){
+        if (mAuthStateListener != null) {
             mAuth.removeAuthStateListener(mAuthStateListener);
         }
     }

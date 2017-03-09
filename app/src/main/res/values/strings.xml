@@ -55,5 +55,9 @@
     <string name="tutorial_fourth_message_title">Notification</string>
     <string name="tutorial_fourth_message_subtitle">You will receive notification informing your position</string>
 
+    <string name="msg_email_wrong_format">Email format is wrong. Please, check it</string>
+    <string name="msg_sign_login_empty_fields">Please. Fill out all fields</string>
+    <string name="msg_dif_password">The passwords are not equals. Please, check them</string>
+
 
 </resources>
