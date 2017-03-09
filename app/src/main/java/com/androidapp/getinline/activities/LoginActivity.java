@@ -243,15 +243,23 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
     }
 
     private ArrayList<TutorialItem> getTutorialItems(Context context) {
-        TutorialItem tutorialItem1 = new TutorialItem(context.getString(R.string.empty_credentials), context.getString(R.string.empty_credentials),
-                R.color.colorPrimaryDark, R.drawable.getinlinelogo,  R.drawable.getinlinelogo);
+        TutorialItem tutorialItem1 = new TutorialItem(context.getString(R.string.tutorial_first_message_title), context.getString(R.string.tutorial_first_message_subtitle),
+                R.color.colorPrimaryDark, R.drawable.social_network);
 
-        TutorialItem tutorialItem2 = new TutorialItem(context.getString(R.string.empty_credentials), context.getString(R.string.empty_credentials),
-                R.color.colorPrimaryDark, R.drawable.getinlinelogo,  R.drawable.getinlinelogo);
+        TutorialItem tutorialItem2 = new TutorialItem(context.getString(R.string.tutorial_second_message_title), context.getString(R.string.tutorial_second_message_subtitle),
+                R.color.colorAccent, R.drawable.social_network);
+
+        TutorialItem tutorialItem3 = new TutorialItem(context.getString(R.string.tutorial_third_message_title), context.getString(R.string.tutorial_third_message_subtitle),
+                R.color.coral, R.drawable.social_network);
+
+        TutorialItem tutorialItem4 = new TutorialItem(context.getString(R.string.tutorial_fourth_message_title), context.getString(R.string.tutorial_fourth_message_subtitle),
+                R.color.seaGreen, R.drawable.social_network);
 
         ArrayList<TutorialItem> tutorialItems = new ArrayList<>();
         tutorialItems.add(tutorialItem1);
         tutorialItems.add(tutorialItem2);
+        tutorialItems.add(tutorialItem3);
+        tutorialItems.add(tutorialItem4);
 
         return tutorialItems;
     }

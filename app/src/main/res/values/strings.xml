@@ -45,6 +45,14 @@
     <string name="email_updated">Login email updated successfully</string>
     <string name="password_updated">Password updated successfully</string>
     <string name="learn_more">Click to Learn</string>
+    <string name="tutorial_first_message_title">Social Login</string>
+    <string name="tutorial_first_message_subtitle">You can login using your email address, facebook or google</string>
+    <string name="tutorial_second_message_title">Get your position in line</string>
+    <string name="tutorial_second_message_subtitle">You can see a list of establishments and request a position in line</string>
+    <string name="tutorial_third_message_title">Wait everywhere</string>
+    <string name="tutorial_third_message_subtitle">You can wait your turn making other things</string>
+    <string name="tutorial_fourth_message_title">Notification</string>
+    <string name="tutorial_fourth_message_subtitle">You will receive notification informing your position</string>
 
 
 </resources>
