@@ -63,6 +63,7 @@ public class EstablishmentAdapter extends RecyclerView.Adapter<EstablishmentAdap
         Establishment establishment = filterList.get(position);
         holder.establishmentIcon.setImageDrawable(establishment.getIcon());
         holder.establishmentName.setText(establishment.getName());
+        holder.getEstablishmentWebSite.setText(establishment.getWebSite());
         holder.establishmentQueueSize.setText(establishment.getSize());
         holder.establishmentAverageTime.setText(establishment.getTime());
     }

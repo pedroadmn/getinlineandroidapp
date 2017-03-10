@@ -76,11 +76,11 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
 
     private void updateEstablishmentList() {
 
-        Establishment e1 = new Establishment(getResources().getDrawable(R.mipmap.ic_launcher), "Estabelecimento", "estabelecimento1@gmail.com", "123456", "10", "20");
-        Establishment e2 = new Establishment(getResources().getDrawable(R.mipmap.ic_launcher), "Cabeleireiro", "estabelecimento2@gmail.com", "123457", "15", "25");
-        Establishment e3 = new Establishment(getResources().getDrawable(R.mipmap.ic_launcher), "Oficina", "estabelecimento3@gmail.com", "123458", "5", "15");
-        Establishment e4 = new Establishment(getResources().getDrawable(R.mipmap.ic_launcher), "Banco", "estabelecimento4@gmail.com", "123459", "6", "10");
-        Establishment e5 = new Establishment(getResources().getDrawable(R.mipmap.ic_launcher), "Padaria", "estabelecimento5@gmail.com", "123451", "10", "20");
+        Establishment e1 = new Establishment(getResources().getDrawable(R.mipmap.ic_launcher), "Estabelecimento", "www.estabelecimento.com", "estabelecimento1@gmail.com", "123456", "10", "20");
+        Establishment e2 = new Establishment(getResources().getDrawable(R.mipmap.ic_launcher), "Cabeleireiro", "www.cabeleireito.com", "estabelecimento2@gmail.com", "123457", "15", "25");
+        Establishment e3 = new Establishment(getResources().getDrawable(R.mipmap.ic_launcher), "Oficina", "www.oficina.com.br", "estabelecimento3@gmail.com", "123458", "5", "15");
+        Establishment e4 = new Establishment(getResources().getDrawable(R.mipmap.ic_launcher), "Banco", "www.banco.com.br", "estabelecimento4@gmail.com", "123459", "6", "10");
+        Establishment e5 = new Establishment(getResources().getDrawable(R.mipmap.ic_launcher), "Padaria", "www.padaria.com.br", "estabelecimento5@gmail.com", "123451", "10", "20");
         establishments.add(e1);
         establishments.add(e2);
         establishments.add(e3);

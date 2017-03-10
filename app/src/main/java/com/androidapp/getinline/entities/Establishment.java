@@ -25,10 +25,13 @@ public class Establishment {
 
     private String time;
 
-    public Establishment(final Drawable establishmentIcon, final String establishmentName, final String establishmentEmail, final String establishmentId,
+    private String website;
+
+    public Establishment(final Drawable establishmentIcon, final String establishmentName, final String establishmentWebSite, final String establishmentEmail, final String establishmentId,
                          final String estQueueSize, final String time) {
         setIcon(establishmentIcon);
         setName(establishmentName);
+        setWebSite(establishmentWebSite);
         setEmail(establishmentEmail);
         setId(establishmentId);
         setSize(estQueueSize);
@@ -103,5 +106,11 @@ public class Establishment {
         return id == establishment.id && name.equals(establishment.name) && email.equals(establishment.email);
     }
 
+    public String getWebSite(){
+        return website;
+    }
 
+    public void setWebSite(String website) {
+        this.website = website;
+    }
 }
