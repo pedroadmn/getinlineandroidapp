@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 
 import com.androidapp.getinline.R;
 import com.androidapp.getinline.entities.User;
+import com.androidapp.getinline.util.Util;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -76,7 +77,7 @@ public class LinkAccountsActivity extends CommonActivity
 
         // GOOGLE SIGN IN
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("617151987057-es670jj5qfiuphb7u64gvrup3c8kdvum.apps.googleusercontent.com")
+                .requestIdToken(Util.GOOGLE_USER_CONTENT_KEY)
                 .requestEmail()
                 .build();
 
@@ -112,16 +113,16 @@ public class LinkAccountsActivity extends CommonActivity
     }
 
     private void accessEmailLoginData(String email, String password) {
-        accessLoginData("email", email, password);
+        accessLoginData(Util.EMAIL_KEY, email, password);
     }
 
     private void accessFacebookLoginData(AccessToken accessToken) {
-        accessLoginData("facebook", (accessToken != null ? accessToken.getToken() : null)
+        accessLoginData(Util.FACEBOOK, (accessToken != null ? accessToken.getToken() : null)
         );
     }
 
     private void accessGoogleLoginData(String accessToken) {
-        accessLoginData("google", accessToken);
+        accessLoginData(Util.GOOGLE, accessToken);
     }
 
     private void accessLoginData(final String provider, String... tokens) {
@@ -130,8 +131,8 @@ public class LinkAccountsActivity extends CommonActivity
                 && tokens[0] != null) {
 
             AuthCredential credential = FacebookAuthProvider.getCredential(tokens[0]);
-            credential = provider.equalsIgnoreCase("google") ? GoogleAuthProvider.getCredential(tokens[0], null) : credential;
-            credential = provider.equalsIgnoreCase("email") ? EmailAuthProvider.getCredential(tokens[0], tokens[1]) : credential;
+            credential = provider.equalsIgnoreCase(Util.GOOGLE) ? GoogleAuthProvider.getCredential(tokens[0], null) : credential;
+            credential = provider.equalsIgnoreCase(Util.EMAIL_KEY) ? EmailAuthProvider.getCredential(tokens[0], tokens[1]) : credential;
 
             mAuth
                     .getCurrentUser()
@@ -255,7 +256,7 @@ public class LinkAccountsActivity extends CommonActivity
                 .getInstance()
                 .logInWithReadPermissions(
                         this,
-                        Arrays.asList("public_profile", "user_friends", "email")
+                        Arrays.asList(Util.PROFILE_PERMISSION, Util.FRIENDS_PERMISSION, Util.EMAIL_PERMISSION)
                 );
     }
 
@@ -316,12 +317,8 @@ public class LinkAccountsActivity extends CommonActivity
         });
     }
 
-
     private boolean isLastProvider(String providerId) {
         int size = mAuth.getCurrentUser().getProviders().size();
-        return (
-                size == 0
-                        || (size == 1 && providerId.equals(EmailAuthProvider.PROVIDER_ID))
-        );
+        return (size == 0 || (size == 1 && providerId.equals(EmailAuthProvider.PROVIDER_ID)));
     }
 }

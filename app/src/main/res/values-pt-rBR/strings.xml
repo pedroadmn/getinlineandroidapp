@@ -69,4 +69,6 @@
     <!-- Main Strings-->
     <string name="establishments">Estabelecimentos</string>
     <string name="inline">Na fila</string>
+    <string name="iv_icon_establishment">Icone do estabelecimento</string>
+    <string name="search">pesquisar</string>
 </resources>

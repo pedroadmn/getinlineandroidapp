@@ -40,7 +40,7 @@ public class UpdateActivity extends AppCompatActivity implements ValueEventListe
         init();
     }
 
-    private void init(){
+    private void init() {
         toolbar.setTitle(getResources().getString(R.string.update_profile));
         name = (AutoCompleteTextView) findViewById(R.id.name);
         user = new User();
@@ -48,7 +48,7 @@ public class UpdateActivity extends AppCompatActivity implements ValueEventListe
         user.contextDataDB(this);
     }
 
-    public void update(View view){
+    public void update(View view) {
         user.setId(FirebaseAuth.getInstance().getCurrentUser().getUid());
         user.setName(name.getText().toString());
         user.updateDB(UpdateActivity.this);
@@ -56,12 +56,11 @@ public class UpdateActivity extends AppCompatActivity implements ValueEventListe
 
     @Override
     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-        if( databaseError != null ){
-            FirebaseCrash.report( databaseError.toException() );
-            Toast.makeText( this, getResources().getString(R.string.failed) + databaseError.getMessage(), Toast.LENGTH_LONG ).show();
-        }
-        else{
-            Toast.makeText( this, getResources().getString(R.string.successfully_updated), Toast.LENGTH_SHORT ).show();
+        if (databaseError != null) {
+            FirebaseCrash.report(databaseError.toException());
+            Toast.makeText(this, getResources().getString(R.string.failed) + databaseError.getMessage(), Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, getResources().getString(R.string.successfully_updated), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -73,6 +72,6 @@ public class UpdateActivity extends AppCompatActivity implements ValueEventListe
 
     @Override
     public void onCancelled(DatabaseError databaseError) {
-        FirebaseCrash.report(databaseError.toException() );
+        FirebaseCrash.report(databaseError.toException());
     }
 }

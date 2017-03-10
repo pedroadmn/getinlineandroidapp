@@ -42,14 +42,16 @@ import java.util.Arrays;
 import za.co.riggaroo.materialhelptutorial.TutorialItem;
 import za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity;
 
+import static com.androidapp.getinline.util.Util.GOOGLE_USER_CONTENT_KEY;
+
 /**
  * Created by pedroadmn on 1/21/2017.
  */
 
-public class LoginActivity extends CommonActivity implements GoogleApiClient.OnConnectionFailedListener{
+public class LoginActivity extends CommonActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private static final int RC_SIGN_IN_GOOGLE = 7859;
-    private static final int REQUEST_CODE = 1000 ;
+    private static final int REQUEST_CODE = 1000;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private CallbackManager callbackManager;
@@ -70,18 +72,19 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
             }
 
             @Override
-            public void onCancel() {}
+            public void onCancel() {
+            }
 
             @Override
             public void onError(FacebookException error) {
-                FirebaseCrash.report( error );
+                FirebaseCrash.report(error);
                 showSnackBar(error.getMessage());
             }
         });
 
         // GOOGLE SIGN IN
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("617151987057-es670jj5qfiuphb7u64gvrup3c8kdvum.apps.googleusercontent.com")
+                .requestIdToken(Util.GOOGLE_USER_CONTENT_KEY)
                 .requestEmail()
                 .build();
 
@@ -107,19 +110,18 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if( requestCode == RC_SIGN_IN_GOOGLE ){
+        if (requestCode == RC_SIGN_IN_GOOGLE) {
 
-            GoogleSignInResult googleSignInResult = Auth.GoogleSignInApi.getSignInResultFromIntent( data );
+            GoogleSignInResult googleSignInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             GoogleSignInAccount account = googleSignInResult.getSignInAccount();
 
-            if( account == null ){
+            if (account == null) {
                 showSnackBar(getResources().getString(R.string.google_login_failed));
                 return;
             }
 
-            accessGoogleLoginData(account.getIdToken() );
-        }
-        else{
+            accessGoogleLoginData(account.getIdToken());
+        } else {
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
@@ -133,33 +135,33 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
     @Override
     protected void onStop() {
         super.onStop();
-        if( mAuthListener != null ){
-            mAuth.removeAuthStateListener( mAuthListener );
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
         }
     }
 
-    private void accessFacebookLoginData(AccessToken accessToken){
-        accessLoginData("facebook", (accessToken != null ? accessToken.getToken() : null));
+    private void accessFacebookLoginData(AccessToken accessToken) {
+        accessLoginData(Util.FACEBOOK, (accessToken != null ? accessToken.getToken() : null));
     }
 
-    private void accessGoogleLoginData(String accessToken){
-        accessLoginData("google", accessToken);
+    private void accessGoogleLoginData(String accessToken) {
+        accessLoginData(Util.GOOGLE, accessToken);
     }
 
-    private void accessLoginData( String provider, String... tokens ){
-        if( tokens != null
+    private void accessLoginData(String provider, String... tokens) {
+        if (tokens != null
                 && tokens.length > 0
-                && tokens[0] != null ){
+                && tokens[0] != null) {
 
             AuthCredential credential = FacebookAuthProvider.getCredential(tokens[0]);
-            credential = provider.equalsIgnoreCase("google") ? GoogleAuthProvider.getCredential(tokens[0], null) : credential;
+            credential = provider.equalsIgnoreCase(Util.GOOGLE) ? GoogleAuthProvider.getCredential(tokens[0], null) : credential;
 
-            user.saveProviderSP( LoginActivity.this, provider );
+            user.saveProviderSP(LoginActivity.this, provider);
             mAuth.signInWithCredential(credential)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(!task.isSuccessful()){
+                            if (!task.isSuccessful()) {
 
                                 showSnackBar(getResources().getString(R.string.social_login_failed));
                             }
@@ -168,24 +170,23 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            FirebaseCrash.report( e );
+                            FirebaseCrash.report(e);
                         }
                     });
-        }
-        else{
+        } else {
             mAuth.signOut();
         }
     }
 
-    private FirebaseAuth.AuthStateListener getFirebaseAuthResultHandler(){
+    private FirebaseAuth.AuthStateListener getFirebaseAuthResultHandler() {
         FirebaseAuth.AuthStateListener callback = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser userFirebase = firebaseAuth.getCurrentUser();
-                if(userFirebase == null){
+                if (userFirebase == null) {
                     return;
                 }
-                if(user.getId() == null && isNameOk(user, userFirebase)){
+                if (user.getId() == null && isNameOk(user, userFirebase)) {
                     user.setId(userFirebase.getUid());
                     user.setNameIfNull(userFirebase.getDisplayName());
                     user.setEmailIfNull(userFirebase.getEmail());
@@ -197,41 +198,41 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
         return callback;
     }
 
-    private boolean isNameOk(User user, FirebaseUser firebaseUser){
-        return(user.getName() != null || firebaseUser.getDisplayName() != null);
+    private boolean isNameOk(User user, FirebaseUser firebaseUser) {
+        return (user.getName() != null || firebaseUser.getDisplayName() != null);
     }
 
-    protected void initViews(){
+    protected void initViews() {
         cancelButton = (TextView) findViewById(R.id.cancel_button);
         email = (AutoCompleteTextView) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.login_progress);
     }
 
-    protected void initUser(){
+    protected void initUser() {
         user = new User();
         user.setEmail(email.getText().toString());
         user.setPassword(password.getText().toString());
     }
 
-    public void callSignUp(View view){
+    public void callSignUp(View view) {
         Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
     }
 
-    public void callReset(View view){
-        Intent intent = new Intent( this, ResetActivity.class );
+    public void callReset(View view) {
+        Intent intent = new Intent(this, ResetActivity.class);
         startActivity(intent);
     }
 
-    public void callLoginForm(View v){
+    public void callLoginForm(View v) {
         findViewById(R.id.act_login_form).setVisibility(View.VISIBLE);
         findViewById(R.id.act_login_form).setEnabled(true);
         findViewById(R.id.email_login_form).setVisibility(View.INVISIBLE);
         findViewById(R.id.tv_learn_more).setVisibility(View.INVISIBLE);
     }
 
-    public void callCancel(){
+    public void callCancel() {
         findViewById(R.id.act_login_form).setVisibility(View.INVISIBLE);
         findViewById(R.id.act_login_form).setEnabled(false);
         findViewById(R.id.email_login_form).setVisibility(View.VISIBLE);
@@ -267,50 +268,50 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
         return tutorialItems;
     }
 
-    public void sendLoginData(View view){
+    public void sendLoginData(View view) {
         FirebaseCrash.log("LoginActivity:clickListener:button:sendLoginData()");
         initUser();
         verifyLogin();
     }
 
-    public void sendLoginFacebookData( View view ){
+    public void sendLoginFacebookData(View view) {
         FirebaseCrash.log("LoginActivity:clickListener:button:sendLoginFacebookData()");
         LoginManager.getInstance().logInWithReadPermissions(this,
-                Arrays.asList("public_profile", "user_friends", "email"));
+                Arrays.asList(Util.PROFILE_PERMISSION, Util.FRIENDS_PERMISSION, Util.EMAIL_PERMISSION));
     }
 
-    public void sendLoginGoogleData( View view ){
+    public void sendLoginGoogleData(View view) {
         FirebaseCrash.log("LoginActivity:clickListener:button:sendLoginGoogleData()");
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN_GOOGLE);
     }
 
-    private void callMainActivity(){
+    private void callMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
-    private void verifyLogged(){
-        if(mAuth.getCurrentUser() != null){
+    private void verifyLogged() {
+        if (mAuth.getCurrentUser() != null) {
             callMainActivity();
         } else {
-            mAuth.addAuthStateListener( mAuthListener );
+            mAuth.addAuthStateListener(mAuthListener);
         }
     }
 
-    private void verifyLogin(){
+    private void verifyLogin() {
         FirebaseCrash.log("LoginActivity:verifyLogin()");
-        user.saveProviderSP(LoginActivity.this, "");
-        if(!isCredentialEmpty(user.getEmail(), user.getPassword())){
-            if(Util.validateEmail(getBaseContext(), user.getEmail())){
+        user.saveProviderSP(LoginActivity.this, Util.EMPTY);
+        if (!isCredentialEmpty(user.getEmail(), user.getPassword())) {
+            if (Util.validateEmail(getBaseContext(), user.getEmail())) {
                 openProgressBar();
                 mAuth.signInWithEmailAndPassword(user.getEmail(), user.getPassword())
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                if( !task.isSuccessful() ){
-                                    showSnackBar("Login falhou");
+                                if (!task.isSuccessful()) {
+                                    showSnackBar(getResources().getString(R.string.failed));
                                     return;
                                 }
                             }
@@ -328,12 +329,12 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         FirebaseCrash.report(
-                new Exception(connectionResult.getErrorCode()+": "+connectionResult.getErrorMessage()));
-        showSnackBar( connectionResult.getErrorMessage() );
+                new Exception(connectionResult.getErrorCode() + ": " + connectionResult.getErrorMessage()));
+        showSnackBar(connectionResult.getErrorMessage());
     }
 
-    public boolean isCredentialEmpty(String email, String password){
-        if (email.isEmpty() || password.isEmpty()){
+    public boolean isCredentialEmpty(String email, String password) {
+        if (email.isEmpty() || password.isEmpty()) {
             showSnackBar(getResources().getString(R.string.empty_credentials));
             return true;
         }
@@ -342,7 +343,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
 
     @Override
     public void onBackPressed() {
-        if(findViewById(R.id.act_login_form).isEnabled()) {
+        if (findViewById(R.id.act_login_form).isEnabled()) {
             findViewById(R.id.act_login_form).setEnabled(false);
             callCancel();
         } else {

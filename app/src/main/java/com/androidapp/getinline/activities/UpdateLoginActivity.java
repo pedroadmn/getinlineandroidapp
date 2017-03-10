@@ -47,27 +47,27 @@ public class UpdateLoginActivity extends AppCompatActivity implements ValueEvent
         init();
     }
 
-    private void init(){
-        toolbar.setTitle( getResources().getString(R.string.update_login) );
+    private void init() {
+        toolbar.setTitle(getResources().getString(R.string.update_login));
         newEmail = (AutoCompleteTextView) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
 
         user = new User();
-        user.setId( mAuth.getCurrentUser().getUid() );
-        user.contextDataDB( this );
+        user.setId(mAuth.getCurrentUser().getUid());
+        user.contextDataDB(this);
     }
 
-    public void update( View view ){
+    public void update(View view) {
 
-        user.setPassword( password.getText().toString() );
+        user.setPassword(password.getText().toString());
 
         reauthenticate();
     }
 
-    private void reauthenticate(){
+    private void reauthenticate() {
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
 
-        if( firebaseUser == null ){
+        if (firebaseUser == null) {
             return;
         }
 
@@ -76,77 +76,77 @@ public class UpdateLoginActivity extends AppCompatActivity implements ValueEvent
                 user.getPassword()
         );
 
-        firebaseUser.reauthenticate( credential )
-            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
+        firebaseUser.reauthenticate(credential)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
 
-                    if( task.isSuccessful() ){
-                        updateData();
+                        if (task.isSuccessful()) {
+                            updateData();
+                        }
                     }
-                }
-            })
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    FirebaseCrash.report( e );
-                    Toast.makeText(
-                            UpdateLoginActivity.this,
-                            e.getMessage(),
-                            Toast.LENGTH_SHORT
-                    ).show();
-                }
-            });
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        FirebaseCrash.report(e);
+                        Toast.makeText(
+                                UpdateLoginActivity.this,
+                                e.getMessage(),
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+                });
     }
 
-    private void updateData(){
-        user.setPassword( password.getText().toString() );
+    private void updateData() {
+        user.setPassword(password.getText().toString());
 
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
 
-        if( firebaseUser == null ){
+        if (firebaseUser == null) {
             return;
         }
 
         firebaseUser
-            .updateEmail( newEmail.getText().toString() )
-            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
+                .updateEmail(newEmail.getText().toString())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
 
-                    if( task.isSuccessful() ){
-                        user.setEmail( newEmail.getText().toString() );
-                        user.updateDB();
+                        if (task.isSuccessful()) {
+                            user.setEmail(newEmail.getText().toString());
+                            user.updateDB();
 
+                            Toast.makeText(
+                                    UpdateLoginActivity.this, getResources().getString(R.string.email_updated),
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                        }
+                    }
+                })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        FirebaseCrash.report(e);
                         Toast.makeText(
-                                UpdateLoginActivity.this, getResources().getString(R.string.email_updated),
+                                UpdateLoginActivity.this,
+                                e.getMessage(),
                                 Toast.LENGTH_SHORT
                         ).show();
                     }
-                }
-            })
-            .addOnFailureListener(this, new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    FirebaseCrash.report( e );
-                    Toast.makeText(
-                            UpdateLoginActivity.this,
-                            e.getMessage(),
-                            Toast.LENGTH_SHORT
-                    ).show();
-                }
-            });
+                });
     }
 
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
-        User u = dataSnapshot.getValue( User.class );
-        newEmail.setText( u.getEmail() );
-        user.setEmail( u.getEmail() );
+        User u = dataSnapshot.getValue(User.class);
+        newEmail.setText(u.getEmail());
+        user.setEmail(u.getEmail());
     }
 
     @Override
     public void onCancelled(DatabaseError firebaseError) {
-        FirebaseCrash.report( firebaseError.toException() );
+        FirebaseCrash.report(firebaseError.toException());
     }
 }

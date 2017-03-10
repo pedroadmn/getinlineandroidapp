@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:orientation="horizontal"
+    android:padding="6dip">
+
+    <ImageView
+        android:id="@+id/iv_establishment_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="6dip"
+        android:contentDescription="@string/iv_icon_establishment"
+        android:src="@mipmap/ic_launcher" />
+
+    <LinearLayout
+        android:id="@+id/ll_establishment_name_website"
+        android:layout_width="0dp"
+        android:layout_weight="7"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_establishment_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Example application"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_establishment_website"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="Description"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_in_line_position"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_line_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="3" />
+
+        <TextView
+            android:id="@+id/tv_label_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="line" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_average_minutes"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_average_minutes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="15" />
+
+        <TextView
+            android:id="@+id/tv_label_average_minutes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="min" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,12 +1,17 @@
 package com.androidapp.getinline.entities;
 
 
+import android.graphics.drawable.Drawable;
+
 public class Establishment {
 
     /**
      * The Establishment Id.
      */
     private String id;
+
+    private Drawable icon;
+
     /**
      * The Establishment Name.
      */
@@ -20,8 +25,9 @@ public class Establishment {
 
     private String time;
 
-    public Establishment(final String establishmentName, final String establishmentEmail, final String establishmentId,
+    public Establishment(final Drawable establishmentIcon, final String establishmentName, final String establishmentEmail, final String establishmentId,
                          final String estQueueSize, final String time) {
+        setIcon(establishmentIcon);
         setName(establishmentName);
         setEmail(establishmentEmail);
         setId(establishmentId);
@@ -35,6 +41,14 @@ public class Establishment {
 
     public final void setId(final String establishmentId) {
         this.id = establishmentId;
+    }
+
+    public Drawable getIcon(){
+        return icon;
+    }
+
+    public void setIcon(Drawable icon) {
+        this.icon = icon;
     }
 
     public final String getName() {
@@ -61,6 +75,14 @@ public class Establishment {
         this.queueSize = queueSize;
     }
 
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
     @Override
     public final String toString() {
         return "Establishment: " + getName() + "\n id: " + getId()
@@ -81,11 +103,5 @@ public class Establishment {
         return id == establishment.id && name.equals(establishment.name) && email.equals(establishment.email);
     }
 
-    public void setTime(String time) {
-        this.time = time;
-    }
 
-    public String getTime() {
-        return time;
-    }
 }

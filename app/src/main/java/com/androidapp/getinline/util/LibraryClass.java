@@ -15,21 +15,22 @@ public class LibraryClass {
     public static String PREF = "com.androidapp.getinline.PREF";
     private static DatabaseReference firebase;
 
-    private LibraryClass(){}
+    private LibraryClass() {
+    }
 
-    public static DatabaseReference getFirebase(){
-        if(firebase == null){
+    public static DatabaseReference getFirebase() {
+        if (firebase == null) {
             firebase = FirebaseDatabase.getInstance().getReference();
         }
         return firebase;
     }
 
-    public static void saveSP(Context context, String key, String value){
+    public static void saveSP(Context context, String key, String value) {
         SharedPreferences sp = context.getSharedPreferences(PREF, Context.MODE_PRIVATE);
         sp.edit().putString(key, value).apply();
     }
 
-    public static String getSP(Context context, String key){
+    public static String getSP(Context context, String key) {
         SharedPreferences sp = context.getSharedPreferences(PREF, Context.MODE_PRIVATE);
         String token = sp.getString(key, "");
         return token;

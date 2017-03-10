@@ -1,5 +1,7 @@
 package com.androidapp.getinline.activities;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,20 +11,21 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.androidapp.getinline.R;
 import com.androidapp.getinline.entities.User;
-import com.androidapp.getinline.fragments.OneFragment;
-import com.androidapp.getinline.fragments.TwoFragment;
+import com.androidapp.getinline.fragments.EstablishmentsFragment;
+import com.androidapp.getinline.fragments.LineFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.androidapp.getinline.R.string.search;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,11 +35,11 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private Toolbar toolbar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -74,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new OneFragment(), getResources().getString(R.string.establishments));
-        adapter.addFragment(new TwoFragment(), getResources().getString(R.string.inline));
+        adapter.addFragment(new EstablishmentsFragment(), getResources().getString(R.string.establishments));
+        adapter.addFragment(new LineFragment(), getResources().getString(R.string.inline));
         viewPager.setAdapter(adapter);
     }
 
@@ -120,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         User user = new User();
-
         if (user.isSocialNetworkLogged(this)) {
             getMenuInflater().inflate(R.menu.menu_social_network_logged, menu);
         } else {
@@ -149,4 +151,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }

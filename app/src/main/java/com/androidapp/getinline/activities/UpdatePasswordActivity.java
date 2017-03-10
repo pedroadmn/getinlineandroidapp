@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.androidapp.getinline.R;
 import com.androidapp.getinline.entities.User;
+import com.androidapp.getinline.util.Util;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -46,27 +47,27 @@ public class UpdatePasswordActivity extends AppCompatActivity implements ValueEv
         init();
     }
 
-    private void init(){
-        toolbar.setTitle( getResources().getString(R.string.update_password) );
+    private void init() {
+        toolbar.setTitle(getResources().getString(R.string.update_password));
         newPassword = (EditText) findViewById(R.id.new_password);
         password = (EditText) findViewById(R.id.password);
 
         user = new User();
-        user.setId( mAuth.getCurrentUser().getUid() );
-        user.contextDataDB( this );
+        user.setId(mAuth.getCurrentUser().getUid());
+        user.contextDataDB(this);
     }
 
-    public void update( View view ){
-        user.setNewPassword( newPassword.getText().toString() );
-        user.setPassword( password.getText().toString() );
+    public void update(View view) {
+        user.setNewPassword(newPassword.getText().toString());
+        user.setPassword(password.getText().toString());
 
         reauthenticate();
     }
 
-    private void reauthenticate(){
+    private void reauthenticate() {
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
 
-        if( firebaseUser == null ){
+        if (firebaseUser == null) {
             return;
         }
 
@@ -75,77 +76,77 @@ public class UpdatePasswordActivity extends AppCompatActivity implements ValueEv
                 user.getPassword()
         );
 
-        firebaseUser.reauthenticate( credential )
-            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
+        firebaseUser.reauthenticate(credential)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
 
-                    if( task.isSuccessful() ){
-                        updateData();
+                        if (task.isSuccessful()) {
+                            updateData();
+                        }
                     }
-                }
-            })
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    FirebaseCrash.report( e );
-                    Toast.makeText(
-                            UpdatePasswordActivity.this,
-                            e.getMessage(),
-                            Toast.LENGTH_SHORT
-                    ).show();
-                }
-            });
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        FirebaseCrash.report(e);
+                        Toast.makeText(
+                                UpdatePasswordActivity.this,
+                                e.getMessage(),
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+                });
     }
 
-    private void updateData(){
-        user.setNewPassword( newPassword.getText().toString() );
-        user.setPassword( password.getText().toString() );
+    private void updateData() {
+        user.setNewPassword(newPassword.getText().toString());
+        user.setPassword(password.getText().toString());
 
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
 
-        if( firebaseUser == null ){
+        if (firebaseUser == null) {
             return;
         }
 
         firebaseUser
-            .updatePassword( user.getNewPassword() )
-            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
+                .updatePassword(user.getNewPassword())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
 
-                    if( task.isSuccessful() ){
-                        newPassword.setText("");
-                        password.setText("");
+                        if (task.isSuccessful()) {
+                            newPassword.setText(Util.EMPTY);
+                            password.setText(Util.EMPTY);
 
+                            Toast.makeText(
+                                    UpdatePasswordActivity.this, getResources().getString(R.string.password_updated),
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                        }
+                    }
+                })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        FirebaseCrash.report(e);
                         Toast.makeText(
-                                UpdatePasswordActivity.this, getResources().getString(R.string.password_updated),
+                                UpdatePasswordActivity.this,
+                                e.getMessage(),
                                 Toast.LENGTH_SHORT
                         ).show();
                     }
-                }
-            })
-            .addOnFailureListener(this, new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    FirebaseCrash.report( e );
-                    Toast.makeText(
-                            UpdatePasswordActivity.this,
-                            e.getMessage(),
-                            Toast.LENGTH_SHORT
-                    ).show();
-                }
-            });
+                });
     }
 
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
-        User u = dataSnapshot.getValue( User.class );
-        user.setEmail( u.getEmail() );
+        User u = dataSnapshot.getValue(User.class);
+        user.setEmail(u.getEmail());
     }
 
     @Override
     public void onCancelled(DatabaseError firebaseError) {
-        FirebaseCrash.report( firebaseError.toException() );
+        FirebaseCrash.report(firebaseError.toException());
     }
 }

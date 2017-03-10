@@ -3,6 +3,7 @@ package com.androidapp.getinline.entities;
 import android.content.Context;
 
 import com.androidapp.getinline.util.LibraryClass;
+import com.androidapp.getinline.util.Util;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.ValueEventListener;
@@ -20,7 +21,8 @@ public class User {
     private String password;
     private String newPassword;
 
-    public User(){}
+    public User() {
+    }
 
     public String getId() {
         return id;
@@ -30,9 +32,9 @@ public class User {
         this.id = id;
     }
 
-    public boolean isSocialNetworkLogged( Context context ){
+    public boolean isSocialNetworkLogged(Context context) {
         String token = getProviderSP(context);
-        return(token.contains("facebook") || token.contains("google"));
+        return (token.contains(Util.FACEBOOK) || token.contains(Util.GOOGLE));
     }
 
     public String getName() {
@@ -43,14 +45,14 @@ public class User {
         this.name = name;
     }
 
-    private void setNameInMap( Map<String, Object> map ) {
-        if( getName() != null ){
-            map.put( "name", getName() );
+    private void setNameInMap(Map<String, Object> map) {
+        if (getName() != null) {
+            map.put(Util.NAME_KEY, getName());
         }
     }
 
     public void setNameIfNull(String name) {
-        if(this.name == null){
+        if (this.name == null) {
             this.name = name;
         }
     }
@@ -63,14 +65,14 @@ public class User {
         this.email = email;
     }
 
-    private void setEmailInMap( Map<String, Object> map ) {
-        if( getEmail() != null ){
-            map.put( "email", getEmail() );
+    private void setEmailInMap(Map<String, Object> map) {
+        if (getEmail() != null) {
+            map.put(Util.EMAIL_KEY, getEmail());
         }
     }
 
     public void setEmailIfNull(String email) {
-        if( this.email == null ){
+        if (this.email == null) {
             this.email = email;
         }
     }
@@ -93,52 +95,50 @@ public class User {
         this.newPassword = newPassword;
     }
 
-    public void saveProviderSP(Context context, String token ){
+    public void saveProviderSP(Context context, String token) {
         LibraryClass.saveSP(context, PROVIDER, token);
     }
 
-    public String getProviderSP(Context context ){
-        return( LibraryClass.getSP( context, PROVIDER) );
+    public String getProviderSP(Context context) {
+        return (LibraryClass.getSP(context, PROVIDER));
     }
 
-    public void saveDB( DatabaseReference.CompletionListener... completionListener ){
-        DatabaseReference firebase = LibraryClass.getFirebase().child("users").child( getId() );
+    public void saveDB(DatabaseReference.CompletionListener... completionListener) {
+        DatabaseReference firebase = LibraryClass.getFirebase().child(Util.USERS_KEY_DB).child(getId());
 
-        if( completionListener.length == 0 ){
+        if (completionListener.length == 0) {
             firebase.setValue(this);
-        }
-        else{
+        } else {
             firebase.setValue(this, completionListener[0]);
         }
     }
 
-    public void updateDB( DatabaseReference.CompletionListener... completionListener ){
+    public void updateDB(DatabaseReference.CompletionListener... completionListener) {
 
-        DatabaseReference firebase = LibraryClass.getFirebase().child("users").child( getId() );
+        DatabaseReference firebase = LibraryClass.getFirebase().child(Util.USERS_KEY_DB).child(getId());
 
         Map<String, Object> map = new HashMap<>();
         setNameInMap(map);
         setEmailInMap(map);
 
-        if( map.isEmpty() ){
+        if (map.isEmpty()) {
             return;
         }
 
-        if( completionListener.length > 0 ){
+        if (completionListener.length > 0) {
             firebase.updateChildren(map, completionListener[0]);
-        }
-        else{
+        } else {
             firebase.updateChildren(map);
         }
     }
 
-    public void removeDB( DatabaseReference.CompletionListener completionListener ){
-        DatabaseReference firebase = LibraryClass.getFirebase().child("users").child(getId());
+    public void removeDB(DatabaseReference.CompletionListener completionListener) {
+        DatabaseReference firebase = LibraryClass.getFirebase().child(Util.USERS_KEY_DB).child(getId());
         firebase.setValue(null, completionListener);
     }
 
-    public void contextDataDB( Context context ){
-        DatabaseReference firebase = LibraryClass.getFirebase().child("users").child(getId());
+    public void contextDataDB(Context context) {
+        DatabaseReference firebase = LibraryClass.getFirebase().child(Util.USERS_KEY_DB).child(getId());
         firebase.addListenerForSingleValueEvent((ValueEventListener) context);
     }
 }
