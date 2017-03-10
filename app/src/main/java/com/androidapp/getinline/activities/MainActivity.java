@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mDrawerList = (ListView)findViewById(R.id.navList);
-
         addDrawerItems();
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
@@ -56,6 +55,12 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mAuth.addAuthStateListener(authStateListener);
+    }
+
+    private void addDrawerItems() {
+        String[] osArray = { "Android", "iOS", "Windows", "OS X", "Linux" };
+        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+        mDrawerList.setAdapter(mAdapter);
     }
 
     @Override
@@ -75,12 +80,6 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-    }
-
-    private void addDrawerItems() {
-        String[] osArray = { "Android", "iOS", "Windows", "OS X", "Linux" };
-        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
-        mDrawerList.setAdapter(mAdapter);
     }
 
     private void setupViewPager(ViewPager viewPager) {
