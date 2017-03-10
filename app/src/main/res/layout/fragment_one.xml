@@ -6,7 +6,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/one"
+        android:text="@string/establishments"
         android:textSize="40dp"
         android:textStyle="bold"
         android:layout_centerInParent="true"/>

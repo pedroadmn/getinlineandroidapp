@@ -1,17 +1,26 @@
 <resources>
     <string name="app_name">GetInLine</string>
+
     <string name="prompt_name">Name</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="prompt_confirm_password">Confirm Password</string>
     <string name="prompt_new_password">New password</string>
-    <string name="action_sign_up_short">Cadastro</string>
-    <string name="action_sign_up">Register</string>
+
+    <string name="action_sign_up_short">Record</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="action_reset_call">Recovery access</string>
     <string name="action_sign_in">Sign in with Email</string>
-    <string name="login">Log in</string>
     <string name="action_sign_in_google">Sign Up with Google</string>
+    <string name="action_sign_in_facebook">Sign in with Facebook</string>
+    <string name="action_link_facebook">Link Facebook login</string>
+    <string name="action_unlink_facebook">Unlink Facebook login</string>
+    <string name="action_link">Link convencional login</string>
+    <string name="action_unlink">Unlink convencional login</string>
+    <string name="action_link_google">Link Google login</string>
+    <string name="action_unlink_google">Unlink Google login</string>
+
+    <string name="login">Log in</string>
     <string name="logout">Logout</string>
     <string name="update_login">Update login</string>
     <string name="update_profile">Update profile</string>
@@ -21,22 +30,17 @@
     <string name="password_info">To follow with the update, type your password below.</string>
     <string name="reset_bt_label">Start the access recuperation</string>
     <string name="reset">Forgot your password?</string>
-    <string name="title_activity_update_login">UpdateLoginActivity</string>
-    <string name="title_activity_update_password">UpdatePasswordActivity</string>
-    <string name="title_activity_remove_user">RemoveUserActivity</string>
-    <string name="action_sign_in_facebook">Sign in with Facebook</string>
-    <string name="action_link_facebook">Link Facebook login</string>
-    <string name="action_unlink_facebook">Unlink Facebook login</string>
-    <string name="action_link">Link convencional login</string>
-    <string name="action_unlink">Unlink convencional login</string>
-    <string name="action_link_google">Link Google login</string>
-    <string name="action_unlink_google">Unlink Google login</string>
-    <string name="title_activity_link_accounts">Link accounts</string>
-
-    <string name="facebook_app_id">637626683090336</string>
     <string name="cancel">Cancel</string>
     <string name="empty_credentials">Please. Type email and password</string>
     <string name="empty_email_reset">Please. Type email</string>
+
+    <string name="title_activity_update_login">UpdateLoginActivity</string>
+    <string name="title_activity_update_password">UpdatePasswordActivity</string>
+    <string name="title_activity_remove_user">RemoveUserActivity</string>
+    <string name="title_activity_link_accounts">Link accounts</string>
+
+    <string name="facebook_app_id">637626683090336</string>
+
     <string name="google_login_failed">Google login failed, try again</string>
     <string name="social_login_failed">Social login failed</string>
     <string name="success_removed">Account removed successfully</string>
@@ -47,6 +51,11 @@
     <string name="email_updated">Login email updated successfully</string>
     <string name="password_updated">Password updated successfully</string>
     <string name="learn_more">Click to Learn</string>
+    <string name="msg_email_wrong_format">Email format is wrong. Please, check it</string>
+    <string name="msg_sign_login_empty_fields">Please. Fill out all fields</string>
+    <string name="msg_dif_password">The passwords are not equals. Please, check them</string>
+
+    <!-- Tutorial Guide Strings-->
     <string name="tutorial_first_message_title">Social Login</string>
     <string name="tutorial_first_message_subtitle">You can login using your email address, facebook or google</string>
     <string name="tutorial_second_message_title">Get your position in line</string>
@@ -56,11 +65,8 @@
     <string name="tutorial_fourth_message_title">Notification</string>
     <string name="tutorial_fourth_message_subtitle">You will receive notification informing your position</string>
 
-    <string name="msg_email_wrong_format">Email format is wrong. Please, check it</string>
-    <string name="msg_sign_login_empty_fields">Please. Fill out all fields</string>
-    <string name="msg_dif_password">The passwords are not equals. Please, check them</string>
-    <string name="one">One</string>
-    <string name="two">two</string>
-
+    <!-- Main Strings-->
+    <string name="establishments">Establishments</string>
+    <string name="inline">In line</string>
 
 </resources>

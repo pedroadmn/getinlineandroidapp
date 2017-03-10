@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GetInLine</string>
+
+    <string name="prompt_name">Nome</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Senha</string>
+    <string name="prompt_confirm_password">Confirme a senha</string>
+    <string name="prompt_new_password">Nova senha</string>
+
+    <string name="action_sign_up_short">Cadastro</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="action_reset_call">Recuperar acesso</string>
+    <string name="action_sign_in">Entrar com Email</string>
+    <string name="action_sign_in_google">Entrar com Google</string>
+    <string name="action_sign_in_facebook">Entrar com Facebook</string>
+    <string name="action_link_facebook">Link login do Facebook</string>
+    <string name="action_unlink_facebook">Unlink login do Facebook</string>
+    <string name="action_link">Link login convencional</string>
+    <string name="action_unlink">Unlink login convencional</string>
+    <string name="action_link_google">Link login do Google</string>
+    <string name="action_unlink_google">Unlink login do Google</string>
+
+    <string name="login">Entrar</string>
+    <string name="logout">Sair</string>
+    <string name="update_login">Atualizar login</string>
+    <string name="update_profile">Atualizar perfil</string>
+    <string name="update_password">Atualizar senha</string>
+    <string name="link_accounts">Link  de contas</string>
+    <string name="remove_user">Remover conta</string>
+    <string name="password_info">Para seguir com a atualização, digite sua senha abaixo</string>
+    <string name="reset_bt_label">Iniciar a recuperação de acesso</string>
+    <string name="reset">Esqueceu sua senha?</string>
+    <string name="cancel">Cancelar</string>
+    <string name="empty_credentials">Por favor. Digite o email e a senha</string>
+    <string name="empty_email_reset">Por favor. Digite o email</string>
+
+    <string name="title_activity_update_login">UpdateLoginActivity</string>
+    <string name="title_activity_update_password">UpdatePasswordActivity</string>
+    <string name="title_activity_remove_user">RemoveUserActivity</string>
+    <string name="title_activity_link_accounts">Link accounts</string>
+
+    <string name="facebook_app_id">637626683090336</string>
+
+    <string name="google_login_failed">Login com o google falhou, tente novamente</string>
+    <string name="social_login_failed">Login social falhou</string>
+    <string name="success_removed">Conta removida com sucesso</string>
+    <string name="access_recovery_initialized">Recuperação de acesso inicializada. Email enviado</string>
+    <string name="failed">Falhou. Tente novamente</string>
+    <string name="account_registered">Conta registrada com sucesso</string>
+    <string name="successfully_updated">Atualizado com sucesso</string>
+    <string name="email_updated">Email de login atualizado com sucesso.</string>
+    <string name="password_updated">Senha atualizada com sucesso</string>
+    <string name="learn_more">Clique para aprender</string>
+    <string name="msg_email_wrong_format">Formato do email está errado. Por favor, cheque-o</string>
+    <string name="msg_sign_login_empty_fields">Por favor. Preencha todos os campos</string>
+    <string name="msg_dif_password">As senhas não estão iguais. Por favor, cheque elas</string>
+
+    <!-- Tutorial Guide Strings-->
+    <string name="tutorial_first_message_title">Login Social</string>
+    <string name="tutorial_first_message_subtitle">Você pode logar usando seu endereço de email, facebook ou google</string>
+    <string name="tutorial_second_message_title">Pegue sua posição na fila</string>
+    <string name="tutorial_second_message_subtitle">Você pode ver uma lista de estabeleciomento e requisitar uma posição na fila</string>
+    <string name="tutorial_third_message_title">Espere onde quiser</string>
+    <string name="tutorial_third_message_subtitle">Você pode esperar sua vez fazendo outras atividades</string>
+    <string name="tutorial_fourth_message_title">Notificações</string>
+    <string name="tutorial_fourth_message_subtitle">Você receberá notificação informando sua posição</string>
+
+    <!-- Main Strings-->
+    <string name="establishments">Estabelecimentos</string>
+    <string name="inline">Na fila</string>
+</resources>
