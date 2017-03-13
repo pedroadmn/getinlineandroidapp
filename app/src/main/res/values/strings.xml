@@ -70,5 +70,7 @@
     <string name="inline">In line</string>
     <string name="iv_icon_establishment">Establishment icon</string>
     <string name="search">search</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 
 </resources>

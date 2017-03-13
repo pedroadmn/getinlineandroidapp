@@ -1,20 +1,28 @@
 package com.androidapp.getinline.activities;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.androidapp.getinline.R;
 import com.androidapp.getinline.entities.User;
@@ -35,14 +43,34 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ListView mDrawerList;
     private ArrayAdapter<String> mAdapter;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private DrawerLayout mDrawerLayout;
+    private String mActivityTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
+        mActivityTitle = getTitle().toString();
+
         mDrawerList = (ListView)findViewById(R.id.navList);
+        LayoutInflater inflater = getLayoutInflater();
+        View listHeaderView = inflater.inflate(R.layout.header_list,null, false);
+
+        mDrawerList.addHeaderView(listHeaderView);
+
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this, "Time for an upgrade! " + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+
         addDrawerItems();
+
+        setupDrawer();
 
         String token = FirebaseInstanceId.getInstance().getToken();
         Log.d("TOKEEN", token);
@@ -78,7 +106,8 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -161,7 +190,45 @@ public class MainActivity extends AppCompatActivity {
         } else if (id == R.id.action_remove_user) {
             startActivity(new Intent(this, RemoveUserActivity.class));
         }
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
+    private void setupDrawer() {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getSupportActionBar().setTitle("Profile");
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getSupportActionBar().setTitle(mActivityTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
 }
