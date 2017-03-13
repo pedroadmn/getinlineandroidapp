@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.w3c.dom.Text;
 
@@ -79,6 +80,8 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
         user.setName(name.getText().toString());
         user.setEmail(email.getText().toString());
         user.setPassword(password.getText().toString());
+        String token = FirebaseInstanceId.getInstance().getToken();
+        user.setTokenFCM(token);
     }
 
     public void sendSignUpData(View view) {

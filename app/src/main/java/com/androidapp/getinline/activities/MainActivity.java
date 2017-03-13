@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -20,6 +21,7 @@ import com.androidapp.getinline.entities.User;
 import com.androidapp.getinline.fragments.EstablishmentsFragment;
 import com.androidapp.getinline.fragments.LineFragment;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
 
         mDrawerList = (ListView)findViewById(R.id.navList);
         addDrawerItems();
+
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Log.d("TOKEEN", token);
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override

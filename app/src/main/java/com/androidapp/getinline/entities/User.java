@@ -8,6 +8,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.ValueEventListener;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +23,7 @@ public class User {
     private String email;
     private String password;
     private String newPassword;
+    private String tokenFCM;
 
     public User() {
     }
@@ -141,4 +145,19 @@ public class User {
         DatabaseReference firebase = LibraryClass.getFirebase().child(Util.USERS_KEY_DB).child(getId());
         firebase.addListenerForSingleValueEvent((ValueEventListener) context);
     }
+
+    public String getTokenFCM() {
+        return tokenFCM;
+    }
+
+    public void setTokenFCM(String tokenFCM) {
+        this.tokenFCM = tokenFCM;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onNewToken(TokenEvent tokenEvent){
+        setTokenFCM(tokenEvent.getToken());
+        updateDB();
+    }
+
 }
