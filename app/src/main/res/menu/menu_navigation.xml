@@ -3,19 +3,15 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/home"
-            android:title="Home"
-            android:icon="@drawable/ic_home"/>
+            android:title="@string/favorite"
+            android:icon="@drawable/ic_favorite"/>
         <item
             android:id="@+id/settings"
-            android:title="Settings"
+            android:title="@string/settings"
             android:icon="@drawable/ic_setting"/>
         <item
-            android:id="@+id/trash"
-            android:title="Trash"
-            android:icon="@drawable/ic_trash"/>
-        <item
             android:id="@+id/logout"
-            android:title="Logout"
+            android:title="@string/logout"
             android:icon="@drawable/ic_exit"/>
     </group>
 </menu>

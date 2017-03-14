@@ -46,7 +46,6 @@ import java.util.Arrays;
 import za.co.riggaroo.materialhelptutorial.TutorialItem;
 import za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity;
 
-import static com.androidapp.getinline.util.Util.GOOGLE_USER_CONTENT_KEY;
 
 /**
  * Created by pedroadmn on 1/21/2017.

@@ -1,10 +1,6 @@
 package com.androidapp.getinline.activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -88,11 +84,8 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.settings:
                         Toast.makeText(getApplicationContext(),"Settings",Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.trash:
-                        Toast.makeText(getApplicationContext(),"Trash",Toast.LENGTH_SHORT).show();
-                        mDrawerLayout.closeDrawers();
-                        break;
                     case R.id.logout:
+                        FirebaseAuth.getInstance().signOut();
                         finish();
                 }
                 return true;
@@ -128,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDrawerOpened(View v) {
                 super.onDrawerOpened(v);
-                getSupportActionBar().setTitle("Profile");
+                getSupportActionBar().setTitle(getResources().getString(R.string.profile));
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
@@ -195,10 +188,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_logout) {
-            FirebaseAuth.getInstance().signOut();
-            finish();
-        } else if (id == R.id.action_update) {
+        if (id == R.id.action_update) {
             startActivity(new Intent(this, UpdateActivity.class));
         } else if (id == R.id.action_update_login) {
             startActivity(new Intent(this, UpdateLoginActivity.class));

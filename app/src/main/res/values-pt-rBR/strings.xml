@@ -71,4 +71,7 @@
     <string name="inline">Na fila</string>
     <string name="iv_icon_establishment">Icone do estabelecimento</string>
     <string name="search">pesquisar</string>
+    <string name="favorite">Favoritos</string>
+    <string name="settings">Configurações</string>
+    <string name="profile">Perfil</string>
 </resources>
