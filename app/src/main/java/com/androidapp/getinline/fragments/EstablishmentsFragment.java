@@ -2,6 +2,7 @@ package com.androidapp.getinline.fragments;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.androidapp.getinline.R;
+import com.androidapp.getinline.activities.EstablishmentActivity;
 import com.androidapp.getinline.activities.MainActivity;
 import com.androidapp.getinline.adapters.EstablishmentAdapter;
 import com.androidapp.getinline.entities.Establishment;
@@ -73,6 +75,7 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mEstablishmentAdapter);
+
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), mRecyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -81,6 +84,13 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
                 String establishmentId = establishments.get(position).getId();
                 String establishmentEmail = establishments.get(position).getEmail();
                 String estQueueSize = establishments.get(position).getSize();
+
+                Intent intent = new Intent(getContext(), EstablishmentActivity.class);
+                intent.putExtra("establishmentName", nameEstablishment);
+                intent.putExtra("establishmentId", establishmentId);
+                intent.putExtra("establishmentEmail", establishmentEmail);
+                intent.putExtra("establishmentSize", estQueueSize);
+                startActivity(intent);
 
                 Log.d("NAMEESTABLISHMENT", nameEstablishment);
                 Log.d("ESTABLISHMENTID", establishmentId);
