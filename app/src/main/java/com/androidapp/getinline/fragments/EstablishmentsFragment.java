@@ -17,11 +17,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.androidapp.getinline.R;
 import com.androidapp.getinline.activities.MainActivity;
 import com.androidapp.getinline.adapters.EstablishmentAdapter;
 import com.androidapp.getinline.entities.Establishment;
+import com.androidapp.getinline.listener.ClickListener;
+import com.androidapp.getinline.listener.RecyclerTouchListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +65,6 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
 
         Log.d("OnCreateView", "Entrou");
 
-
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.list_establishments_fragment, container, false);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_list_establishments);
@@ -71,6 +73,27 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mEstablishmentAdapter);
+        mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), mRecyclerView, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Log.d("Item clicado", establishments.get(position).getName());
+                String nameEstablishment = establishments.get(position).getName();
+                String establishmentId = establishments.get(position).getId();
+                String establishmentEmail = establishments.get(position).getEmail();
+                String estQueueSize = establishments.get(position).getSize();
+
+                Log.d("NAMEESTABLISHMENT", nameEstablishment);
+                Log.d("ESTABLISHMENTID", establishmentId);
+                Log.d("ESTABLISHMENTEMAIL", establishmentEmail);
+                Log.d("ESTABLISHMENTSIZE", estQueueSize);
+
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
         return rootView;
     }
 
