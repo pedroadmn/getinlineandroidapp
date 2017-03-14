@@ -2,8 +2,10 @@ package com.androidapp.getinline.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -36,6 +38,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.crash.FirebaseCrash;
 
+
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -58,6 +62,8 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
     private GoogleApiClient mGoogleApiClient;
     private TextView cancelButton;
     private User user;
+    String profileEmail;
+    Uri profilePhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +125,9 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
                 showSnackBar(getResources().getString(R.string.google_login_failed));
                 return;
             }
+
+            profileEmail = account.getEmail();
+            profilePhoto = account.getPhotoUrl();
 
             accessGoogleLoginData(account.getIdToken());
         } else {
@@ -288,6 +297,10 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
 
     private void callMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
+        if(profileEmail != null && profilePhoto != null){
+            intent.putExtra("profileEmail", profileEmail);
+            intent.putExtra("profilePhoto", profilePhoto.toString());
+        }
         startActivity(intent);
         finish();
     }
@@ -350,4 +363,5 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
             finish();
         }
     }
+
 }

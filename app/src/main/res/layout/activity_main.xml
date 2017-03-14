@@ -37,11 +37,13 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         </LinearLayout>
 
-        <ListView
+        <android.support.design.widget.NavigationView
             android:id="@+id/navList"
             android:layout_width="250dp"
             android:layout_height="match_parent"
             android:layout_gravity="left|start"
+            app:headerLayout="@layout/header_list"
+            app:menu="@menu/menu_navigation"
             android:background="#ffeeeeee" />
 
     </android.support.v4.widget.DrawerLayout>
