@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GetInLine</string>
+    <string name="app_name">Get in Line</string>
 
     <string name="prompt_name">Name</string>
     <string name="prompt_email">Email</string>

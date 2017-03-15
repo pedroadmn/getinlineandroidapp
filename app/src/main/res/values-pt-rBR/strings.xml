@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">GetInLine</string>
+    <string name="app_name">Get in Line</string>
 
     <string name="prompt_name">Nome</string>
     <string name="prompt_email">Email</string>
