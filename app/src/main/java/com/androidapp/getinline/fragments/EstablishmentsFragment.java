@@ -1,11 +1,9 @@
 package com.androidapp.getinline.fragments;
 
-import android.app.SearchManager;
-import android.content.Context;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,11 +16,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.androidapp.getinline.R;
 import com.androidapp.getinline.activities.EstablishmentActivity;
-import com.androidapp.getinline.activities.MainActivity;
 import com.androidapp.getinline.adapters.EstablishmentAdapter;
 import com.androidapp.getinline.entities.Establishment;
 import com.androidapp.getinline.listener.ClickListener;
@@ -31,10 +27,8 @@ import com.androidapp.getinline.listener.RecyclerTouchListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.androidapp.getinline.R.string.establishments;
 import static com.androidapp.getinline.R.string.search;
 import static com.facebook.FacebookSdk.getApplicationContext;
-import static java.security.AccessController.getContext;
 
 /**
  * Created by pedroadmn-PC on 3/9/2017.
@@ -42,11 +36,24 @@ import static java.security.AccessController.getContext;
 
 public class EstablishmentsFragment extends Fragment implements SearchView.OnQueryTextListener  {
 
+    /**
+     * Establishment Adapter
+     */
     private EstablishmentAdapter mEstablishmentAdapter;
+
+    /**
+     * Establishment List
+     */
     public List<Establishment> establishments = new ArrayList<>();
-    private RecyclerView mRecyclerView;
+
+    /**
+     * Search View
+     */
     private SearchView mSearchView;
 
+    /**
+     * Establishment Fragment constructor
+     */
     public EstablishmentsFragment() {
         // Required empty public constructor
     }
@@ -54,22 +61,18 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("OnCreate", "Entrou");
         setHasOptionsMenu(true);
         updateEstablishmentList();
         mEstablishmentAdapter = new EstablishmentAdapter(getContext(), establishments);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Log.d("OnCreateView", "Entrou");
-
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.list_establishments_fragment, container, false);
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_list_establishments);
+        RecyclerView mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_list_establishments);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -91,12 +94,6 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
                 intent.putExtra("establishmentEmail", establishmentEmail);
                 intent.putExtra("establishmentSize", estQueueSize);
                 startActivity(intent);
-
-                Log.d("NAMEESTABLISHMENT", nameEstablishment);
-                Log.d("ESTABLISHMENTID", establishmentId);
-                Log.d("ESTABLISHMENTEMAIL", establishmentEmail);
-                Log.d("ESTABLISHMENTSIZE", estQueueSize);
-
             }
 
             @Override
@@ -107,6 +104,9 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
         return rootView;
     }
 
+    /**
+     * Method to populate the establishment list
+     */
     private void updateEstablishmentList() {
 
         Establishment e1 = new Establishment(getResources().getDrawable(R.mipmap.ic_launcher), "Estabelecimento", "www.estabelecimento.com", "estabelecimento1@gmail.com", "123456", "10", "20");
@@ -121,6 +121,7 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
         establishments.add(e5);
     }
 
+
     @Override
     public boolean onQueryTextSubmit(String query) {
         return false;
@@ -132,6 +133,9 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
         return true;
     }
 
+    /**
+     * Method to set up the search view
+     */
     private void setupSearchView() {
         mSearchView.setOnQueryTextListener(this);
         mSearchView.setSubmitButtonEnabled(true);

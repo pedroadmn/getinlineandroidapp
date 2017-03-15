@@ -30,11 +30,24 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class LineFragment extends Fragment implements SearchView.OnQueryTextListener {
 
+    /**
+     * Search View
+     */
     private SearchView mSearchView;
-    private EstablishmentAdapter mEstablishmentAdapter;
-    public List<Establishment> establishments = new ArrayList<>();
-    private RecyclerView mRecyclerView;
 
+    /**
+     * Establishment Adapter
+     */
+    private EstablishmentAdapter mEstablishmentAdapter;
+
+    /**
+     * Establishment List
+     */
+    public List<Establishment> establishments = new ArrayList<>();
+
+    /**
+     * Line Fragment constructor
+     */
     public LineFragment() {
         // Required empty public constructor
     }
@@ -52,7 +65,7 @@ public class LineFragment extends Fragment implements SearchView.OnQueryTextList
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.list_line_fragment, container, false);
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_list_line);
+        RecyclerView mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_list_line);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -61,6 +74,9 @@ public class LineFragment extends Fragment implements SearchView.OnQueryTextList
         return rootView;
     }
 
+    /**
+     * Method to populate the establishment list
+     */
     private void updateEstablishmentList() {
 
         Establishment e1 = new Establishment(getResources().getDrawable(R.mipmap.ic_launcher), "Estabelecimento", "www.estabelecimento.com", "estabelecimento1@gmail.com", "123456", "10", "20");
@@ -75,6 +91,9 @@ public class LineFragment extends Fragment implements SearchView.OnQueryTextList
         establishments.add(e5);
     }
 
+    /**
+     * Method to set up the search view
+     */
     private void setupSearchView() {
         mSearchView.setOnQueryTextListener(this);
         mSearchView.setSubmitButtonEnabled(true);
