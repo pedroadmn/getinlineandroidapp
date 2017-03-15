@@ -222,6 +222,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
      * @param provider Login provider name(Facebook or Google)
      * @param tokens Token given by provider(Facebook or Google)
      */
+
     private void accessLoginData(String provider, String... tokens) {
         if (tokens != null
                 && tokens.length > 0

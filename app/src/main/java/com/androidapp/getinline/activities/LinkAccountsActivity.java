@@ -43,12 +43,30 @@ import java.util.Arrays;
 public class LinkAccountsActivity extends CommonActivity
         implements GoogleApiClient.OnConnectionFailedListener, DatabaseReference.CompletionListener {
 
+    /**
+     * Google Request Code to onActivityResult
+     */
     private static final int RC_SIGN_IN_GOOGLE = 7859;
 
+    /**
+     * The entry point of the Firebase Authentication SDK.
+     */
     private FirebaseAuth mAuth;
 
+    /**
+     * A User object
+     */
     private User user;
+
+    /**
+     * The CallbackManager manages the callbacks into the FacebookSdk from an Activity's or
+     * Fragment's onActivityResult() method.
+     */
     private CallbackManager callbackManager;
+
+    /**
+     * The main entry point for Google Play services integration.
+     */
     private GoogleApiClient mGoogleApiClient;
 
     @Override
@@ -56,7 +74,34 @@ public class LinkAccountsActivity extends CommonActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_link_accounts);
 
-        // FACEBOOK
+        registerFacebookCallBack();
+        registerGoogleSignOption();
+
+        mAuth = FirebaseAuth.getInstance();
+        initViews();
+        initUser();
+    }
+
+    /**
+     * Method to build the google sign in configurations options
+     */
+    private void registerGoogleSignOption() {
+        // GOOGLE SIGN IN
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(Util.GOOGLE_USER_CONTENT_KEY)
+                .requestEmail()
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+    }
+
+    /**
+     * Method to register facebook callback to login and permissions
+     */
+    private void registerFacebookCallBack() {
         callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -70,26 +115,10 @@ public class LinkAccountsActivity extends CommonActivity
 
             @Override
             public void onError(FacebookException error) {
+                FirebaseCrash.report(error);
                 showSnackBar(error.getMessage());
             }
         });
-
-
-        // GOOGLE SIGN IN
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(Util.GOOGLE_USER_CONTENT_KEY)
-                .requestEmail()
-                .build();
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-
-
-        mAuth = FirebaseAuth.getInstance();
-        initViews();
-        initUser();
     }
 
     @Override
@@ -112,19 +141,37 @@ public class LinkAccountsActivity extends CommonActivity
         }
     }
 
+    /**
+     * Intermediary Method to send conventional credential to method accessLoginData
+     * @param email Email
+     * @param password Password
+     */
     private void accessEmailLoginData(String email, String password) {
         accessLoginData(Util.EMAIL_KEY, email, password);
     }
 
+    /**
+     * Intermediary Method to send facebook token credential to method accessLoginData
+     * @param accessToken Token given by Facebook
+     */
     private void accessFacebookLoginData(AccessToken accessToken) {
         accessLoginData(Util.FACEBOOK, (accessToken != null ? accessToken.getToken() : null)
         );
     }
 
+    /**
+     * Intermediary Method to send google token credential to accessLoginData method
+     * @param accessToken Token given by Google
+     */
     private void accessGoogleLoginData(String accessToken) {
         accessLoginData(Util.GOOGLE, accessToken);
     }
 
+    /**
+     * Method to access login credentials of some provider(Email, Facebook or Google) and link with existent account
+     * @param provider Login provider name(Email, Facebook or Google)
+     * @param tokens Token given by provider(Facebook or Google)
+     */
     private void accessLoginData(final String provider, String... tokens) {
         if (tokens != null
                 && tokens.length > 0
@@ -162,6 +209,9 @@ public class LinkAccountsActivity extends CommonActivity
         }
     }
 
+    /**
+     * Method to initialize the views
+     */
     protected void initViews() {
         email = (AutoCompleteTextView) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
@@ -169,6 +219,9 @@ public class LinkAccountsActivity extends CommonActivity
         initButtons();
     }
 
+    /**
+     * Method to initiate the button to link or unlink accounts
+     */
     private void initButtons() {
         setButtonLabel(
                 R.id.email_sign_in_button,
@@ -195,6 +248,14 @@ public class LinkAccountsActivity extends CommonActivity
 
     }
 
+    /**
+     * Method to set the button labels
+     * @param buttonId Button Id
+     * @param providerId Provider Id
+     * @param linkId Link Id
+     * @param unlinkId Unlink Id
+     * @param fieldsIds Fields Id
+     */
     private void setButtonLabel(
             int buttonId,
             String providerId,
@@ -211,6 +272,11 @@ public class LinkAccountsActivity extends CommonActivity
         }
     }
 
+    /**
+     * Method to show or hide fields
+     * @param status True if it is a linked provider, False otherwise
+     * @param ids Fields Id
+     */
     private void showHideFields(boolean status, int... ids) {
         for (int id : ids) {
             findViewById(id).setVisibility(status ? View.VISIBLE : View.GONE);
@@ -228,12 +294,19 @@ public class LinkAccountsActivity extends CommonActivity
         return false;
     }
 
+    /**
+     * Method to initialize the user
+     */
     protected void initUser() {
         user = new User();
         user.setEmail(email.getText().toString());
         user.setPassword(password.getText().toString());
     }
 
+    /**
+     * Method to unlink account if it is a a linked provider, or link account otherwise
+     * @param view View
+     */
     public void sendLoginData(View view) {
         if (isALinkedProvider(EmailAuthProvider.PROVIDER_ID)) {
             unlinkProvider(EmailAuthProvider.PROVIDER_ID);
@@ -245,6 +318,10 @@ public class LinkAccountsActivity extends CommonActivity
         accessEmailLoginData(user.getEmail(), user.getPassword());
     }
 
+    /**
+     * Method to unlink account if it is an linked provider, or link account otherwise
+     * @param view View
+     */
     public void sendLoginFacebookData(View view) {
 
         if (isALinkedProvider(FacebookAuthProvider.PROVIDER_ID)) {
@@ -260,6 +337,10 @@ public class LinkAccountsActivity extends CommonActivity
                 );
     }
 
+    /**
+     * Method to unlink account if it is an linked provider, or link account otherwise
+     * @param view View
+     */
     public void sendLoginGoogleData(View view) {
         if (isALinkedProvider(GoogleAuthProvider.PROVIDER_ID)) {
             unlinkProvider(GoogleAuthProvider.PROVIDER_ID);
@@ -287,7 +368,10 @@ public class LinkAccountsActivity extends CommonActivity
         finish();
     }
 
-
+    /**
+     * Method to unlink account
+     * @param providerId
+     */
     private void unlinkProvider(final String providerId) {
 
         mAuth
@@ -317,6 +401,11 @@ public class LinkAccountsActivity extends CommonActivity
         });
     }
 
+    /**
+     * Method to know if the account is the last provider link
+     * @param providerId Provider Id
+     * @return True if provider list is equal 0 or equal 1 and provider id is by Email
+     */
     private boolean isLastProvider(String providerId) {
         int size = mAuth.getCurrentUser().getProviders().size();
         return (size == 0 || (size == 1 && providerId.equals(EmailAuthProvider.PROVIDER_ID)));
