@@ -26,9 +26,24 @@ import com.google.firebase.database.ValueEventListener;
 public class RemoveUserActivity extends AppCompatActivity
         implements ValueEventListener, DatabaseReference.CompletionListener {
 
+    /**
+     * A standard toolbar for use within application content.
+     */
     private Toolbar toolbar;
+
+    /**
+     * A User object
+     */
     private User user;
+
+    /**
+     * The user password variable
+     */
     private EditText password;
+
+    /**
+     * The entry point of the Firebase Authentication SDK.
+     */
     private FirebaseAuth mAuth;
 
     @Override
@@ -47,6 +62,9 @@ public class RemoveUserActivity extends AppCompatActivity
         init();
     }
 
+    /**
+     * Method to initiate the RemoveUserActivity screen layout. The action bar and user
+     */
     private void init() {
         toolbar.setTitle(getResources().getString(R.string.remove_user));
         password = (EditText) findViewById(R.id.password);
@@ -56,11 +74,19 @@ public class RemoveUserActivity extends AppCompatActivity
         user.contextDataDB(this);
     }
 
+    /**
+     * Method to get the user password and reauthenticate the user to then remove him
+     *
+     * @param view View
+     */
     public void update(View view) {
         user.setPassword(password.getText().toString());
         reauthenticate();
     }
 
+    /**
+     * Method to reauthenticate user
+     */
     private void reauthenticate() {
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
 
@@ -95,6 +121,9 @@ public class RemoveUserActivity extends AppCompatActivity
         });
     }
 
+    /**
+     * Method to delete the user
+     */
     private void deleteUser() {
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
 

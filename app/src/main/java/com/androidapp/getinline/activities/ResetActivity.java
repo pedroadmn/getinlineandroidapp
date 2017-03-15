@@ -31,7 +31,7 @@ public class ResetActivity extends CommonActivity {
     /**
      * The entry point of the Firebase Authentication SDK.
      */
-    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth mAuth;
 
     /**
      * The reset button
@@ -51,7 +51,7 @@ public class ResetActivity extends CommonActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
     }
 
@@ -66,7 +66,7 @@ public class ResetActivity extends CommonActivity {
      */
     public void reset() {
         if (!isFieldEmpty(email.getText().toString())) {
-            firebaseAuth
+            mAuth
                     .sendPasswordResetEmail(email.getText().toString())
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
