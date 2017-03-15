@@ -24,11 +24,30 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 public class UpdatePasswordActivity extends AppCompatActivity implements ValueEventListener {
+
+    /**
+     * A standard toolbar for use within application content.
+     */
     private Toolbar toolbar;
+
+    /**
+     * A User object
+     */
     private User user;
-    private EditText newPassword;
+
+    /**
+     * The password variable
+     */
     private EditText password;
 
+    /**
+     * The new password variable
+     */
+    private EditText newPassword;
+
+    /**
+     * The entry point of the Firebase Authentication SDK.
+     */
     private FirebaseAuth mAuth;
 
     @Override
@@ -47,6 +66,9 @@ public class UpdatePasswordActivity extends AppCompatActivity implements ValueEv
         init();
     }
 
+    /**
+     * Method to initiate the UpdatePasswordActivity screen layout. The action bar and variable.
+     */
     private void init() {
         toolbar.setTitle(getResources().getString(R.string.update_password));
         newPassword = (EditText) findViewById(R.id.new_password);
@@ -57,13 +79,19 @@ public class UpdatePasswordActivity extends AppCompatActivity implements ValueEv
         user.contextDataDB(this);
     }
 
+    /**
+     * Method to update password
+     * @param view View
+     */
     public void update(View view) {
         user.setNewPassword(newPassword.getText().toString());
         user.setPassword(password.getText().toString());
-
         reauthenticate();
     }
 
+    /**
+     * Method to reauthenticate when the password is updated
+     */
     private void reauthenticate() {
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
 
@@ -99,6 +127,9 @@ public class UpdatePasswordActivity extends AppCompatActivity implements ValueEv
                 });
     }
 
+    /**
+     * Method to update user password
+     */
     private void updateData() {
         user.setNewPassword(newPassword.getText().toString());
         user.setPassword(password.getText().toString());
