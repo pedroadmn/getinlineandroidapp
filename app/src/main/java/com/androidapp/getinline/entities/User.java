@@ -18,95 +18,196 @@ public class User {
 
     public static String PROVIDER = "com.androidapp.getinline.entities.User.PROVIDER";
 
+    /**
+     * User id
+     */
     private String id;
+
+    /**
+     * User name
+     */
     private String name;
+
+    /**
+     * User email
+     */
     private String email;
+
+    /**
+     * User password
+     */
     private String password;
+
+    /**
+     * User new password
+     */
     private String newPassword;
+
+    /**
+     * User FCM token
+     */
     private String tokenFCM;
 
+    /**
+     * User constructor
+     */
     public User() {
     }
 
+    /**
+     * Method to get User id
+     * @return User id
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Method to set User id
+     * @param id New user id
+     */
     public void setId(String id) {
         this.id = id;
     }
 
+    /**
+     * Method to verify if it is logged with social network
+     * @param context Context
+     * @return True if it is logged with social network, False otherwise
+     */
     public boolean isSocialNetworkLogged(Context context) {
         String token = getProviderSP(context);
         return (token.contains(Util.FACEBOOK) || token.contains(Util.GOOGLE));
     }
 
+    /**
+     * Method to get User name
+     * @return User name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Method to set User name
+     * @param name New user name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Method to set user name in map
+     * @param map Map
+     */
     private void setNameInMap(Map<String, Object> map) {
         if (getName() != null) {
             map.put(Util.NAME_KEY, getName());
         }
     }
 
+    /**
+     *  Method to set user name in map
+     * @param name New user name
+     */
     public void setNameIfNull(String name) {
         if (this.name == null) {
             this.name = name;
         }
     }
 
+    /**
+     * Method to get user email
+     * @return User email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Method to set User email
+     * @param email New user email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * Method to set user email in map
+     * @param map New user email in map
+     */
     private void setEmailInMap(Map<String, Object> map) {
         if (getEmail() != null) {
             map.put(Util.EMAIL_KEY, getEmail());
         }
     }
 
+    /**
+     * Method to set User email if null
+     * @param email New user email
+     */
     public void setEmailIfNull(String email) {
         if (this.email == null) {
             this.email = email;
         }
     }
 
+    /**
+     * Method to get User password
+     * @return User password
+     */
     @Exclude
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Method to set User password
+     * @param password New user password
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * Method to get User new password
+     * @return User new password
+     */
     @Exclude
     public String getNewPassword() {
         return newPassword;
     }
 
+    /**
+     * Method to set User new password
+     * @param newPassword
+     */
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
     }
 
+    /**
+     * Method to save on shared preference the pair: provider : key
+     * @param context Context
+     * @param token Token
+     */
     public void saveProviderSP(Context context, String token) {
         LibraryClass.saveSP(context, PROVIDER, token);
     }
 
+    /**
+     * Method to get token by provider key
+     * @param context Context
+     * @return Token
+     */
     public String getProviderSP(Context context) {
         return (LibraryClass.getSP(context, PROVIDER));
     }
 
+    /**
+     * Method to save user into firebase database
+     * @param completionListener DatabaseReference.CompletionListener
+     */
     public void saveDB(DatabaseReference.CompletionListener... completionListener) {
         DatabaseReference firebase = LibraryClass.getFirebase().child(Util.USERS_KEY_DB).child(getId());
 
@@ -117,6 +218,10 @@ public class User {
         }
     }
 
+    /**
+     * Method to update the user info into database
+     * @param completionListener DatabaseReference.CompletionListener
+     */
     public void updateDB(DatabaseReference.CompletionListener... completionListener) {
 
         DatabaseReference firebase = LibraryClass.getFirebase().child(Util.USERS_KEY_DB).child(getId());
@@ -136,6 +241,10 @@ public class User {
         }
     }
 
+    /**
+     * Method to remove user in firebase database
+     * @param completionListener DatabaseReference.CompletionListener
+     */
     public void removeDB(DatabaseReference.CompletionListener completionListener) {
         DatabaseReference firebase = LibraryClass.getFirebase().child(Util.USERS_KEY_DB).child(getId());
         firebase.setValue(null, completionListener);
@@ -147,18 +256,27 @@ public class User {
         firebase.addListenerForSingleValueEvent((ValueEventListener) context);
     }
 
+    /**
+     * Method to get User FCM token
+     * @return User FCM token
+     */
     public String getTokenFCM() {
         return tokenFCM;
     }
 
+    /**
+     * Method to set User FCM token
+     * @param tokenFCM New FCM token
+     */
     public void setTokenFCM(String tokenFCM) {
         this.tokenFCM = tokenFCM;
     }
 
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onNewToken(TokenEvent tokenEvent){
         setTokenFCM(tokenEvent.getToken());
-        updateDB();
+        saveDB();
     }
 
 }
