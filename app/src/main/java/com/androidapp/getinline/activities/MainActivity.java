@@ -30,12 +30,29 @@ import com.google.firebase.iid.FirebaseInstanceId;
 
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * The entry point of the Firebase Authentication SDK.
+     */
     private FirebaseAuth mAuth;
+
+    /**
+     * Listener called when there is a change in the authentication state.
+     */
     private FirebaseAuth.AuthStateListener authStateListener;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+
+    /**
+     * A standard toolbar for use within application content.
+     */
     private Toolbar toolbar;
+
+    /**
+     * Top-level container for window content that allows for interactive "drawer" views to be pulled out from one or both vertical edges of the window.
+     */
     private DrawerLayout mDrawerLayout;
+
+    /**
+     * Activity title attribute
+     */
     private String mActivityTitle;
 
     @Override
@@ -45,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
 
         mActivityTitle = getTitle().toString();
 
-        String token = FirebaseInstanceId.getInstance().getToken();
-        Log.d("TOKEEN", token);
+//        String token = FirebaseInstanceId.getInstance().getToken();
+//        Log.d("TOKEEN", token);
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -61,10 +78,11 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mAuth.addAuthStateListener(authStateListener);
-
-
     }
 
+    /**
+     * Method to initiate the navigation drawer. Setup drawer layout and the navigation view list and menu item.
+     */
     public void initNavigationDrawer() {
 
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
@@ -129,8 +147,6 @@ public class MainActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
     }
 
-
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -142,6 +158,9 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
+    /**
+     * Method to initiate the main screen layout. The action bar, view pager and tab layout
+     */
     private void init() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -151,13 +170,17 @@ public class MainActivity extends AppCompatActivity {
 
         initNavigationDrawer();
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
     }
 
+    /**
+     * Method to build the view pager with the correspondent fragments
+     * @param viewPager View Pager
+     */
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new EstablishmentsFragment(), getResources().getString(R.string.establishments));
