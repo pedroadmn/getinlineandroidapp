@@ -45,7 +45,7 @@
     <string name="google_login_failed">Login com o google falhou, tente novamente</string>
     <string name="social_login_failed">Login social falhou</string>
     <string name="success_removed">Conta removida com sucesso</string>
-    <string name="access_recovery_initialized">Recuperação de acesso inicializada. Email enviado</string>
+    <string name="access_recovery_initialized">Recuperação de acesso inicializada. Cheque seu email</string>
     <string name="failed">Falhou. Tente novamente</string>
     <string name="account_registered">Conta registrada com sucesso</string>
     <string name="successfully_updated">Atualizado com sucesso</string>

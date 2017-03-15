@@ -18,10 +18,29 @@ import com.google.firebase.crash.FirebaseCrash;
 
 public class ResetActivity extends CommonActivity {
 
+    /**
+     * A standard toolbar for use within application content.
+     */
     private Toolbar toolbar;
+
+    /**
+     * The user email variable
+     */
     private AutoCompleteTextView email;
+
+    /**
+     * The entry point of the Firebase Authentication SDK.
+     */
     private FirebaseAuth firebaseAuth;
+
+    /**
+     * The reset button
+     */
     private Button resetButton;
+
+    /**
+     * Visual indicator of progress in some operation
+     */
     protected ProgressBar progressBar;
 
     @Override
@@ -42,6 +61,9 @@ public class ResetActivity extends CommonActivity {
         initViews();
     }
 
+    /**
+     * Method that start the access recovery send an email to the user
+     */
     public void reset() {
         if (!isFieldEmpty(email.getText().toString())) {
             firebaseAuth
@@ -68,6 +90,9 @@ public class ResetActivity extends CommonActivity {
         }
     }
 
+    /**
+     * Method to initialize the views
+     */
     @Override
     protected void initViews() {
         toolbar.setTitle(getResources().getString(R.string.reset));
@@ -83,6 +108,11 @@ public class ResetActivity extends CommonActivity {
         });
     }
 
+    /**
+     * Method to verify if email field is empty
+     * @param email Email
+     * @return True if field is empty, and False otherwise
+     */
     public boolean isFieldEmpty(String email) {
         return email.isEmpty();
     }

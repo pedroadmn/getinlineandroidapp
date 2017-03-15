@@ -44,7 +44,7 @@
     <string name="google_login_failed">Google login failed, try again</string>
     <string name="social_login_failed">Social login failed</string>
     <string name="success_removed">Account removed successfully</string>
-    <string name="access_recovery_initialized">Access recovery initialized. Email sent.</string>
+    <string name="access_recovery_initialized">Access recovery initialized. Check your email.</string>
     <string name="failed">Failed. Try again</string>
     <string name="account_registered">Account registered successfully</string>
     <string name="successfully_updated">Successfully updated</string>

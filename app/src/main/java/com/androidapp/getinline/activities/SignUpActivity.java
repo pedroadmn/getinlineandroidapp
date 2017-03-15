@@ -184,7 +184,7 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
         Intent goMain = new Intent(this, LoginActivity.class);
         startActivity(goMain);
     }
-    
+
     @Override
     protected void onStart() {
         super.onStart();
