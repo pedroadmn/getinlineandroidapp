@@ -193,7 +193,7 @@ public class LinkAccountsActivity extends CommonActivity
                             }
 
                             initButtons();
-                            showSnackBar("Conta provider " + provider + " vinculada com sucesso.");
+                            showSnackBar("Provider account " + provider + " linked successfully.");
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -385,7 +385,7 @@ public class LinkAccountsActivity extends CommonActivity
                         }
 
                         initButtons();
-                        showSnackBar("Conta provider " + providerId + " desvinculada com sucesso.");
+                        showSnackBar("Provider account " + providerId + " unlinked successfully.");
 
                         if (isLastProvider(providerId)) {
                             user.setId(mAuth.getCurrentUser().getUid());
