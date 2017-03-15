@@ -1,10 +1,12 @@
 package com.androidapp.getinline.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -28,10 +30,29 @@ import org.w3c.dom.Text;
 
 public class SignUpActivity extends CommonActivity implements DatabaseReference.CompletionListener {
 
+    /**
+     * The entry point of the Firebase Authentication SDK.
+     */
     private FirebaseAuth mAuth;
+
+    /**
+     * Listener called when there is a change in the authentication state.
+     */
     private FirebaseAuth.AuthStateListener mAuthStateListener;
+
+    /**
+     * A User object
+     */
     private User user;
+
+    /**
+     * The user name variable
+     */
     private AutoCompleteTextView name;
+
+    /**
+     * Cancel to come back to main login page
+     */
     private TextView cancel;
 
     @Override
@@ -59,6 +80,9 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
         initViews();
     }
 
+    /**
+     * Method to initialize the views
+     */
     protected void initViews() {
         name = (AutoCompleteTextView) findViewById(R.id.name);
         email = (AutoCompleteTextView) findViewById(R.id.email);
@@ -75,6 +99,9 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
         });
     }
 
+    /**
+     * Method to initialize the user
+     */
     protected void initUser() {
         user = new User();
         user.setName(name.getText().toString());
@@ -84,11 +111,18 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
         user.setTokenFCM(token);
     }
 
+    /**
+     * Method to send sign up data to save user
+     * @param view View
+     */
     public void sendSignUpData(View view) {
         initUser();
         saveUser();
     }
 
+    /**
+     * Method to save the user
+     */
     private void saveUser() {
         if (!isFieldEmpty(user.getEmail(), user.getPassword())) {
             if (Util.validateEmail(getBaseContext(), user.getEmail())) {
@@ -120,9 +154,20 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
         mAuth.signOut();
         showToast(getResources().getString(R.string.account_registered));
         closeProgressBar();
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
         finish();
     }
 
+    /**
+     * Method to verify if some fields are empty
+     * @param email Email
+     * @param password Password
+     * @return True if email or password is empty, false Otherwise
+     */
     public boolean isFieldEmpty(String email, String password) {
         if (email.isEmpty() || password.isEmpty()) {
             showSnackBar(getResources().getString(R.string.empty_credentials));
@@ -132,12 +177,14 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
         return false;
     }
 
+    /**
+     * Method to switch from SignUpActivity to LoginActivity
+     */
     private void callCancel() {
-        Intent goMain = new Intent(this, MainActivity.class);
+        Intent goMain = new Intent(this, LoginActivity.class);
         startActivity(goMain);
     }
-
-
+    
     @Override
     protected void onStart() {
         super.onStart();

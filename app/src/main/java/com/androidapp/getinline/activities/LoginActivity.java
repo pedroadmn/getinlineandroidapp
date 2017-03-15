@@ -83,9 +83,9 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
     private GoogleApiClient mGoogleApiClient;
 
     /**
-     * Cancel Button to come back to main login page
+     * Cancel button to come back to main login page
      */
-    private TextView cancelButton;
+    private TextView cancel;
 
     /**
      * A User object
@@ -117,7 +117,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
         initViews();
         initUser();
 
-        cancelButton.setOnClickListener(new View.OnClickListener() {
+        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 callCancel();
@@ -291,7 +291,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
      * Method to initialize the views
      */
     protected void initViews() {
-        cancelButton = (TextView) findViewById(R.id.cancel_button);
+        cancel = (TextView) findViewById(R.id.cancel_button);
         email = (AutoCompleteTextView) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.login_progress);
