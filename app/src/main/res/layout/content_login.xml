@@ -38,7 +38,8 @@
             android:onClick="sendLoginFacebookData"
             android:text="@string/action_sign_in_facebook"
             android:textAllCaps="false"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            />
 
         <!--<com.google.android.gms.common.SignInButton-->
         <!--android:id="@+id/email_sign_in_google_button"-->
@@ -77,6 +78,8 @@
             android:onClick="callLoginForm"
             android:text="@string/login"
             android:textColor="@color/grayNormal"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -93,7 +96,9 @@
         android:text="@string/learn_more"
         android:textColor="@color/grayNormal"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"/>
 
     <include layout="@layout/activity_login_form" />
 
