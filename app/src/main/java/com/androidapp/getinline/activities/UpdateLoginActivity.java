@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.androidapp.getinline.R;
 import com.androidapp.getinline.entities.User;
+import com.androidapp.getinline.util.Util;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -24,11 +25,30 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 public class UpdateLoginActivity extends AppCompatActivity implements ValueEventListener {
+
+    /**
+     * A standard toolbar for use within application content.
+     */
     private Toolbar toolbar;
+
+    /**
+     * A User object
+     */
     private User user;
+
+    /**
+     * The new email variable
+     */
     private AutoCompleteTextView newEmail;
+
+    /**
+     * The password variable
+     */
     private EditText password;
 
+    /**
+     * The entry point of the Firebase Authentication SDK.
+     */
     private FirebaseAuth mAuth;
 
     @Override
@@ -47,6 +67,9 @@ public class UpdateLoginActivity extends AppCompatActivity implements ValueEvent
         init();
     }
 
+    /**
+     * Method to initiate the UpdateLoginActivity screen layout. The action bar and variables.
+     */
     private void init() {
         toolbar.setTitle(getResources().getString(R.string.update_login));
         newEmail = (AutoCompleteTextView) findViewById(R.id.email);
@@ -57,13 +80,18 @@ public class UpdateLoginActivity extends AppCompatActivity implements ValueEvent
         user.contextDataDB(this);
     }
 
+    /**
+     * Method to update email
+     * @param view View
+     */
     public void update(View view) {
-
         user.setPassword(password.getText().toString());
-
         reauthenticate();
     }
 
+    /**
+     * Method to reauthenticate when the email is updated
+     */
     private void reauthenticate() {
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
 
@@ -99,6 +127,9 @@ public class UpdateLoginActivity extends AppCompatActivity implements ValueEvent
                 });
     }
 
+    /**
+     * Method to update user email
+     */
     private void updateData() {
         user.setPassword(password.getText().toString());
 
@@ -116,6 +147,7 @@ public class UpdateLoginActivity extends AppCompatActivity implements ValueEvent
 
                         if (task.isSuccessful()) {
                             user.setEmail(newEmail.getText().toString());
+                            password.setText(Util.EMPTY);
                             user.updateDB();
 
                             Toast.makeText(
