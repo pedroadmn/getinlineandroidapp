@@ -19,8 +19,19 @@ import java.util.List;
 
 public class EstablishmentAdapter extends RecyclerView.Adapter<EstablishmentAdapter.ViewHolder> {
 
+    /**
+     * Establishment List
+     */
     private List<Establishment> mEstablishments;
+
+    /**
+     * Establishment List filtered
+     */
     public static List<Establishment> filterList;
+
+    /**
+     * The context
+     */
     private Context mContext;
 
     /**
@@ -33,6 +44,10 @@ public class EstablishmentAdapter extends RecyclerView.Adapter<EstablishmentAdap
         TextView establishmentQueueSize;
         TextView establishmentAverageTime;
 
+        /**
+         * The View Holder constructor
+         * @param view View
+         */
         public ViewHolder(View view) {
             super(view);
             establishmentIcon = (ImageView) view.findViewById(R.id.iv_establishment_icon);
@@ -43,6 +58,11 @@ public class EstablishmentAdapter extends RecyclerView.Adapter<EstablishmentAdap
         }
     }
 
+    /**
+     * Establishment Adapter constructor
+     * @param context Context
+     * @param establishments Establishments
+     */
     public EstablishmentAdapter(final Context context, final List<Establishment> establishments) {
         this.mContext = context;
         this.mEstablishments = establishments;
@@ -78,6 +98,10 @@ public class EstablishmentAdapter extends RecyclerView.Adapter<EstablishmentAdap
         return (null != filterList ? filterList.size(): 0);
     }
 
+    /**
+     * Method that text and filter the Establishment List based on the text
+     * @param text Text to filter by
+     */
     public void filter(final String text) {
 
         // Searching could be complex..so we will dispatch it to a different thread...
