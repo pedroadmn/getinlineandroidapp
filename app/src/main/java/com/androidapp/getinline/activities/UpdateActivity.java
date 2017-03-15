@@ -22,9 +22,25 @@ import com.google.firebase.database.ValueEventListener;
 
 public class UpdateActivity extends AppCompatActivity implements ValueEventListener, DatabaseReference.CompletionListener {
 
+    /**
+     * A standard toolbar for use within application content.
+     */
     private Toolbar toolbar;
+
+    /**
+     * A User object
+     */
     private User user;
+
+    /**
+     * The user name variable
+     */
     private AutoCompleteTextView name;
+
+    /**
+     * The entry point of the Firebase Authentication SDK.
+     */
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +56,23 @@ public class UpdateActivity extends AppCompatActivity implements ValueEventListe
         init();
     }
 
+    /**
+     * Method to initiate the UpdateActivity screen layout. The action bar and variables.
+     */
     private void init() {
         toolbar.setTitle(getResources().getString(R.string.update_profile));
         name = (AutoCompleteTextView) findViewById(R.id.name);
         user = new User();
-        user.setId(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        user.setId(mAuth.getInstance().getCurrentUser().getUid());
         user.contextDataDB(this);
     }
 
+    /**
+     * Method to update name
+     * @param view View
+     */
     public void update(View view) {
-        user.setId(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        user.setId(mAuth.getInstance().getCurrentUser().getUid());
         user.setName(name.getText().toString());
         user.updateDB(UpdateActivity.this);
     }
