@@ -7,6 +7,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,9 +18,16 @@ import android.view.ViewGroup;
 import com.androidapp.getinline.R;
 import com.androidapp.getinline.adapters.EstablishmentAdapter;
 import com.androidapp.getinline.entities.Establishment;
+import com.androidapp.getinline.interfaces.RetrofitArrayAPI;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 import static com.androidapp.getinline.R.string.search;
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -29,6 +37,10 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  */
 
 public class LineFragment extends Fragment implements SearchView.OnQueryTextListener {
+
+    String url = "http://projeto1getinline.herokuapp.com/";
+
+    RecyclerView mRecyclerView;
 
     /**
      * Search View
@@ -43,7 +55,7 @@ public class LineFragment extends Fragment implements SearchView.OnQueryTextList
     /**
      * Establishment List
      */
-    public List<Establishment> establishments = new ArrayList<>();
+    public List<Establishment> establishments;
 
     /**
      * Line Fragment constructor
@@ -56,21 +68,20 @@ public class LineFragment extends Fragment implements SearchView.OnQueryTextList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        updateEstablishmentList();
-        mEstablishmentAdapter = new EstablishmentAdapter(getContext(), establishments);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+
         View rootView = inflater.inflate(R.layout.list_line_fragment, container, false);
-        RecyclerView mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_list_line);
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_list_line);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-        mRecyclerView.setAdapter(mEstablishmentAdapter);
         return rootView;
     }
 
@@ -78,17 +89,51 @@ public class LineFragment extends Fragment implements SearchView.OnQueryTextList
      * Method to populate the establishment list
      */
     private void updateEstablishmentList() {
+        getRetrofitArray();
+    }
 
-        Establishment e1 = new Establishment(getResources().getDrawable(R.mipmap.ic_launcher), "Estabelecimento", "www.estabelecimento.com", "estabelecimento1@gmail.com", "123456", "10", "20");
-        Establishment e2 = new Establishment(getResources().getDrawable(R.mipmap.ic_launcher), "Cabeleireiro", "www.cabeleireito.com", "estabelecimento2@gmail.com", "123457", "15", "25");
-        Establishment e3 = new Establishment(getResources().getDrawable(R.mipmap.ic_launcher), "Oficina", "www.oficina.com.br", "estabelecimento3@gmail.com", "123458", "5", "15");
-        Establishment e4 = new Establishment(getResources().getDrawable(R.mipmap.ic_launcher), "Banco", "www.banco.com.br", "estabelecimento4@gmail.com", "123459", "6", "10");
-        Establishment e5 = new Establishment(getResources().getDrawable(R.mipmap.ic_launcher), "Padaria", "www.padaria.com.br", "estabelecimento5@gmail.com", "123451", "10", "20");
-        establishments.add(e1);
-        establishments.add(e2);
-        establishments.add(e3);
-        establishments.add(e4);
-        establishments.add(e5);
+    void getRetrofitArray() {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        RetrofitArrayAPI service = retrofit.create(RetrofitArrayAPI.class);
+
+        Call<List<Establishment>> call = service.getEstablishmentDetails();
+
+        call.enqueue(new Callback<List<Establishment>>() {
+            @Override
+            public void onResponse(Response<List<Establishment>> response, Retrofit retrofit) {
+
+                try {
+
+                    List<Establishment> establishmentData = response.body();
+                    Log.d("RETROFIT", establishmentData.get(0).toString());
+
+                    for(int i = 0; i < establishmentData.size(); i++){
+                        Establishment est = new Establishment(establishmentData.get(i).getName(), establishmentData.get(i).getWebSite(), establishmentData.get(i).getEmail(),
+                                establishmentData.get(i).get_id(), establishmentData.get(i).getSize(), establishmentData.get(i).getAttendingTime());
+
+                        establishments.add(est);
+
+                        mEstablishmentAdapter = new EstablishmentAdapter(getContext(), establishments);
+                        mRecyclerView.setAdapter(mEstablishmentAdapter);
+                    }
+
+                } catch (Exception e) {
+                    Log.d("onResponse", "There is an error");
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.d("onFailure", t.toString());
+            }
+        });
     }
 
     /**
@@ -117,6 +162,8 @@ public class LineFragment extends Fragment implements SearchView.OnQueryTextList
     @Override
     public void onResume() {
         super.onResume();
+        establishments = new ArrayList<>();
+        updateEstablishmentList();
     }
 
     @Override

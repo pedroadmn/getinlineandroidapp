@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.androidapp.getinline.R;
@@ -38,7 +37,7 @@ public class EstablishmentAdapter extends RecyclerView.Adapter<EstablishmentAdap
      * View Holder Pattern to improve the scrolling performance. It makes the scrolling much smoother.
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView establishmentIcon;
+        //ImageView establishmentIcon;
         TextView establishmentName;
         TextView getEstablishmentWebSite;
         TextView establishmentQueueSize;
@@ -50,7 +49,7 @@ public class EstablishmentAdapter extends RecyclerView.Adapter<EstablishmentAdap
          */
         public ViewHolder(View view) {
             super(view);
-            establishmentIcon = (ImageView) view.findViewById(R.id.iv_establishment_icon);
+            //establishmentIcon = (ImageView) view.findViewById(R.id.iv_establishment_icon);
             establishmentName = (TextView) view.findViewById(R.id.tv_establishment_name);
             getEstablishmentWebSite = (TextView) view.findViewById(R.id.tv_establishment_website);
             establishmentQueueSize = (TextView) view.findViewById(R.id.tv_line_size);
@@ -81,11 +80,11 @@ public class EstablishmentAdapter extends RecyclerView.Adapter<EstablishmentAdap
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Establishment establishment = filterList.get(position);
-        holder.establishmentIcon.setImageDrawable(establishment.getIcon());
+        //holder.establishmentIcon.setImageDrawable(establishment.getIcon());
         holder.establishmentName.setText(establishment.getName());
         holder.getEstablishmentWebSite.setText(establishment.getWebSite());
         holder.establishmentQueueSize.setText(establishment.getSize());
-        holder.establishmentAverageTime.setText(establishment.getTime());
+        holder.establishmentAverageTime.setText(establishment.getAttendingTime());
     }
 
     @Override

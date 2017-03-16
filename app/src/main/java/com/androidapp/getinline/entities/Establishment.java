@@ -1,19 +1,17 @@
 package com.androidapp.getinline.entities;
 
 
-import android.graphics.drawable.Drawable;
-
 public class Establishment {
 
     /**
      * The Establishment Id.
      */
-    private String id;
+    private String _id;
 
-    /**
-     * Establishment icon
-     */
-    private Drawable icon;
+//    /**
+//     * Establishment icon
+//     */
+//    private Drawable icon;
 
     /**
      * The Establishment Name.
@@ -31,9 +29,9 @@ public class Establishment {
     private String queueSize;
 
     /**
-     * Establishment attendance time average
+     * Establishment attendance attendingTime average
      */
-    private String time;
+    private String attendingTime;
 
     /**
      * Establishment website
@@ -42,56 +40,56 @@ public class Establishment {
 
     /**
      * Establishment constructor
-     * @param establishmentIcon Establishment Icon
+     //* @param establishmentIcon Establishment Icon
      * @param establishmentName Establishment Name
      * @param establishmentWebSite Establishment WebSite
      * @param establishmentEmail Establishment Email
      * @param establishmentId Establishment Id
      * @param estQueueSize Establishment Queue Size
-     * @param time Establishment Attendance Time Average
+     * @param attendingTime Establishment Attendance Time Average
      */
-    public Establishment(final Drawable establishmentIcon, final String establishmentName, final String establishmentWebSite, final String establishmentEmail, final String establishmentId,
-                         final String estQueueSize, final String time) {
-        setIcon(establishmentIcon);
+    public Establishment(/*final Drawable establishmentIcon,*/ final String establishmentName, final String establishmentWebSite, final String establishmentEmail, final String establishmentId,
+                         final String estQueueSize, final String attendingTime) {
+        //setIcon(establishmentIcon);
         setName(establishmentName);
         setWebSite(establishmentWebSite);
         setEmail(establishmentEmail);
-        setId(establishmentId);
+        set_id(establishmentId);
         setSize(estQueueSize);
-        setTime(time);
+        setAttendingTime(attendingTime);
     }
 
     /**
      * Method to get Establishment Id
      * @return Establishment Id
      */
-    public final String getId() {
-        return id;
+    public final String get_id() {
+        return _id;
     }
 
     /**
      * Method to set Establishment Id
-     * @param establishmentId New establishment id
+     * @param establishmentId New establishment _id
      */
-    public final void setId(final String establishmentId) {
-        this.id = establishmentId;
+    public final void set_id(final String establishmentId) {
+        this._id = establishmentId;
     }
 
-    /**
-     * Method to get Establishment icon
-     * @return Establishment icon
-     */
-    public Drawable getIcon(){
-        return icon;
-    }
-
-    /**
-     * Method to set Establishment icon
-     * @param icon New establishment icon
-     */
-    public void setIcon(Drawable icon) {
-        this.icon = icon;
-    }
+//    /**
+//     * Method to get Establishment icon
+//     * @return Establishment icon
+//     */
+//    public Drawable getIcon(){
+//        return icon;
+//    }
+//
+//    /**
+//     * Method to set Establishment icon
+//     * @param icon New establishment icon
+//     */
+//    public void setIcon(Drawable icon) {
+//        this.icon = icon;
+//    }
 
     /**
      * Method to get Establishment name
@@ -142,19 +140,19 @@ public class Establishment {
     }
 
     /**
-     * Method to set Establishment attendance time average
-     * @param time New attendance time average
+     * Method to set Establishment attendance attendingTime average
+     * @param attendingTime New attendance attendingTime average
      */
-    public void setTime(String time) {
-        this.time = time;
+    public void setAttendingTime(String attendingTime) {
+        this.attendingTime = attendingTime;
     }
 
     /**
-     * Method to get Establishment attendance time average
-     * @return Establishment attendance time average
+     * Method to get Establishment attendance attendingTime average
+     * @return Establishment attendance attendingTime average
      */
-    public String getTime() {
-        return time;
+    public String getAttendingTime() {
+        return attendingTime;
     }
 
     /**
@@ -173,11 +171,11 @@ public class Establishment {
         this.website = website;
     }
 
-    @Override
-    public final String toString() {
-        return "Establishment: " + getName() + "\n id: " + getId()
-                + " Email: " + getEmail() + "QueueSize: " + getSize() + "\n";
-    }
+//    @Override
+//    public final String toString() {
+//        return "Establishment: " + getName() + "\n _id: " + get_id()
+//                + " Email: " + getEmail() + "QueueSize: " + getSize() + "\n";
+//    }
 
     @Override
     public final boolean equals(final Object obj) {
@@ -190,6 +188,6 @@ public class Establishment {
 
         Establishment establishment = (Establishment) obj;
 
-        return id == establishment.id && name.equals(establishment.name) && email.equals(establishment.email);
+        return _id == establishment._id && name.equals(establishment.name) && email.equals(establishment.email);
     }
 }
