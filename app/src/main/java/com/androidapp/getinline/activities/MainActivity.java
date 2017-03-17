@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,10 +57,18 @@ public class MainActivity extends AppCompatActivity {
      */
     private String mActivityTitle;
 
+    /**
+     * A User
+     */
+    private User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        user = getIntent().getParcelableExtra(Util.KEY_USER);
+        Log.d("KEYUSER", user.getEmail());
 
         mActivityTitle = getTitle().toString();
 
@@ -126,17 +135,19 @@ public class MainActivity extends AppCompatActivity {
         ImageView iv_photo = (ImageView) header.findViewById(R.id.profile_photo);
         TextView tv_email = (TextView) header.findViewById(R.id.profile_email);
 
-        String profileEmail = getIntent().getStringExtra("profileEmail");
-        String profilePhoto = getIntent().getStringExtra("profilePhoto");
-
-        Glide.with(getApplicationContext()).load(profilePhoto)
-                .thumbnail(0.5f)
-                .crossFade()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(iv_photo);
-
-        tv_email.setText(profileEmail);
-
+        if (user.isSocialNetworkLogged(this)){
+            String profileEmail = getIntent().getStringExtra("profileEmail");
+            String profilePhoto = getIntent().getStringExtra("profilePhoto");
+            Glide.with(getApplicationContext()).load(profilePhoto)
+                    .thumbnail(0.5f)
+                    .crossFade()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(iv_photo);
+            tv_email.setText(profileEmail);
+        } else {
+            iv_photo.setImageDrawable(getResources().getDrawable(R.drawable.ic_person));
+            tv_email.setText(user.getEmail());
+        }
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close){
 

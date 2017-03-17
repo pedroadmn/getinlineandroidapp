@@ -394,6 +394,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
             intent.putExtra("profileEmail", profileEmail);
             intent.putExtra("profilePhoto", profilePhoto.toString());
         }
+        intent.putExtra(Util.KEY_USER, user);
         startActivity(intent);
         finish();
     }

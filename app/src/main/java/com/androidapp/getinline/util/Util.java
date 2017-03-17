@@ -68,6 +68,11 @@ public class Util {
     public static final String EMAIL_PERMISSION = "email";
 
     /**
+     * Constant KEY_USER
+     */
+    public static final String KEY_USER = "key_user";
+
+    /**
      * Method to validate user email address
      * @param context Context
      * @param email Email

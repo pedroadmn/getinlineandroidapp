@@ -1,6 +1,8 @@
 package com.androidapp.getinline.entities;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.androidapp.getinline.util.LibraryClass;
 import com.androidapp.getinline.util.Util;
@@ -14,7 +16,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.HashMap;
 import java.util.Map;
 
-public class User {
+public class User implements Parcelable {
 
     public static String PROVIDER = "com.androidapp.getinline.entities.User.PROVIDER";
 
@@ -279,4 +281,36 @@ public class User {
         saveDB();
     }
 
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.email);
+        dest.writeString(this.tokenFCM);
+    }
+
+    protected User(Parcel in) {
+        this.id = in.readString();
+        this.name = in.readString();
+        this.email = in.readString();
+        this.tokenFCM = in.readString();
+    }
+
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }
