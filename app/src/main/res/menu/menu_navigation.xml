@@ -1,17 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+    <group android:id="@+id/group_features"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/home"
             android:title="@string/favorite"
             android:icon="@drawable/ic_favorite"/>
+
+    </group>
+
+    <group android:id="@+id/group_settings"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/settings"
             android:title="@string/settings"
-            android:icon="@drawable/ic_setting"/>
+            android:icon="@drawable/ic_setting" />
+
+        <item
+            android:id="@+id/setup_guide"
+            android:title="@string/setup_guide"
+            android:icon="@drawable/ic_nav_setupguide"/>
+
+        <item
+            android:id="@+id/legal"
+            android:title="@string/legal"
+            android:icon="@drawable/ic_nav_legal"
+            />
+
         <item
             android:id="@+id/logout"
             android:title="@string/logout"
             android:icon="@drawable/ic_exit"/>
+
     </group>
 </menu>

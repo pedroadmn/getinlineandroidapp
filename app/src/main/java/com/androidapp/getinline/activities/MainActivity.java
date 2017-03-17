@@ -10,7 +10,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,10 +22,12 @@ import com.androidapp.getinline.adapters.ViewPagerAdapter;
 import com.androidapp.getinline.entities.User;
 import com.androidapp.getinline.fragments.EstablishmentsFragment;
 import com.androidapp.getinline.fragments.LineFragment;
+import com.androidapp.getinline.util.Util;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.iid.FirebaseInstanceId;
+
+import za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
 
         NavigationView navigationView = (NavigationView)findViewById(R.id.navList);
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -101,6 +103,15 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.settings:
                         Toast.makeText(getApplicationContext(),"Settings",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.setup_guide:
+                        Intent tutorialIntent = new Intent(getBaseContext(), MaterialTutorialActivity.class);
+                        tutorialIntent.putParcelableArrayListExtra(MaterialTutorialActivity.MATERIAL_TUTORIAL_ARG_TUTORIAL_ITEMS, Util.getTutorialItems(getBaseContext()));
+                        startActivity(tutorialIntent);
+                        Toast.makeText(getApplicationContext(),"Setup Guide",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.legal:
+                        Toast.makeText(getApplicationContext(),"Legal",Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.logout:
                         FirebaseAuth.getInstance().signOut();

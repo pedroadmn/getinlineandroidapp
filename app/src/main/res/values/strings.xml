@@ -74,6 +74,8 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="favorite">Favorites</string>
     <string name="settings">Settings</string>
+    <string name="setup_guide">Setup guide</string>
+    <string name="legal">Legal</string>
     <string name="profile">Profile</string>
 
 </resources>

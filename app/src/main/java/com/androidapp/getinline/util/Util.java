@@ -5,8 +5,11 @@ import android.widget.Toast;
 
 import com.androidapp.getinline.R;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import za.co.riggaroo.materialhelptutorial.TutorialItem;
 
 public class Util {
     /**
@@ -97,4 +100,33 @@ public class Util {
         }
         return result;
     }
+
+    /**
+     * Method to setup the start tutorial screens
+     * @param context Context
+     * @return Tutorial Item List
+     */
+    public static ArrayList<TutorialItem> getTutorialItems(Context context) {
+        ArrayList<TutorialItem> tutorialItems = new ArrayList<>();
+
+        TutorialItem tutorialItem1 = new TutorialItem(context.getString(R.string.tutorial_first_message_title), context.getString(R.string.tutorial_first_message_subtitle),
+                R.color.colorPrimaryDark, R.drawable.social_network);
+
+        TutorialItem tutorialItem2 = new TutorialItem(context.getString(R.string.tutorial_second_message_title), context.getString(R.string.tutorial_second_message_subtitle),
+                R.color.colorAccent, R.drawable.social_network);
+
+        TutorialItem tutorialItem3 = new TutorialItem(context.getString(R.string.tutorial_third_message_title), context.getString(R.string.tutorial_third_message_subtitle),
+                R.color.coral, R.drawable.social_network);
+
+        TutorialItem tutorialItem4 = new TutorialItem(context.getString(R.string.tutorial_fourth_message_title), context.getString(R.string.tutorial_fourth_message_subtitle),
+                R.color.seaGreen, R.drawable.social_network);
+
+        tutorialItems.add(tutorialItem1);
+        tutorialItems.add(tutorialItem2);
+        tutorialItems.add(tutorialItem3);
+        tutorialItems.add(tutorialItem4);
+
+        return tutorialItems;
+    }
+
 }
