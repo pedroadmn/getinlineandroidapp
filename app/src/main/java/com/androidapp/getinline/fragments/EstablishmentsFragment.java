@@ -97,12 +97,14 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
                 String establishmentId = establishments.get(position).get_id();
                 String establishmentEmail = establishments.get(position).getEmail();
                 String estQueueSize = establishments.get(position).getSize();
+                String estTime = establishments.get(position).getAttendingTime();
 
                 Intent intent = new Intent(getContext(), EstablishmentActivity.class);
                 intent.putExtra("establishmentName", nameEstablishment);
                 intent.putExtra("establishmentId", establishmentId);
                 intent.putExtra("establishmentEmail", establishmentEmail);
                 intent.putExtra("establishmentSize", estQueueSize);
+                intent.putExtra("establishmentTime", estTime);
                 startActivity(intent);
             }
 
