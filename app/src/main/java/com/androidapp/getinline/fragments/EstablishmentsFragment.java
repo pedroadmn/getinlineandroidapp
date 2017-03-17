@@ -21,9 +21,11 @@ import com.androidapp.getinline.R;
 import com.androidapp.getinline.activities.EstablishmentActivity;
 import com.androidapp.getinline.adapters.EstablishmentAdapter;
 import com.androidapp.getinline.entities.Establishment;
+import com.androidapp.getinline.entities.User;
 import com.androidapp.getinline.interfaces.RetrofitArrayAPI;
 import com.androidapp.getinline.listener.ClickListener;
 import com.androidapp.getinline.listener.RecyclerTouchListener;
+import com.androidapp.getinline.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +43,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  * Created by pedroadmn-PC on 3/9/2017.
  */
 
-public class EstablishmentsFragment extends Fragment implements SearchView.OnQueryTextListener  {
-
-    String url = "http://projeto1getinline.herokuapp.com/";
+public class EstablishmentsFragment extends Fragment implements SearchView.OnQueryTextListener   {
 
     RecyclerView mRecyclerView;
 
@@ -79,7 +79,6 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         // Inflate the layout for this fragment
 
         View rootView = inflater.inflate(R.layout.list_establishments_fragment, container, false);
@@ -92,19 +91,9 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), mRecyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Log.d("Item clicado", establishments.get(position).getName());
-                String nameEstablishment = establishments.get(position).getName();
-                String establishmentId = establishments.get(position).get_id();
-                String establishmentEmail = establishments.get(position).getEmail();
-                String estQueueSize = establishments.get(position).getSize();
-                String estTime = establishments.get(position).getAttendingTime();
-
                 Intent intent = new Intent(getContext(), EstablishmentActivity.class);
-                intent.putExtra("establishmentName", nameEstablishment);
-                intent.putExtra("establishmentId", establishmentId);
-                intent.putExtra("establishmentEmail", establishmentEmail);
-                intent.putExtra("establishmentSize", estQueueSize);
-                intent.putExtra("establishmentTime", estTime);
+                intent.putExtra(Util.KEY_ESTABLISHMENT, establishments.get(position));
+                intent.putExtra(Util.KEY_USER, getActivity().getIntent().getParcelableExtra(Util.KEY_USER));
                 startActivity(intent);
             }
 
@@ -126,7 +115,7 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
     void getRetrofitArray() {
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
+                .baseUrl(Util.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

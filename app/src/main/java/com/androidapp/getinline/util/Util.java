@@ -73,6 +73,16 @@ public class Util {
     public static final String KEY_USER = "key_user";
 
     /**
+     * Constant KEY_ESTABLISHMENT
+     */
+    public static final String KEY_ESTABLISHMENT = "key_establishment";
+
+    /**
+     * Constant BASE_URL. Base url end point
+     */
+    public static final String BASE_URL = "http://projeto1getinline.herokuapp.com/";
+
+    /**
      * Method to validate user email address
      * @param context Context
      * @param email Email

@@ -61,7 +61,7 @@
         android:src="@drawable/time" />
 
     <Button
-        android:id="@+id/go_to_line"
+        android:id="@+id/bt_go_to_line"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Go to Line"

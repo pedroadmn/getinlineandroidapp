@@ -1,7 +1,10 @@
 package com.androidapp.getinline.entities;
 
 
-public class Establishment {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Establishment implements Parcelable {
 
     /**
      * The Establishment Id.
@@ -190,4 +193,40 @@ public class Establishment {
 
         return _id == establishment._id && name.equals(establishment.name) && email.equals(establishment.email);
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this._id);
+        dest.writeString(this.name);
+        dest.writeString(this.email);
+        dest.writeString(this.queueSize);
+        dest.writeString(this.attendingTime);
+        dest.writeString(this.website);
+    }
+
+    protected Establishment(Parcel in) {
+        this._id = in.readString();
+        this.name = in.readString();
+        this.email = in.readString();
+        this.queueSize = in.readString();
+        this.attendingTime = in.readString();
+        this.website = in.readString();
+    }
+
+    public static final Parcelable.Creator<Establishment> CREATOR = new Parcelable.Creator<Establishment>() {
+        @Override
+        public Establishment createFromParcel(Parcel source) {
+            return new Establishment(source);
+        }
+
+        @Override
+        public Establishment[] newArray(int size) {
+            return new Establishment[size];
+        }
+    };
 }
