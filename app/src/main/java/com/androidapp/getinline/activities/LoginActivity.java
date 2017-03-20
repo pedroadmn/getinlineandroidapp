@@ -1,6 +1,5 @@
 package com.androidapp.getinline.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -37,6 +36,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.crash.FirebaseCrash;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Arrays;
 
@@ -304,6 +304,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
         user = new User();
         user.setEmail(email.getText().toString());
         user.setPassword(password.getText().toString());
+        user.setTokenFCM(FirebaseInstanceId.getInstance().getToken());
     }
 
     /**

@@ -82,8 +82,8 @@ public class EstablishmentActivity extends AppCompatActivity {
     private void createEstablishmentScreen(){
         TextView name = (TextView) findViewById(R.id.tv_est_name);
         TextView email = (TextView) findViewById(R.id.tv_est_email);
-        TextView size = (TextView) findViewById(R.id.tv_est_size);
         TextView time = (TextView) findViewById(R.id.tv_est_time);
+        TextView size = (TextView) findViewById(R.id.tv_est_size);
 
         name.setText(establishment.getName());
         email.setText(establishment.getEmail());

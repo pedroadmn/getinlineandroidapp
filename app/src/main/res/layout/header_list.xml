@@ -2,39 +2,34 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorAccent">
 
-    <com.makeramen.roundedimageview.RoundedImageView
+    <ImageView
+        android:id="@+id/profile_photo"
         android:layout_width="100dp"
         android:layout_height="98dp"
-        android:layout_marginTop="24dp"
         android:layout_centerHorizontal="true"
-        android:id="@+id/profile_photo"
-        android:scaleType="fitCenter"
-        app:riv_border_width="2dip"
-        app:riv_corner_radius="10dip"
-        app:riv_mutate_background="true"
-        />
+        android:layout_marginTop="24dp"
+        android:scaleType="fitCenter" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/prompt_confirm_password"
         android:id="@+id/profile_name"
-        android:layout_below="@+id/profile_photo"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/colorAccent"
-        android:textSize="14sp"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/profile_email"
+        android:layout_below="@+id/profile_photo"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:textColor="@color/textColorPrimary"
+        android:text="@string/prompt_confirm_password"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/profile_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/profile_name"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/textColorPrimary" />
 
 </RelativeLayout>
