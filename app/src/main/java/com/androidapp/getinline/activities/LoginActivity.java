@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -41,7 +40,6 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import java.util.Arrays;
 
 import za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity;
-
 
 
 /**
@@ -112,7 +110,6 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = getFirebaseAuthResultHandler();
 
-        Log.d("ENTROUONCREATE", "ENTROUONCREATE");
         initViews();
         initUser();
 
@@ -176,9 +173,6 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
                 return;
             }
 
-            profileEmail = account.getEmail();
-            profilePhoto = account.getPhotoUrl();
-
             accessGoogleLoginData(account.getIdToken());
 
         } else {
@@ -202,6 +196,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
 
     /**
      * Intermediary Method to send facebook token credential to accessLoginData method
+     *
      * @param accessToken Token given by Facebook
      */
     private void accessFacebookLoginData(AccessToken accessToken) {
@@ -210,6 +205,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
 
     /**
      * Intermediary Method to send google token credential to accessLoginData method
+     *
      * @param accessToken Token given by Google
      */
     private void accessGoogleLoginData(String accessToken) {
@@ -218,8 +214,9 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
 
     /**
      * Method to sign in on Firebase Authentication with the provider(Facebook or Google)
+     *
      * @param provider Login provider name(Facebook or Google)
-     * @param tokens Token given by provider(Facebook or Google)
+     * @param tokens   Token given by provider(Facebook or Google)
      */
 
     private void accessLoginData(String provider, String... tokens) {
@@ -255,6 +252,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
 
     /**
      * Method to take some action when the auth state change
+     *
      * @return FirebaseAuth.AuthStateListener
      */
     private FirebaseAuth.AuthStateListener getFirebaseAuthResultHandler() {
@@ -271,15 +269,14 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
                     user.setEmailIfNull(userFirebase.getEmail());
                     user.saveDB();
                 }
-                callMainActivity();
+                callMainActivity(userFirebase.getDisplayName(), userFirebase.getEmail(), userFirebase.getPhotoUrl());
             }
         };
         return callback;
     }
 
     /**
-     *
-     * @param user User
+     * @param user         User
      * @param firebaseUser Firebase user
      * @return True if user name is ok, and False otherwise
      */
@@ -309,6 +306,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
 
     /**
      * Method to switch from LoginActivity to SignUpActivity
+     *
      * @param view View
      */
     public void callSignUp(View view) {
@@ -318,6 +316,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
 
     /**
      * Method to switch from LoginActivity to ResetActiviy
+     *
      * @param view View
      */
     public void callReset(View view) {
@@ -327,6 +326,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
 
     /**
      * Method to make Login Form visible and main login screen invisible
+     *
      * @param v View
      */
     public void callLoginForm(View v) {
@@ -348,6 +348,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
 
     /**
      * Method to load the start tutorial
+     *
      * @param view View
      */
     public void loadTutorial(View view) {
@@ -358,6 +359,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
 
     /**
      * Method to send login data. To conventional login (email and password)
+     *
      * @param view View
      */
     public void sendLoginData(View view) {
@@ -368,6 +370,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
 
     /**
      * Method to send facebook login data.
+     *
      * @param view View
      */
     public void sendLoginFacebookData(View view) {
@@ -378,6 +381,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
 
     /**
      * Method to send google login data
+     *
      * @param view
      */
     public void sendLoginGoogleData(View view) {
@@ -388,13 +392,16 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
 
     /**
      * Method to switch from LoginActivity to MainActivity
+     *
+     * @param profileName
+     * @param profileEmail
+     * @param profilePhoto
      */
-    private void callMainActivity() {
+    private void callMainActivity(String profileName, String profileEmail, Uri profilePhoto) {
         Intent intent = new Intent(this, MainActivity.class);
-        if(profileEmail != null && profilePhoto != null){
-            intent.putExtra("profileEmail", profileEmail);
-            intent.putExtra("profilePhoto", profilePhoto.toString());
-        }
+        intent.putExtra("profileEmail", profileEmail);
+        intent.putExtra("profilePhoto", profilePhoto.toString());
+        intent.putExtra("profileName", profileName);
         intent.putExtra(Util.KEY_USER, user);
         startActivity(intent);
         finish();
@@ -405,7 +412,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
      */
     private void verifyLogged() {
         if (mAuth.getCurrentUser() != null) {
-            callMainActivity();
+            callMainActivity(mAuth.getCurrentUser().getDisplayName(), mAuth.getCurrentUser().getEmail(), mAuth.getCurrentUser().getPhotoUrl());
         } else {
             mAuth.addAuthStateListener(mAuthListener);
         }
@@ -451,7 +458,8 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
 
     /**
      * Method to verify if the credentials are empty
-     * @param email Email
+     *
+     * @param email    Email
      * @param password Password
      * @return True if credentials are empty, and False otherwise
      */

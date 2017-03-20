@@ -4,13 +4,13 @@
     android:layout_height="200dp"
     android:background="@color/colorAccent">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_photo"
-        android:layout_width="100dp"
-        android:layout_height="98dp"
+        android:layout_height="96dp"
+        android:layout_width="96dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
-        android:scaleType="fitCenter" />
+        />
 
     <TextView
         android:id="@+id/profile_name"
@@ -18,10 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/profile_photo"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="@string/prompt_confirm_password"
-        android:textColor="@color/colorAccent"
-        android:textSize="14sp" />
+        android:layout_marginTop="15dp"
+        android:textColor="@color/textColorPrimary" />
 
     <TextView
         android:id="@+id/profile_email"
@@ -29,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/profile_name"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="2dp"
         android:textColor="@color/textColorPrimary" />
 
 </RelativeLayout>

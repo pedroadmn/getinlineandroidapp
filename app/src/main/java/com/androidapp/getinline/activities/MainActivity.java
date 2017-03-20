@@ -95,9 +95,9 @@ public class MainActivity extends AppCompatActivity {
      */
     public void initNavigationDrawer() {
 
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 
-        NavigationView navigationView = (NavigationView)findViewById(R.id.navList);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navList);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -105,22 +105,22 @@ public class MainActivity extends AppCompatActivity {
 
                 int id = menuItem.getItemId();
 
-                switch (id){
+                switch (id) {
                     case R.id.home:
-                        Toast.makeText(getApplicationContext(),"Home",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT).show();
                         mDrawerLayout.closeDrawers();
                         break;
                     case R.id.settings:
-                        Toast.makeText(getApplicationContext(),"Settings",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Settings", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.setup_guide:
                         Intent tutorialIntent = new Intent(getBaseContext(), MaterialTutorialActivity.class);
                         tutorialIntent.putParcelableArrayListExtra(MaterialTutorialActivity.MATERIAL_TUTORIAL_ARG_TUTORIAL_ITEMS, Util.getTutorialItems(getBaseContext()));
                         startActivity(tutorialIntent);
-                        Toast.makeText(getApplicationContext(),"Setup Guide",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Setup Guide", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.legal:
-                        Toast.makeText(getApplicationContext(),"Legal",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Legal", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.logout:
                         FirebaseAuth.getInstance().signOut();
@@ -134,25 +134,25 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView iv_photo = (ImageView) header.findViewById(R.id.profile_photo);
         TextView tv_email = (TextView) header.findViewById(R.id.profile_email);
+        TextView tv_name = (TextView) header.findViewById(R.id.profile_name);
 
-        if (user.isSocialNetworkLogged(this)){
-            String profileEmail = getIntent().getStringExtra("profileEmail");
-            String profilePhoto = getIntent().getStringExtra("profilePhoto");
-            Glide.with(getApplicationContext()).load(profilePhoto)
-                    .thumbnail(0.5f)
-                    .crossFade()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(iv_photo);
-            tv_email.setText(profileEmail);
-        } else {
-            iv_photo.setImageDrawable(getResources().getDrawable(R.drawable.ic_person));
-            tv_email.setText(user.getEmail());
-        }
+        String profileName = getIntent().getStringExtra("profileName");
+        String profileEmail = getIntent().getStringExtra("profileEmail");
+        String profilePhoto = getIntent().getStringExtra("profilePhoto");
 
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close){
+        tv_email.setText(profileEmail);
+        tv_name.setText(profileName);
+
+        Glide.with(getApplicationContext()).load(profilePhoto)
+                .thumbnail(0.5f)
+                .crossFade()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(iv_photo);
+
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
 
             @Override
-            public void onDrawerClosed(View v){
+            public void onDrawerClosed(View v) {
                 super.onDrawerClosed(v);
                 getSupportActionBar().setTitle(mActivityTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
@@ -201,6 +201,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Method to build the view pager with the correspondent fragments
+     *
      * @param viewPager View Pager
      */
     private void setupViewPager(ViewPager viewPager) {
