@@ -28,6 +28,7 @@ public abstract class CommonActivity extends AppCompatActivity {
 
     /**
      * Method to provide lightweight feedback about an operation
+     *
      * @param message Message
      */
     protected void showSnackBar(String message) {
@@ -37,6 +38,7 @@ public abstract class CommonActivity extends AppCompatActivity {
 
     /**
      * Method to provides simple feedback about an operation in a small popup
+     *
      * @param message Message
      */
     protected void showToast(String message) {

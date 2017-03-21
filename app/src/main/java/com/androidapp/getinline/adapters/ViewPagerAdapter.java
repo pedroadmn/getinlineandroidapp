@@ -7,10 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by pedroadmn-PC on 3/14/2017.
- */
-
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     /**
@@ -25,6 +21,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     /**
      * View Pager Adapter constructor
+     *
      * @param manager Fragment Manager
      */
     public ViewPagerAdapter(FragmentManager manager) {
@@ -43,8 +40,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     /**
      * Method to add Fragment and Fragment title to Lists
+     *
      * @param fragment Fragment
-     * @param title Fragment´s Title
+     * @param title    Fragment´s Title
      */
     public void addFragment(Fragment fragment, String title) {
         mFragmentList.add(fragment);

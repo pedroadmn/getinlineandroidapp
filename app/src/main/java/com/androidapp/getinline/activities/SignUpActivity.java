@@ -48,11 +48,6 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
      */
     private AutoCompleteTextView name;
 
-    /**
-     * Cancel to come back to main login page
-     */
-    private TextView cancel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +82,8 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
         password = (EditText) findViewById(R.id.password);
         confirmPassword = (EditText) findViewById(R.id.confirm_password);
         progressBar = (ProgressBar) findViewById(R.id.sign_up_progress);
-        cancel = (TextView) findViewById(R.id.tv_cancel_signup);
+
+        TextView cancel = (TextView) findViewById(R.id.tv_cancel_signup);
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +105,7 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
 
     /**
      * Method to send sign up data to save user
+     *
      * @param view View
      */
     public void sendSignUpData(View view) {
@@ -167,7 +164,7 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
         closeProgressBar();
         View view = this.getCurrentFocus();
         if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
         finish();
@@ -175,7 +172,8 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
 
     /**
      * Method to verify if some fields are empty
-     * @param email Email
+     *
+     * @param email    Email
      * @param password Password
      * @return True if email or password is empty, false Otherwise
      */

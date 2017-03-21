@@ -19,6 +19,7 @@ import com.androidapp.getinline.R;
 import com.androidapp.getinline.adapters.EstablishmentAdapter;
 import com.androidapp.getinline.entities.Establishment;
 import com.androidapp.getinline.interfaces.RetrofitArrayAPI;
+import com.androidapp.getinline.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,14 +33,11 @@ import retrofit.Retrofit;
 import static com.androidapp.getinline.R.string.search;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-/**
- * Created by pedroadmn-PC on 3/9/2017.
- */
-
 public class LineFragment extends Fragment implements SearchView.OnQueryTextListener {
 
-    String url = "http://projeto1getinline.herokuapp.com/";
-
+    /**
+     * Recycle View
+     */
     RecyclerView mRecyclerView;
 
     /**
@@ -95,7 +93,7 @@ public class LineFragment extends Fragment implements SearchView.OnQueryTextList
     void getRetrofitArray() {
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
+                .baseUrl(Util.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -112,8 +110,8 @@ public class LineFragment extends Fragment implements SearchView.OnQueryTextList
                     List<Establishment> establishmentData = response.body();
                     Log.d("RETROFIT", establishmentData.get(0).toString());
 
-                    for(int i = 0; i < establishmentData.size(); i++){
-                        Establishment est = new Establishment(establishmentData.get(i).getName(), establishmentData.get(i).getWebSite(), establishmentData.get(i).getEmail(),
+                    for (int i = 0; i < establishmentData.size(); i++) {
+                        Establishment est = new Establishment(establishmentData.get(i).getUrlPhoto(), establishmentData.get(i).getName(), establishmentData.get(i).getWebSite(), establishmentData.get(i).getEmail(),
                                 establishmentData.get(i).get_id(), establishmentData.get(i).getSize(), establishmentData.get(i).getAttendingTime());
 
                         establishments.add(est);

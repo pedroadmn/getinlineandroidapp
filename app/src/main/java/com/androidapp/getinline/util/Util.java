@@ -20,7 +20,7 @@ public class Util {
     /**
      * Constant EMAIL_PATTERN
      */
-    public static final String EMAIL_PATTERN = "^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$";
+    private static final String EMAIL_PATTERN = "^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$";
 
     /**
      * Constant GOOGLE_USER_CONTENT_KEY
@@ -44,7 +44,7 @@ public class Util {
 
     /**
      * Constant EMAIL_KEY
-      */
+     */
     public static final String EMAIL_KEY = "email";
 
     /**
@@ -84,8 +84,9 @@ public class Util {
 
     /**
      * Method to validate user email address
+     *
      * @param context Context
-     * @param email Email
+     * @param email   Email
      * @return True if the email has a validate format, False otherwise
      */
     public static boolean validateEmail(Context context, String email) {
@@ -102,7 +103,8 @@ public class Util {
 
     /**
      * Method to validate if the passwords match
-     * @param context Context
+     *
+     * @param context  Context
      * @param pass1Str Password
      * @param pass2Str Password
      * @return True if the passwords match, False otherwise
@@ -118,6 +120,7 @@ public class Util {
 
     /**
      * Method to setup the start tutorial screens
+     *
      * @param context Context
      * @return Tutorial Item List
      */

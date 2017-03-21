@@ -6,16 +6,12 @@ import android.content.SharedPreferences;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-/**
- * Created by pedroadmn on 1/21/2017.
- */
-
 public class LibraryClass {
 
     /**
      * Static attribute PREF
      */
-    public static String PREF = "com.androidapp.getinline.PREF";
+    private static String PREF = "com.androidapp.getinline.PREF";
 
     /**
      * Firebase Database Reference
@@ -30,6 +26,7 @@ public class LibraryClass {
 
     /**
      * Method to get Firebase Database Reference
+     *
      * @return Firebase Database Reference
      */
     public static DatabaseReference getFirebase() {
@@ -41,9 +38,10 @@ public class LibraryClass {
 
     /**
      * Method to save on shared preference the pair provider : token
+     *
      * @param context Context
-     * @param key Key
-     * @param value Value
+     * @param key     Key
+     * @param value   Value
      */
     public static void saveSP(Context context, String key, String value) {
         SharedPreferences sp = context.getSharedPreferences(PREF, Context.MODE_PRIVATE);
@@ -52,8 +50,9 @@ public class LibraryClass {
 
     /**
      * Method to get token based on provider
+     *
      * @param context Context
-     * @param key Key
+     * @param key     Key
      * @return Token
      */
     public static String getSP(Context context, String key) {

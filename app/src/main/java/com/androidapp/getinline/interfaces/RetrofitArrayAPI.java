@@ -21,9 +21,21 @@ public interface RetrofitArrayAPI {
     @GET("/api/allEstablishments")
     Call<List<Establishment>> getEstablishmentDetails();
 
+    /**
+     * Post to add client to Establishment line
+     *
+     * @param nameEstablishment Establishment name
+     * @param nameClient        Client name
+     * @param idClient          Client id
+     * @param tokenGCM          Token FCM
+     * @param establishmentId   Establishment id
+     * @param loginClient       Client login
+     * @return Callback Response
+     */
+
     @FormUrlEncoded
     @POST("/api/addClientQueue")
-    Call<ResponseBody>  getUserLogin(
+    Call<ResponseBody> postClientToQueue(
             @Field("nameEstablishment") String nameEstablishment,
             @Field("nameClient") String nameClient,
             /*@Field("currentHour") String currentHour,*/
@@ -32,5 +44,4 @@ public interface RetrofitArrayAPI {
             @Field("est_id") String establishmentId,
             @Field("login") String loginClient
     );
-
 }

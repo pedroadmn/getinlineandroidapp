@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class User implements Parcelable {
 
-    public static String PROVIDER = "com.androidapp.getinline.entities.User.PROVIDER";
+    private static String PROVIDER = "com.androidapp.getinline.entities.User.PROVIDER";
 
     /**
      * User id
@@ -182,7 +182,7 @@ public class User implements Parcelable {
 
     /**
      * Method to set User new password
-     * @param newPassword
+     * @param newPassword New Password
      */
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
@@ -202,7 +202,7 @@ public class User implements Parcelable {
      * @param context Context
      * @return Token
      */
-    public String getProviderSP(Context context) {
+    private String getProviderSP(Context context) {
         return (LibraryClass.getSP(context, PROVIDER));
     }
 

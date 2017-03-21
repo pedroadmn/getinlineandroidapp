@@ -41,11 +41,6 @@ import java.util.Arrays;
 
 import za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity;
 
-
-/**
- * Created by pedroadmn on 1/21/2017.
- */
-
 public class LoginActivity extends CommonActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     /**
@@ -89,15 +84,6 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
      */
     private User user;
 
-    /**
-     * The profile email to be shown in the navigation list header
-     */
-    private String profileEmail;
-
-    /**
-     * The profile photo Uri to use in the navigation list header
-     */
-    private Uri profilePhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -382,7 +368,7 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
     /**
      * Method to send google login data
      *
-     * @param view
+     * @param view View
      */
     public void sendLoginGoogleData(View view) {
         FirebaseCrash.log("LoginActivity:clickListener:button:sendLoginGoogleData()");
@@ -393,9 +379,9 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
     /**
      * Method to switch from LoginActivity to MainActivity
      *
-     * @param profileName
-     * @param profileEmail
-     * @param profilePhoto
+     * @param profileName  User Name
+     * @param profileEmail User Email
+     * @param profilePhoto User Profile Photo
      */
     private void callMainActivity(String profileName, String profileEmail, Uri profilePhoto) {
         Intent intent = new Intent(this, MainActivity.class);

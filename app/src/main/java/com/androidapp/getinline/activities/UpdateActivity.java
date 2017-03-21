@@ -16,10 +16,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-/**
- * Created by pedroadmn on 1/22/2017.
- */
-
 public class UpdateActivity extends AppCompatActivity implements ValueEventListener, DatabaseReference.CompletionListener {
 
     /**
@@ -69,6 +65,7 @@ public class UpdateActivity extends AppCompatActivity implements ValueEventListe
 
     /**
      * Method to update name
+     *
      * @param view View
      */
     public void update(View view) {

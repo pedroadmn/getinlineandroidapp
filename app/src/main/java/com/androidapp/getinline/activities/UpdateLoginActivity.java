@@ -82,6 +82,7 @@ public class UpdateLoginActivity extends AppCompatActivity implements ValueEvent
 
     /**
      * Method to update email
+     *
      * @param view View
      */
     public void update(View view) {

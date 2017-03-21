@@ -81,6 +81,7 @@ public class UpdatePasswordActivity extends AppCompatActivity implements ValueEv
 
     /**
      * Method to update password
+     *
      * @param view View
      */
     public void update(View view) {

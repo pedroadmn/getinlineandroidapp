@@ -20,14 +20,16 @@ import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-/**
- * Created by pedroadmn-PC on 3/14/2017.
- */
-
 public class EstablishmentActivity extends AppCompatActivity {
 
-    private Button goToLine;
+    /**
+     * An Establishment object
+     */
     private Establishment establishment;
+
+    /**
+     * A User object
+     */
     private User user;
 
     @Override
@@ -35,7 +37,7 @@ public class EstablishmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_establishment);
 
-        goToLine = (Button) findViewById(R.id.bt_go_to_line);
+        Button goToLine = (Button) findViewById(R.id.bt_go_to_line);
 
         establishment = getIntent().getParcelableExtra(Util.KEY_ESTABLISHMENT);
         user = getIntent().getParcelableExtra(Util.KEY_USER);
@@ -62,7 +64,7 @@ public class EstablishmentActivity extends AppCompatActivity {
                 Log.d("USERTOKENFCM", user.getTokenFCM());
                 Log.d("ESTABLISHMENTID", establishment.get_id());
 
-                Call<ResponseBody> call = service.getUserLogin(establishment.getName(), user.getName(), user.getId(), user.getTokenFCM(), establishment.get_id(), user.getEmail());
+                Call<ResponseBody> call = service.postClientToQueue(establishment.getName(), user.getName(), user.getId(), user.getTokenFCM(), establishment.get_id(), user.getEmail());
 
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
@@ -79,7 +81,10 @@ public class EstablishmentActivity extends AppCompatActivity {
         });
     }
 
-    private void createEstablishmentScreen(){
+    /**
+     * Method that initialize and set the visual resource of Establiment Screen
+     */
+    private void createEstablishmentScreen() {
         TextView name = (TextView) findViewById(R.id.tv_est_name);
         TextView email = (TextView) findViewById(R.id.tv_est_email);
         TextView time = (TextView) findViewById(R.id.tv_est_time);

@@ -34,11 +34,6 @@ public class ResetActivity extends CommonActivity {
     private FirebaseAuth mAuth;
 
     /**
-     * The reset button
-     */
-    private Button resetButton;
-
-    /**
      * Visual indicator of progress in some operation
      */
     protected ProgressBar progressBar;
@@ -97,7 +92,8 @@ public class ResetActivity extends CommonActivity {
     protected void initViews() {
         toolbar.setTitle(getResources().getString(R.string.reset));
         email = (AutoCompleteTextView) findViewById(R.id.email);
-        resetButton = (Button) findViewById(R.id.bt_reset);
+
+        Button resetButton = (Button) findViewById(R.id.bt_reset);
         progressBar = (ProgressBar) findViewById(R.id.login_progress);
 
         resetButton.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +106,7 @@ public class ResetActivity extends CommonActivity {
 
     /**
      * Method to verify if email field is empty
+     *
      * @param email Email
      * @return True if field is empty, and False otherwise
      */

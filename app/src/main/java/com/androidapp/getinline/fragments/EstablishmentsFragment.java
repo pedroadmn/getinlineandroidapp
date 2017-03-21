@@ -1,6 +1,5 @@
 package com.androidapp.getinline.fragments;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,7 +20,6 @@ import com.androidapp.getinline.R;
 import com.androidapp.getinline.activities.EstablishmentActivity;
 import com.androidapp.getinline.adapters.EstablishmentAdapter;
 import com.androidapp.getinline.entities.Establishment;
-import com.androidapp.getinline.entities.User;
 import com.androidapp.getinline.interfaces.RetrofitArrayAPI;
 import com.androidapp.getinline.listener.ClickListener;
 import com.androidapp.getinline.listener.RecyclerTouchListener;
@@ -39,11 +37,7 @@ import retrofit.Retrofit;
 import static com.androidapp.getinline.R.string.search;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-/**
- * Created by pedroadmn-PC on 3/9/2017.
- */
-
-public class EstablishmentsFragment extends Fragment implements SearchView.OnQueryTextListener   {
+public class EstablishmentsFragment extends Fragment implements SearchView.OnQueryTextListener {
 
     RecyclerView mRecyclerView;
 
@@ -131,8 +125,9 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
 
                     List<Establishment> establishmentData = response.body();
 
-                    for(int i = 0; i < establishmentData.size(); i++){
-                        Establishment est = new Establishment(establishmentData.get(i).getName(), establishmentData.get(i).getWebSite(), establishmentData.get(i).getEmail(),
+                    for (int i = 0; i < establishmentData.size(); i++) {
+                        Log.d("URLPHOTO", establishmentData.get(i).getUrlPhoto().toString());
+                        Establishment est = new Establishment(establishmentData.get(i).getUrlPhoto(), establishmentData.get(i).getName(), establishmentData.get(i).getWebSite(), establishmentData.get(i).getEmail(),
                                 establishmentData.get(i).get_id(), establishmentData.get(i).getSize(), establishmentData.get(i).getAttendingTime());
 
                         establishments.add(est);

@@ -1,6 +1,6 @@
 package com.androidapp.getinline.entities;
 
-
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,10 +11,10 @@ public class Establishment implements Parcelable {
      */
     private String _id;
 
-//    /**
-//     * Establishment icon
-//     */
-//    private Drawable icon;
+    /**
+     * Establishment icon
+     */
+    private String urlPhoto;
 
     /**
      * The Establishment Name.
@@ -43,17 +43,18 @@ public class Establishment implements Parcelable {
 
     /**
      * Establishment constructor
-     //* @param establishmentIcon Establishment Icon
-     * @param establishmentName Establishment Name
+     * //* @param establishmentIcon Establishment Icon
+     *
+     * @param establishmentName    Establishment Name
      * @param establishmentWebSite Establishment WebSite
-     * @param establishmentEmail Establishment Email
-     * @param establishmentId Establishment Id
-     * @param estQueueSize Establishment Queue Size
-     * @param attendingTime Establishment Attendance Time Average
+     * @param establishmentEmail   Establishment Email
+     * @param establishmentId      Establishment Id
+     * @param estQueueSize         Establishment Queue Size
+     * @param attendingTime        Establishment Attendance Time Average
      */
-    public Establishment(/*final Drawable establishmentIcon,*/ final String establishmentName, final String establishmentWebSite, final String establishmentEmail, final String establishmentId,
+    public Establishment(final String urlPhoto, final String establishmentName, final String establishmentWebSite, final String establishmentEmail, final String establishmentId,
                          final String estQueueSize, final String attendingTime) {
-        //setIcon(establishmentIcon);
+        setUrlPhoto(urlPhoto);
         setName(establishmentName);
         setWebSite(establishmentWebSite);
         setEmail(establishmentEmail);
@@ -64,6 +65,7 @@ public class Establishment implements Parcelable {
 
     /**
      * Method to get Establishment Id
+     *
      * @return Establishment Id
      */
     public final String get_id() {
@@ -72,30 +74,32 @@ public class Establishment implements Parcelable {
 
     /**
      * Method to set Establishment Id
+     *
      * @param establishmentId New establishment _id
      */
     public final void set_id(final String establishmentId) {
         this._id = establishmentId;
     }
 
-//    /**
-//     * Method to get Establishment icon
-//     * @return Establishment icon
-//     */
-//    public Drawable getIcon(){
-//        return icon;
-//    }
-//
-//    /**
-//     * Method to set Establishment icon
-//     * @param icon New establishment icon
-//     */
-//    public void setIcon(Drawable icon) {
-//        this.icon = icon;
-//    }
+    /**
+     * Method to get Establishment icon
+     * @return Establishment icon
+     */
+    public String getUrlPhoto(){
+        return urlPhoto;
+    }
+
+    /**
+     * Method to set Establishment icon
+     * @param urlPhoto New establishment urlPhoto
+     */
+    public void setUrlPhoto(String urlPhoto) {
+        this.urlPhoto = urlPhoto;
+    }
 
     /**
      * Method to get Establishment name
+     *
      * @return Establishment name
      */
     public final String getName() {
@@ -104,6 +108,7 @@ public class Establishment implements Parcelable {
 
     /**
      * Method to set Establishment name
+     *
      * @param name New establishment name
      */
     public final void setName(final String name) {
@@ -112,6 +117,7 @@ public class Establishment implements Parcelable {
 
     /**
      * Method to get Establishment email
+     *
      * @return Establishment email
      */
     public final String getEmail() {
@@ -120,6 +126,7 @@ public class Establishment implements Parcelable {
 
     /**
      * Method to set Establishment email
+     *
      * @param email New establishment email
      */
     public final void setEmail(final String email) {
@@ -128,6 +135,7 @@ public class Establishment implements Parcelable {
 
     /**
      * Method to get Establishment queue size
+     *
      * @return Establishment queue size
      */
     public final String getSize() {
@@ -136,6 +144,7 @@ public class Establishment implements Parcelable {
 
     /**
      * Method to set Establishment queue size
+     *
      * @param queueSize New establishment size
      */
     public final void setSize(final String queueSize) {
@@ -144,6 +153,7 @@ public class Establishment implements Parcelable {
 
     /**
      * Method to set Establishment attendance attendingTime average
+     *
      * @param attendingTime New attendance attendingTime average
      */
     public void setAttendingTime(String attendingTime) {
@@ -152,6 +162,7 @@ public class Establishment implements Parcelable {
 
     /**
      * Method to get Establishment attendance attendingTime average
+     *
      * @return Establishment attendance attendingTime average
      */
     public String getAttendingTime() {
@@ -160,14 +171,16 @@ public class Establishment implements Parcelable {
 
     /**
      * Method to get Establishment Web Site
+     *
      * @return Establishment website
      */
-    public String getWebSite(){
+    public String getWebSite() {
         return website;
     }
 
     /**
      * Method to set Establishment Web Site
+     *
      * @param website New Establishment website
      */
     public void setWebSite(String website) {
@@ -202,6 +215,7 @@ public class Establishment implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this._id);
+        dest.writeString(this.urlPhoto);
         dest.writeString(this.name);
         dest.writeString(this.email);
         dest.writeString(this.queueSize);
@@ -211,6 +225,7 @@ public class Establishment implements Parcelable {
 
     protected Establishment(Parcel in) {
         this._id = in.readString();
+        this.urlPhoto = in.readString();
         this.name = in.readString();
         this.email = in.readString();
         this.queueSize = in.readString();
@@ -218,7 +233,7 @@ public class Establishment implements Parcelable {
         this.website = in.readString();
     }
 
-    public static final Parcelable.Creator<Establishment> CREATOR = new Parcelable.Creator<Establishment>() {
+    public static final Creator<Establishment> CREATOR = new Creator<Establishment>() {
         @Override
         public Establishment createFromParcel(Parcel source) {
             return new Establishment(source);

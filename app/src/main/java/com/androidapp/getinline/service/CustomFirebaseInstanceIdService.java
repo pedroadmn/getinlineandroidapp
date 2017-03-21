@@ -12,7 +12,7 @@ public class CustomFirebaseInstanceIdService extends FirebaseInstanceIdService {
     public void onTokenRefresh() {
         String token = FirebaseInstanceId.getInstance().getToken();
 
-        TokenEvent tokenEvent = new TokenEvent( token );
+        TokenEvent tokenEvent = new TokenEvent(token);
         EventBus.getDefault().post(tokenEvent);
     }
 }

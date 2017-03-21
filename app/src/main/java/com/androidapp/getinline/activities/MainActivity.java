@@ -57,17 +57,12 @@ public class MainActivity extends AppCompatActivity {
      */
     private String mActivityTitle;
 
-    /**
-     * A User
-     */
-    private User user;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        user = getIntent().getParcelableExtra(Util.KEY_USER);
+        User user = getIntent().getParcelableExtra(Util.KEY_USER);
         Log.d("KEYUSER", user.getEmail());
 
         mActivityTitle = getTitle().toString();
@@ -117,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
                         Intent tutorialIntent = new Intent(getBaseContext(), MaterialTutorialActivity.class);
                         tutorialIntent.putParcelableArrayListExtra(MaterialTutorialActivity.MATERIAL_TUTORIAL_ARG_TUTORIAL_ITEMS, Util.getTutorialItems(getBaseContext()));
                         startActivity(tutorialIntent);
-                        Toast.makeText(getApplicationContext(), "Setup Guide", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.legal:
                         Toast.makeText(getApplicationContext(), "Legal", Toast.LENGTH_SHORT).show();

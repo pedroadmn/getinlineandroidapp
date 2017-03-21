@@ -143,7 +143,8 @@ public class LinkAccountsActivity extends CommonActivity
 
     /**
      * Intermediary Method to send conventional credential to method accessLoginData
-     * @param email Email
+     *
+     * @param email    Email
      * @param password Password
      */
     private void accessEmailLoginData(String email, String password) {
@@ -152,6 +153,7 @@ public class LinkAccountsActivity extends CommonActivity
 
     /**
      * Intermediary Method to send facebook token credential to method accessLoginData
+     *
      * @param accessToken Token given by Facebook
      */
     private void accessFacebookLoginData(AccessToken accessToken) {
@@ -161,6 +163,7 @@ public class LinkAccountsActivity extends CommonActivity
 
     /**
      * Intermediary Method to send google token credential to accessLoginData method
+     *
      * @param accessToken Token given by Google
      */
     private void accessGoogleLoginData(String accessToken) {
@@ -169,8 +172,9 @@ public class LinkAccountsActivity extends CommonActivity
 
     /**
      * Method to access login credentials of some provider(Email, Facebook or Google) and link with existent account
+     *
      * @param provider Login provider name(Email, Facebook or Google)
-     * @param tokens Token given by provider(Facebook or Google)
+     * @param tokens   Token given by provider(Facebook or Google)
      */
     private void accessLoginData(final String provider, String... tokens) {
         if (tokens != null
@@ -250,11 +254,12 @@ public class LinkAccountsActivity extends CommonActivity
 
     /**
      * Method to set the button labels
-     * @param buttonId Button Id
+     *
+     * @param buttonId   Button Id
      * @param providerId Provider Id
-     * @param linkId Link Id
-     * @param unlinkId Unlink Id
-     * @param fieldsIds Fields Id
+     * @param linkId     Link Id
+     * @param unlinkId   Unlink Id
+     * @param fieldsIds  Fields Id
      */
     private void setButtonLabel(
             int buttonId,
@@ -274,8 +279,9 @@ public class LinkAccountsActivity extends CommonActivity
 
     /**
      * Method to show or hide fields
+     *
      * @param status True if it is a linked provider, False otherwise
-     * @param ids Fields Id
+     * @param ids    Fields Id
      */
     private void showHideFields(boolean status, int... ids) {
         for (int id : ids) {
@@ -305,6 +311,7 @@ public class LinkAccountsActivity extends CommonActivity
 
     /**
      * Method to unlink account if it is a a linked provider, or link account otherwise
+     *
      * @param view View
      */
     public void sendLoginData(View view) {
@@ -320,6 +327,7 @@ public class LinkAccountsActivity extends CommonActivity
 
     /**
      * Method to unlink account if it is an linked provider, or link account otherwise
+     *
      * @param view View
      */
     public void sendLoginFacebookData(View view) {
@@ -339,6 +347,7 @@ public class LinkAccountsActivity extends CommonActivity
 
     /**
      * Method to unlink account if it is an linked provider, or link account otherwise
+     *
      * @param view View
      */
     public void sendLoginGoogleData(View view) {
@@ -370,7 +379,8 @@ public class LinkAccountsActivity extends CommonActivity
 
     /**
      * Method to unlink account
-     * @param providerId
+     *
+     * @param providerId Provider Id
      */
     private void unlinkProvider(final String providerId) {
 
@@ -403,6 +413,7 @@ public class LinkAccountsActivity extends CommonActivity
 
     /**
      * Method to know if the account is the last provider link
+     *
      * @param providerId Provider Id
      * @return True if provider list is equal 0 or equal 1 and provider id is by Email
      */
