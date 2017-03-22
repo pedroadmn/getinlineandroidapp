@@ -10,7 +10,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidapp.getinline.R;
+import com.androidapp.getinline.Session;
 import com.androidapp.getinline.adapters.ViewPagerAdapter;
 import com.androidapp.getinline.entities.User;
 import com.androidapp.getinline.fragments.EstablishmentsFragment;
@@ -27,6 +27,8 @@ import com.androidapp.getinline.util.Util;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.HashMap;
 
 import za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity;
 
@@ -57,18 +59,20 @@ public class MainActivity extends AppCompatActivity {
      */
     private String mActivityTitle;
 
+    /**
+     * Map to retrieve user info from Shared Preference
+     */
+    private HashMap<String, String> userSession;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        User user = getIntent().getParcelableExtra(Util.KEY_USER);
-        Log.d("KEYUSER", user.getEmail());
+        Session session = new Session(this);
+        userSession = session.getUserDetails();
 
         mActivityTitle = getTitle().toString();
-
-//        String token = FirebaseInstanceId.getInstance().getToken();
-//        Log.d("TOKEEN", token);
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -130,14 +134,10 @@ public class MainActivity extends AppCompatActivity {
         TextView tv_email = (TextView) header.findViewById(R.id.profile_email);
         TextView tv_name = (TextView) header.findViewById(R.id.profile_name);
 
-        String profileName = getIntent().getStringExtra("profileName");
-        String profileEmail = getIntent().getStringExtra("profileEmail");
-        String profilePhoto = getIntent().getStringExtra("profilePhoto");
+        tv_email.setText(userSession.get(Session.KEY_USER_EMAIL));
+        tv_name.setText(userSession.get(Session.KEY_USER_NAME));
 
-        tv_email.setText(profileEmail);
-        tv_name.setText(profileName);
-
-        Glide.with(getApplicationContext()).load(profilePhoto)
+        Glide.with(getApplicationContext()).load(userSession.get(Session.KEY_USER_URL_PHOTO))
                 .thumbnail(0.5f)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

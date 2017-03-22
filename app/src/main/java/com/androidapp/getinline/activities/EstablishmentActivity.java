@@ -9,11 +9,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidapp.getinline.R;
+import com.androidapp.getinline.Session;
 import com.androidapp.getinline.entities.Establishment;
 import com.androidapp.getinline.entities.User;
 import com.androidapp.getinline.interfaces.EstablishmentsAPI;
 import com.androidapp.getinline.util.Util;
 import com.squareup.okhttp.ResponseBody;
+
+import java.util.HashMap;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -29,24 +32,23 @@ public class EstablishmentActivity extends AppCompatActivity {
     private Establishment establishment;
 
     /**
-     * A User object
+     * Map to retrieve user info from Shared Preference
      */
-    private User user;
+    private HashMap<String, String> userSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_establishment);
 
+        Session session = new Session(this);
+        userSession = session.getUserDetails();
+
         Button goToLine = (Button) findViewById(R.id.bt_go_to_line);
 
         establishment = getIntent().getParcelableExtra(Util.KEY_ESTABLISHMENT);
 
-        user = getIntent().getParcelableExtra(Util.KEY_USER);
         createEstablishmentScreen();
-
-        Log.d("KEYUSER", user.getEmail());
-        Log.d("KEYESTABLISHMENT", establishment.getEmail());
 
         goToLine.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,14 +60,8 @@ public class EstablishmentActivity extends AppCompatActivity {
 
                 EstablishmentsAPI api = retrofit.create(EstablishmentsAPI.class);
 
-                Log.d("USEREMAIL", user.getEmail());
-                Log.d("USERNAME", user.getName());
-                Log.d("ESTABLISHMENTNAME", establishment.getName());
-                Log.d("USERID", user.getId());
-                Log.d("USERTOKENFCM", user.getTokenFCM());
-                Log.d("ESTABLISHMENTID", establishment.get_id());
-
-                Call<ResponseBody> call = api.postClientToQueue(establishment.getName(), user.getName(), user.getId(), user.getTokenFCM(), establishment.get_id(), user.getEmail());
+                Call<ResponseBody> call = api.postClientToQueue(establishment.getName(), userSession.get(Session.KEY_USER_NAME), userSession.get(Session.KEY_USER_ID),
+                        userSession.get(Session.KEY_USER_TOKEN_FCM), establishment.get_id(), userSession.get(Session.KEY_USER_EMAIL));
 
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override

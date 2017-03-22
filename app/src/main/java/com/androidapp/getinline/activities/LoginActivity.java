@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -11,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.androidapp.getinline.R;
+import com.androidapp.getinline.Session;
 import com.androidapp.getinline.entities.User;
 import com.androidapp.getinline.util.Util;
 import com.facebook.AccessToken;
@@ -84,11 +86,18 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
      */
     private User user;
 
+    /**
+     * Session to save User info on Shared Preference
+     */
+    private Session session;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        session = new Session(this);
 
         registerFacebookCallBack();
         registerGoogleSignOption();
@@ -255,7 +264,10 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
                     user.setEmailIfNull(userFirebase.getEmail());
                     user.saveDB();
                 }
-                callMainActivity(userFirebase.getDisplayName(), userFirebase.getEmail(), userFirebase.getPhotoUrl());
+
+                session.createLoginSession(userFirebase.getDisplayName(), userFirebase.getEmail(), userFirebase.getUid(),
+                        FirebaseInstanceId.getInstance().getToken(), userFirebase.getPhotoUrl().toString());
+                callMainActivity();
             }
         };
         return callback;
@@ -378,17 +390,9 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
 
     /**
      * Method to switch from LoginActivity to MainActivity
-     *
-     * @param profileName  User Name
-     * @param profileEmail User Email
-     * @param profilePhoto User Profile Photo
      */
-    private void callMainActivity(String profileName, String profileEmail, Uri profilePhoto) {
+    private void callMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("profileEmail", profileEmail);
-        intent.putExtra("profilePhoto", profilePhoto.toString());
-        intent.putExtra("profileName", profileName);
-        intent.putExtra(Util.KEY_USER, user);
         startActivity(intent);
         finish();
     }
@@ -398,7 +402,9 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
      */
     private void verifyLogged() {
         if (mAuth.getCurrentUser() != null) {
-            callMainActivity(mAuth.getCurrentUser().getDisplayName(), mAuth.getCurrentUser().getEmail(), mAuth.getCurrentUser().getPhotoUrl());
+            session.createLoginSession(mAuth.getCurrentUser().getDisplayName(), mAuth.getCurrentUser().getEmail(),
+                    mAuth.getCurrentUser().getUid(), FirebaseInstanceId.getInstance().getToken(), mAuth.getCurrentUser().getPhotoUrl().toString());
+            callMainActivity();
         } else {
             mAuth.addAuthStateListener(mAuthListener);
         }
