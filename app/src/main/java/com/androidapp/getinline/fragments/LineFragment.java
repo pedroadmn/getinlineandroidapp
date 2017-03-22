@@ -1,5 +1,6 @@
 package com.androidapp.getinline.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -91,7 +92,7 @@ public class LineFragment extends Fragment implements SearchView.OnQueryTextList
     }
 
     void getRetrofitArray() {
-
+        final ProgressDialog loading = ProgressDialog.show(getContext(), "Fetching Data", "Please wait...", false, false);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Util.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -104,7 +105,7 @@ public class LineFragment extends Fragment implements SearchView.OnQueryTextList
         call.enqueue(new Callback<List<Establishment>>() {
             @Override
             public void onResponse(Response<List<Establishment>> response, Retrofit retrofit) {
-
+                loading.dismiss();
                 try {
 
                     List<Establishment> establishmentData = response.body();

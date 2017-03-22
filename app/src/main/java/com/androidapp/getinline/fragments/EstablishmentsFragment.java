@@ -1,5 +1,6 @@
 package com.androidapp.getinline.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -108,6 +109,7 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
 
     void getRetrofitArray() {
 
+        final ProgressDialog loading = ProgressDialog.show(getContext(), "Fetching Data", "Please wait...", false, false);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Util.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -120,13 +122,19 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
         call.enqueue(new Callback<List<Establishment>>() {
             @Override
             public void onResponse(Response<List<Establishment>> response, Retrofit retrofit) {
-
+                loading.dismiss();
                 try {
 
                     List<Establishment> establishmentData = response.body();
 
                     for (int i = 0; i < establishmentData.size(); i++) {
-                        Log.d("URLPHOTO", establishmentData.get(i).getUrlPhoto().toString());
+                        Log.d("ESTPHOTO", establishmentData.get(i).getUrlPhoto());
+                        Log.d("ESTNAME", establishmentData.get(i).getName());
+                        Log.d("ESTWEBSITE", establishmentData.get(i).getWebSite());
+                        Log.d("ESTEMAIL", establishmentData.get(i).getEmail());
+                        Log.d("ESTID", establishmentData.get(i).get_id());
+                        Log.d("ESTGETSIZE", establishmentData.get(i).getSize());
+                        Log.d("ESTATTENDTIME", establishmentData.get(i).getAttendingTime());
                         Establishment est = new Establishment(establishmentData.get(i).getUrlPhoto(), establishmentData.get(i).getName(), establishmentData.get(i).getWebSite(), establishmentData.get(i).getEmail(),
                                 establishmentData.get(i).get_id(), establishmentData.get(i).getSize(), establishmentData.get(i).getAttendingTime());
 

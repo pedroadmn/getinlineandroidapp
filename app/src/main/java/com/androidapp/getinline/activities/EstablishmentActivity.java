@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidapp.getinline.R;
 import com.androidapp.getinline.entities.Establishment;
@@ -40,8 +41,8 @@ public class EstablishmentActivity extends AppCompatActivity {
         Button goToLine = (Button) findViewById(R.id.bt_go_to_line);
 
         establishment = getIntent().getParcelableExtra(Util.KEY_ESTABLISHMENT);
-        user = getIntent().getParcelableExtra(Util.KEY_USER);
 
+        user = getIntent().getParcelableExtra(Util.KEY_USER);
         createEstablishmentScreen();
 
         Log.d("KEYUSER", user.getEmail());
@@ -69,7 +70,7 @@ public class EstablishmentActivity extends AppCompatActivity {
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Response<ResponseBody> response, Retrofit retrofit) {
-                        Log.d("ONRESPONSEPOST", "ONRESPONSEPOST");
+                        Toast.makeText(getBaseContext(), "You are in " + establishment.getName() + " line", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

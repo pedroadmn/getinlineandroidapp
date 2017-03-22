@@ -89,11 +89,11 @@ public class EstablishmentAdapter extends RecyclerView.Adapter<EstablishmentAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Collections.sort(filterList, new Comparator<Establishment>() {
-            public int compare(Establishment est1, Establishment est2) {
-                return est1.getName().compareTo(est2.getName());
-            }
-        });
+//        Collections.sort(filterList, new Comparator<Establishment>() {
+//            public int compare(Establishment est1, Establishment est2) {
+//                return est1.getName().compareTo(est2.getName());
+//            }
+//        });
 
         Establishment establishment = filterList.get(position);
 
