@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.androidapp.getinline.R;
 import com.androidapp.getinline.entities.Establishment;
 import com.androidapp.getinline.entities.User;
-import com.androidapp.getinline.interfaces.RetrofitArrayAPI;
+import com.androidapp.getinline.interfaces.EstablishmentsAPI;
 import com.androidapp.getinline.util.Util;
 import com.squareup.okhttp.ResponseBody;
 
@@ -56,7 +56,7 @@ public class EstablishmentActivity extends AppCompatActivity {
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 
-                RetrofitArrayAPI service = retrofit.create(RetrofitArrayAPI.class);
+                EstablishmentsAPI api = retrofit.create(EstablishmentsAPI.class);
 
                 Log.d("USEREMAIL", user.getEmail());
                 Log.d("USERNAME", user.getName());
@@ -65,7 +65,7 @@ public class EstablishmentActivity extends AppCompatActivity {
                 Log.d("USERTOKENFCM", user.getTokenFCM());
                 Log.d("ESTABLISHMENTID", establishment.get_id());
 
-                Call<ResponseBody> call = service.postClientToQueue(establishment.getName(), user.getName(), user.getId(), user.getTokenFCM(), establishment.get_id(), user.getEmail());
+                Call<ResponseBody> call = api.postClientToQueue(establishment.getName(), user.getName(), user.getId(), user.getTokenFCM(), establishment.get_id(), user.getEmail());
 
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override

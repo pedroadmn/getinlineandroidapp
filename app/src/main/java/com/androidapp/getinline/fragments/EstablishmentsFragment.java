@@ -21,7 +21,7 @@ import com.androidapp.getinline.R;
 import com.androidapp.getinline.activities.EstablishmentActivity;
 import com.androidapp.getinline.adapters.EstablishmentAdapter;
 import com.androidapp.getinline.entities.Establishment;
-import com.androidapp.getinline.interfaces.RetrofitArrayAPI;
+import com.androidapp.getinline.interfaces.EstablishmentsAPI;
 import com.androidapp.getinline.listener.ClickListener;
 import com.androidapp.getinline.listener.RecyclerTouchListener;
 import com.androidapp.getinline.util.Util;
@@ -109,46 +109,28 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
 
     void getRetrofitArray() {
 
-        final ProgressDialog loading = ProgressDialog.show(getContext(), "Fetching Data", "Please wait...", false, false);
+        final ProgressDialog loading = ProgressDialog.show(getContext(), getResources().getString(R.string.fetching_data), getResources().getString(R.string.please_wait), false, false);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Util.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        RetrofitArrayAPI service = retrofit.create(RetrofitArrayAPI.class);
+        EstablishmentsAPI api = retrofit.create(EstablishmentsAPI.class);
 
-        Call<List<Establishment>> call = service.getEstablishmentDetails();
+        Call<List<Establishment>> call = api.getEstablishmentDetails();
 
         call.enqueue(new Callback<List<Establishment>>() {
             @Override
             public void onResponse(Response<List<Establishment>> response, Retrofit retrofit) {
                 loading.dismiss();
                 try {
-
-                    List<Establishment> establishmentData = response.body();
-
-                    for (int i = 0; i < establishmentData.size(); i++) {
-                        Log.d("ESTPHOTO", establishmentData.get(i).getUrlPhoto());
-                        Log.d("ESTNAME", establishmentData.get(i).getName());
-                        Log.d("ESTWEBSITE", establishmentData.get(i).getWebSite());
-                        Log.d("ESTEMAIL", establishmentData.get(i).getEmail());
-                        Log.d("ESTID", establishmentData.get(i).get_id());
-                        Log.d("ESTGETSIZE", establishmentData.get(i).getSize());
-                        Log.d("ESTATTENDTIME", establishmentData.get(i).getAttendingTime());
-                        Establishment est = new Establishment(establishmentData.get(i).getUrlPhoto(), establishmentData.get(i).getName(), establishmentData.get(i).getWebSite(), establishmentData.get(i).getEmail(),
-                                establishmentData.get(i).get_id(), establishmentData.get(i).getSize(), establishmentData.get(i).getAttendingTime());
-
-                        establishments.add(est);
-
-                        mEstablishmentAdapter = new EstablishmentAdapter(getContext(), establishments);
-                        mRecyclerView.setAdapter(mEstablishmentAdapter);
-                    }
-
+                    establishments = response.body();;
+                    mEstablishmentAdapter = new EstablishmentAdapter(getContext(), establishments);
+                    mRecyclerView.setAdapter(mEstablishmentAdapter);
                 } catch (Exception e) {
                     Log.d("onResponse", "There is an error");
                     e.printStackTrace();
                 }
-
             }
 
             @Override

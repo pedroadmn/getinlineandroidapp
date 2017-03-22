@@ -77,5 +77,7 @@
     <string name="setup_guide">Setup guide</string>
     <string name="legal">Legal</string>
     <string name="profile">Profile</string>
+    <string name="fetching_data">Fetching data</string>
+    <string name="please_wait">Please wait...</string>
 
 </resources>

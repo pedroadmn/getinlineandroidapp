@@ -74,4 +74,6 @@
     <string name="favorite">Favoritos</string>
     <string name="settings">Configurações</string>
     <string name="profile">Perfil</string>
+    <string name="fetching_data">Carregando dados</string>
+    <string name="please_wait">Por favor, espere…</string>
 </resources>

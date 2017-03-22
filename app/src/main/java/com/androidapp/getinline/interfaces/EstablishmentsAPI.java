@@ -12,7 +12,7 @@ import retrofit.http.GET;
 import retrofit.http.POST;
 
 
-public interface RetrofitArrayAPI {
+public interface EstablishmentsAPI {
 
     /*
      * Retrofit get annotation with our URL
