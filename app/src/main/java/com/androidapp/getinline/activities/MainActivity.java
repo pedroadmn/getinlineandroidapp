@@ -27,12 +27,27 @@ import com.androidapp.getinline.util.Util;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
 import za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity;
 
 public class MainActivity extends AppCompatActivity {
+
+    /**
+     * Text View user email
+     */
+    TextView tv_email;
+
+    /**
+     * Text view user name
+     */
+    TextView tv_name;
 
     /**
      * The entry point of the Firebase Authentication SDK.
@@ -72,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
         Session session = new Session(this);
         userSession = session.getUserDetails();
 
+        init();
+
         mActivityTitle = getTitle().toString();
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
@@ -87,6 +104,26 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mAuth.addAuthStateListener(authStateListener);
+
+        FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
+
+        // get reference to 'users' node
+        DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference("users");
+
+        mFirebaseDatabase.child(userSession.get(Session.KEY_USER_ID)).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                tv_name.setText(user.getName());
+                tv_email.setText(user.getEmail());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     /**
@@ -131,8 +168,8 @@ public class MainActivity extends AppCompatActivity {
         View header = navigationView.getHeaderView(0);
 
         ImageView iv_photo = (ImageView) header.findViewById(R.id.profile_photo);
-        TextView tv_email = (TextView) header.findViewById(R.id.profile_email);
-        TextView tv_name = (TextView) header.findViewById(R.id.profile_name);
+        tv_email = (TextView) header.findViewById(R.id.profile_email);
+        tv_name = (TextView) header.findViewById(R.id.profile_name);
 
         tv_email.setText(userSession.get(Session.KEY_USER_EMAIL));
         tv_name.setText(userSession.get(Session.KEY_USER_NAME));
@@ -166,7 +203,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        init();
     }
 
     @Override
@@ -241,5 +277,4 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

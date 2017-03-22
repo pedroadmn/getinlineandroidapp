@@ -25,6 +25,12 @@ import com.androidapp.getinline.interfaces.EstablishmentsAPI;
 import com.androidapp.getinline.listener.ClickListener;
 import com.androidapp.getinline.listener.RecyclerTouchListener;
 import com.androidapp.getinline.util.Util;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +74,24 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        updateEstablishmentList();
+
+        FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
+
+        // get reference to 'users' node
+        DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference("users");
+
+        mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                updateEstablishmentList();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -178,7 +202,5 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
     public void onResume() {
         super.onResume();
         establishments = new ArrayList<>();
-        updateEstablishmentList();
-
     }
 }

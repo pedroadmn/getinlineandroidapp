@@ -67,6 +67,7 @@ public class LineFragment extends Fragment implements SearchView.OnQueryTextList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        updateEstablishmentList();
     }
 
     @Override
@@ -151,7 +152,6 @@ public class LineFragment extends Fragment implements SearchView.OnQueryTextList
     public void onResume() {
         super.onResume();
         establishments = new ArrayList<>();
-        updateEstablishmentList();
     }
 
     @Override
