@@ -1,6 +1,5 @@
 package com.androidapp.getinline.fragments;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.androidapp.getinline.R;
 import com.androidapp.getinline.activities.EstablishmentActivity;
@@ -25,14 +25,12 @@ import com.androidapp.getinline.interfaces.EstablishmentsAPI;
 import com.androidapp.getinline.listener.ClickListener;
 import com.androidapp.getinline.listener.RecyclerTouchListener;
 import com.androidapp.getinline.util.Util;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Call;
@@ -62,6 +60,12 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
      * Search View
      */
     private SearchView mSearchView;
+
+    /**
+     * Progress Bar
+     */
+    private ProgressBar progressBar;
+
 
     /**
      * Establishment Fragment constructor
@@ -101,6 +105,8 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
         // Inflate the layout for this fragment
 
         View rootView = inflater.inflate(R.layout.list_establishments_fragment, container, false);
+        progressBar = (ProgressBar) rootView.findViewById(R.id.pb_fetching_data_establishments);
+        progressBar.setVisibility(View.VISIBLE);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_list_establishments);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -132,8 +138,6 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
     }
 
     void getRetrofitArray() {
-
-        final ProgressDialog loading = ProgressDialog.show(getContext(), getResources().getString(R.string.fetching_data), getResources().getString(R.string.please_wait), false, false);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Util.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -146,11 +150,11 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
         call.enqueue(new Callback<List<Establishment>>() {
             @Override
             public void onResponse(Response<List<Establishment>> response, Retrofit retrofit) {
-                loading.dismiss();
                 try {
-                    establishments = response.body();;
+                    establishments = response.body();
                     mEstablishmentAdapter = new EstablishmentAdapter(getContext(), establishments);
                     mRecyclerView.setAdapter(mEstablishmentAdapter);
+                    progressBar.setVisibility(View.GONE);
                 } catch (Exception e) {
                     Log.d("onResponse", "There is an error");
                     e.printStackTrace();

@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.androidapp.getinline.R;
 import com.androidapp.getinline.Session;
 import com.androidapp.getinline.entities.Establishment;
-import com.androidapp.getinline.entities.User;
 import com.androidapp.getinline.interfaces.EstablishmentsAPI;
 import com.androidapp.getinline.util.Util;
 import com.squareup.okhttp.ResponseBody;

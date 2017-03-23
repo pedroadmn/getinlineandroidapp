@@ -1,6 +1,5 @@
 package com.androidapp.getinline.fragments;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -15,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.androidapp.getinline.R;
 import com.androidapp.getinline.adapters.EstablishmentAdapter;
@@ -57,6 +57,11 @@ public class LineFragment extends Fragment implements SearchView.OnQueryTextList
     public List<Establishment> establishments;
 
     /**
+     * Progress Bar
+     */
+    private ProgressBar progressBar;
+
+    /**
      * Line Fragment constructor
      */
     public LineFragment() {
@@ -77,6 +82,8 @@ public class LineFragment extends Fragment implements SearchView.OnQueryTextList
 
 
         View rootView = inflater.inflate(R.layout.list_line_fragment, container, false);
+        progressBar = (ProgressBar) rootView.findViewById(R.id.pb_fetching_data_line);
+        progressBar.setVisibility(View.VISIBLE);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_list_line);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -93,7 +100,6 @@ public class LineFragment extends Fragment implements SearchView.OnQueryTextList
     }
 
     void getRetrofitArray() {
-        final ProgressDialog loading = ProgressDialog.show(getContext(), getResources().getString(R.string.fetching_data), getResources().getString(R.string.please_wait), false, false);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Util.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -106,12 +112,11 @@ public class LineFragment extends Fragment implements SearchView.OnQueryTextList
         call.enqueue(new Callback<List<Establishment>>() {
             @Override
             public void onResponse(Response<List<Establishment>> response, Retrofit retrofit) {
-                loading.dismiss();
                 try {
                     establishments = response.body();
                     mEstablishmentAdapter = new EstablishmentAdapter(getContext(), establishments);
                     mRecyclerView.setAdapter(mEstablishmentAdapter);
-
+                    progressBar.setVisibility(View.GONE);
                 } catch (Exception e) {
                     Log.d("onResponse", "There is an error");
                     e.printStackTrace();
