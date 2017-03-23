@@ -95,14 +95,16 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <!-- [START firebase_service] -->
-        <service android:name=".service.CustomFirebaseMessagingService"
+        <service
+            android:name=".service.CustomFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <service android:name=".service.CustomFirebaseInstanceIdService"
+        <service
+            android:name=".service.CustomFirebaseInstanceIdService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />

@@ -16,6 +16,10 @@ import com.androidapp.getinline.interfaces.EstablishmentsAPI;
 import com.androidapp.getinline.util.Util;
 import com.squareup.okhttp.ResponseBody;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.HashMap;
 
 import retrofit.Call;
@@ -66,7 +70,13 @@ public class EstablishmentActivity extends AppCompatActivity {
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Response<ResponseBody> response, Retrofit retrofit) {
-                        Toast.makeText(getBaseContext(), "You are in " + establishment.getName() + " line", Toast.LENGTH_SHORT).show();
+                        try {
+                            String  bodyString = new String(response.body().bytes());
+                            JSONObject jObject  = new JSONObject(bodyString);
+                            Toast.makeText(getBaseContext(),jObject.getString(Util.MESSAGE), Toast.LENGTH_SHORT).show();
+                        } catch (JSONException | IOException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     @Override

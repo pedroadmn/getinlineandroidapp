@@ -83,6 +83,11 @@ public class Util {
     public static final String BASE_URL = "http://projeto1getinline.herokuapp.com/";
 
     /**
+     * Constant MESSAGE. Used as key to catch server response
+     */
+    public static final String MESSAGE = "message" ;
+
+    /**
      * Method to validate user email address
      *
      * @param context Context
