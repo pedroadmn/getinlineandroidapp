@@ -201,6 +201,5 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
     @Override
     public void onResume() {
         super.onResume();
-        establishments = new ArrayList<>();
     }
 }
