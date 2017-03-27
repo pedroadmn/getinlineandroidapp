@@ -147,8 +147,9 @@ public class MainActivity extends AppCompatActivity {
                 int id = menuItem.getItemId();
 
                 switch (id) {
-                    case R.id.home:
-                        Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT).show();
+                    case R.id.favorites_establishments:
+                        Intent i = new Intent(getBaseContext(), FavoritesEstablishments.class);
+                        startActivity(i);
                         mDrawerLayout.closeDrawers();
                         break;
                     case R.id.settings:

@@ -13,6 +13,8 @@ import com.androidapp.getinline.Session;
 import com.androidapp.getinline.entities.Establishment;
 import com.androidapp.getinline.interfaces.EstablishmentsAPI;
 import com.androidapp.getinline.util.Util;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.okhttp.ResponseBody;
 
 import org.json.JSONException;
@@ -49,6 +51,8 @@ public class EstablishmentActivity extends AppCompatActivity {
 
         Button goToLine = (Button) findViewById(R.id.bt_go_to_line);
 
+        Button addToFavorites = (Button) findViewById(R.id.bt_add_to_favorites);
+
         establishment = getIntent().getParcelableExtra(Util.KEY_ESTABLISHMENT);
 
         createEstablishmentScreen();
@@ -83,6 +87,15 @@ public class EstablishmentActivity extends AppCompatActivity {
                         Log.d("ONRESPONSEFAILURE", "ONRESPONSEPOST");
                     }
                 });
+            }
+        });
+
+        addToFavorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference ref = database.getReference("users");
+                ref.child(userSession.get(Session.KEY_USER_ID)).child("favoritesEstablishments").push().setValue(establishment);
             }
         });
     }

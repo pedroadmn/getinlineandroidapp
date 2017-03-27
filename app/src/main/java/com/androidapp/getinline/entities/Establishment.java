@@ -63,6 +63,12 @@ public class Establishment implements Parcelable {
     }
 
     /**
+     * Establishment constructor
+     */
+    public Establishment() {
+    }
+
+    /**
      * Method to get Establishment Id
      *
      * @return Establishment Id
