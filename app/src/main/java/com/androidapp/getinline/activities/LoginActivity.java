@@ -264,7 +264,6 @@ public class LoginActivity extends CommonActivity implements GoogleApiClient.OnC
                     user.setEmailIfNull(userFirebase.getEmail());
                     user.saveDB();
                 }
-
                 session.createLoginSession(userFirebase.getDisplayName(), userFirebase.getEmail(), userFirebase.getUid(),
                         FirebaseInstanceId.getInstance().getToken(), userFirebase.getPhotoUrl().toString());
                 callMainActivity();

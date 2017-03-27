@@ -1,7 +1,6 @@
 package com.androidapp.getinline.service;
 
 import com.androidapp.getinline.entities.TokenEvent;
-import com.androidapp.getinline.entities.User;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 

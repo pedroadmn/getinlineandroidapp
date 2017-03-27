@@ -108,14 +108,19 @@ public class MainActivity extends AppCompatActivity {
         FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
 
         // get reference to 'users' node
-        DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference("users");
+        final DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference("users");
 
         mFirebaseDatabase.child(userSession.get(Session.KEY_USER_ID)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                tv_name.setText(user.getName());
-                tv_email.setText(user.getEmail());
+                if (user.isSocialNetworkLogged(getBaseContext())){
+                    tv_name.setText(userSession.get(Session.KEY_USER_NAME));
+                    tv_email.setText(userSession.get(Session.KEY_USER_EMAIL));
+                } else {
+                    tv_name.setText(user.getName());
+                    tv_email.setText(user.getEmail());
+                }
             }
 
             @Override
