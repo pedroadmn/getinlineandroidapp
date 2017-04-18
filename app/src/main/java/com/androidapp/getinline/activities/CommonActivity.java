@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-
 public abstract class CommonActivity extends AppCompatActivity {
 
     /**
@@ -53,7 +52,7 @@ public abstract class CommonActivity extends AppCompatActivity {
     }
 
     /**
-     * Methdo to close progress bar
+     * Method to close progress bar
      */
     protected void closeProgressBar() {
         progressBar.setVisibility(View.GONE);
@@ -65,7 +64,7 @@ public abstract class CommonActivity extends AppCompatActivity {
     abstract protected void initViews();
 
     /**
-     * Abstract method where activies will init an user
+     * Abstract method where activities will init an user
      */
     abstract protected void initUser();
 

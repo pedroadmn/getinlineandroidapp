@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,10 +21,11 @@ import android.widget.Toast;
 
 import com.androidapp.getinline.R;
 import com.androidapp.getinline.Session;
-import com.androidapp.getinline.adapters.ViewPagerAdapter;
 import com.androidapp.getinline.entities.User;
-import com.androidapp.getinline.fragments.EstablishmentsFragment;
-import com.androidapp.getinline.fragments.LineFragment;
+import com.androidapp.getinline.fragments.UpdateFragment;
+import com.androidapp.getinline.fragments.UpdateLoginFragment;
+import com.androidapp.getinline.fragments.UpdatePasswordFragment;
+import com.androidapp.getinline.fragments.ViewPagerTabFragment;
 import com.androidapp.getinline.util.Util;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -84,6 +87,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        Log.d("OncreateMain", "Entrou");
+
         Session session = new Session(this);
         userSession = session.getUserDetails();
 
@@ -129,6 +135,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.container_body, ViewPagerTabFragment.newInstance(), "rageComicList")
+                    .commit();
+        }
+
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.container_body, new ViewPagerTabFragment());
+//        fragmentTransaction.commit();
     }
 
     /**
@@ -209,6 +226,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d("OncreateResume", "Entrou");
     }
 
     @Override
@@ -227,25 +245,8 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         initNavigationDrawer();
-
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
     }
 
-    /**
-     * Method to build the view pager with the correspondent fragments
-     *
-     * @param viewPager View Pager
-     */
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new EstablishmentsFragment(), getResources().getString(R.string.establishments));
-        adapter.addFragment(new LineFragment(), getResources().getString(R.string.inline));
-        viewPager.setAdapter(adapter);
-    }
 
     @Override
     protected void onDestroy() {
@@ -270,17 +271,37 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
+        Fragment fragment = null;
+
         if (id == R.id.action_update) {
-            startActivity(new Intent(this, UpdateActivity.class));
+            fragment = new UpdateFragment();
         } else if (id == R.id.action_update_login) {
-            startActivity(new Intent(this, UpdateLoginActivity.class));
+            fragment = new UpdateLoginFragment();
         } else if (id == R.id.action_link_accounts) {
             startActivity(new Intent(this, LinkAccountsActivity.class));
         } else if (id == R.id.action_update_password) {
-            startActivity(new Intent(this, UpdatePasswordActivity.class));
+            fragment = new UpdatePasswordFragment();
         } else if (id == R.id.action_remove_user) {
             startActivity(new Intent(this, RemoveUserActivity.class));
         }
+
+        if (fragment != null) {
+            final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.container_body, fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+
+            // set the toolbar title
+//            getSupportActionBar().setTitle(title);
+        }
+
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("OnStartMain", "Entrou");
+    }
+
 }

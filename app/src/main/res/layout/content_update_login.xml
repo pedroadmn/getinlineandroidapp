@@ -70,11 +70,9 @@
         </android.support.design.widget.TextInputLayout>
 
         <Button
-            android:id="@+id/bt_logout"
-            android:layout_alignParentLeft="true"
+            android:id="@+id/bt_update_login"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
-            android:onClick="update"
             android:gravity="center"
             android:text="@string/update_login"
             android:layout_width="match_parent"

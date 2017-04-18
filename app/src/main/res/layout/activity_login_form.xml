@@ -55,8 +55,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="15dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
                 android:onClick="callReset"
                 android:text="@string/reset"
                 android:textColor="#0000ff"
@@ -68,17 +68,15 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_form_login"
-            android:layout_marginTop="30dp">
+            android:layout_below="@+id/ll_form_login">
 
             <TextView
                 android:id="@+id/cancel_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
+                android:padding="15dp"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="60dp"
-                android:layout_marginLeft="60dp"
                 android:text="@string/cancel"
                 android:textColor="@color/grayNormal"
                 android:textSize="16sp"
@@ -89,10 +87,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:padding="15dp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="60dp"
-                android:layout_marginRight="60dp"
                 android:onClick="sendLoginData"
                 android:text="@string/login"
                 android:textColor="@color/grayNormal"

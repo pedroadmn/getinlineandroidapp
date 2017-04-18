@@ -79,5 +79,12 @@
     <string name="profile">Profile</string>
     <string name="fetching_data">Fetching data</string>
     <string name="please_wait">Please wait...</string>
+    <string name="iv_icon_line">In line position icon</string>
+    <string name="iv_icon_average_time">Average time icon</string>
+    <string name="get_in_line_logo">Get in line logo</string>
+    <string name="go_to_line">Go to line</string>
+    <string name="add_to_favorites">Add to favorites</string>
+    <string name="line">line</string>
+    <string name="min">min</string>
 
 </resources>

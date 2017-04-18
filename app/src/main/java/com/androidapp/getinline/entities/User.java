@@ -252,7 +252,6 @@ public class User implements Parcelable {
         firebase.setValue(null, completionListener);
     }
 
-
     public void contextDataDB(Context context) {
         DatabaseReference firebase = LibraryClass.getFirebase().child(Util.USERS_KEY_DB).child(getId());
         firebase.addListenerForSingleValueEvent((ValueEventListener) context);

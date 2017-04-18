@@ -70,10 +70,20 @@
     <string name="establishments">Estabelecimentos</string>
     <string name="inline">Na fila</string>
     <string name="iv_icon_establishment">Icone do estabelecimento</string>
+    <string name="iv_icon_line">Icone de posição na fila</string>
     <string name="search">pesquisar</string>
     <string name="favorite">Favoritos</string>
     <string name="settings">Configurações</string>
+    <string name="setup_guide">Guia inicial</string>
+    <string name="legal">Legal</string>
     <string name="profile">Perfil</string>
     <string name="fetching_data">Carregando dados</string>
     <string name="please_wait">Por favor, espere…</string>
+    <string name="iv_icon_average_time">Icone de tempo médio</string>
+    <string name="get_in_line_logo">Logo do Get in line</string>
+    <string name="go_to_line">Ir para fila</string>
+    <string name="add_to_favorites">Adicionar aos favoritos</string>
+    <string name="line">Fila</string>
+    <string name="min">min</string>
+
 </resources>

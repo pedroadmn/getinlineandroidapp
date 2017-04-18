@@ -2,6 +2,7 @@ package com.androidapp.getinline.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -78,7 +79,8 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        updateEstablishmentList();
+
+        Log.d("ONCREATEESTFRAG", "ENTROU");
 
         FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
 
@@ -104,6 +106,7 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
 
         // Inflate the layout for this fragment
 
+        Log.d("ONCREATEVIEWESTFRAG", "ENTROU");
         View rootView = inflater.inflate(R.layout.list_establishments_fragment, container, false);
         progressBar = (ProgressBar) rootView.findViewById(R.id.pb_fetching_data_establishments);
         progressBar.setVisibility(View.VISIBLE);
@@ -112,6 +115,8 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+
+        updateEstablishmentList();
 
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), mRecyclerView, new ClickListener() {
             @Override
@@ -205,5 +210,6 @@ public class EstablishmentsFragment extends Fragment implements SearchView.OnQue
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("ONRESUMEESTFRAG", "ENTROU");
     }
 }

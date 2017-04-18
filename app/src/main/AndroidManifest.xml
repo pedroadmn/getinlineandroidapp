@@ -47,7 +47,8 @@
 
         <activity
             android:name=".activities.MainActivity"
-            android:parentActivityName=".activities.LoginActivity">
+            android:parentActivityName=".activities.LoginActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
 
         <activity
@@ -60,10 +61,6 @@
             android:name=".activities.SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
-        <activity
-            android:name=".activities.UpdateActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".activities.ResetActivity"

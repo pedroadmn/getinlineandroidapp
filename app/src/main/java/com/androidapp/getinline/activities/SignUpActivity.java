@@ -40,7 +40,9 @@ public class SignUpActivity extends CommonActivity implements DatabaseReference.
      */
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
-
+    /**
+     * The User
+     */
     private User user;
 
     /**

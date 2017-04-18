@@ -76,7 +76,7 @@ public class EstablishmentActivity extends AppCompatActivity {
                         try {
                             String  bodyString = new String(response.body().bytes());
                             JSONObject jObject  = new JSONObject(bodyString);
-                            Toast.makeText(getBaseContext(),jObject.getString(Util.MESSAGE), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getBaseContext(), jObject.getString(Util.MESSAGE), Toast.LENGTH_SHORT).show();
                         } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }

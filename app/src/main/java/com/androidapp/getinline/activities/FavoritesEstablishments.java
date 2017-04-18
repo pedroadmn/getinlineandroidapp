@@ -33,7 +33,9 @@ import java.util.List;
 
 public class FavoritesEstablishments extends AppCompatActivity{
 
-
+    /**
+     * Recycle view to list of favorite establishments
+     */
     RecyclerView mRecyclerView;
 
     /**
@@ -75,7 +77,6 @@ public class FavoritesEstablishments extends AppCompatActivity{
         userSession = session.getUserDetails();
         toolbar = (Toolbar) findViewById(R.id.fe_toolbar);
         toolbar.setTitle("Favorite Establishments");
-
 
         FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
 

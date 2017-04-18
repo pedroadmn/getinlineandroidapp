@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activities.UpdateActivity"
+    tools:context=".activities.MainActivity"
     tools:showIn="@layout/activity_update">
 
     <RelativeLayout
@@ -34,10 +34,8 @@
 
         <Button
             android:id="@+id/bt_update_login"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
-            android:onClick="update"
             android:gravity="center"
             android:text="@string/update_profile"
             android:layout_width="match_parent"
